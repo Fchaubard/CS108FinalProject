@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class Matching implements Question {
 
-	public static final int type=7;
+	public static final int type = 7;
 	private String statement;
 	private Set<Integer> answers;
 	private ArrayList<String> rowOne;
