@@ -38,4 +38,10 @@ public class FillInTheBlank implements Question {
 		return 0;
 	}
 
+	@Override
+	public String toHTMLString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

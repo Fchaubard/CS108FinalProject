@@ -8,5 +8,7 @@ public interface Question {
 	
 	public int solve();
 	
+	public String toHTMLString();
+	
 	
 }

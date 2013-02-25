@@ -56,5 +56,11 @@ public class Matching implements Question {
 		this.rowTwo = rowTwo;
 	}
 
+	@Override
+	public String toHTMLString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

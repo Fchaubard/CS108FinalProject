@@ -46,4 +46,10 @@ public class MultipleChoice implements Question {
 		this.answer = answer;
 	}
 
+	@Override
+	public String toHTMLString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

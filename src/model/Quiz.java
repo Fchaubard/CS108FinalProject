@@ -37,7 +37,7 @@ public class Quiz {
 	public Question getNextQuestion(){
 		
 		
-		return new QuestionResponse();
+		return null;
 		
 	}
 	

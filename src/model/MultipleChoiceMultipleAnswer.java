@@ -47,5 +47,11 @@ public class MultipleChoiceMultipleAnswer implements Question {
 		this.wrongAnswers = wrongAnswers;
 	}
 
+	@Override
+	public String toHTMLString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

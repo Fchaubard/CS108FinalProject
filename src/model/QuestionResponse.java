@@ -7,7 +7,17 @@ public class QuestionResponse implements Question {
 	public static final int type=1;
 	private String statement;
 	private Set<String> answers;
+	private int qID;
 	
+	public QuestionResponse(String question, Set<String> ans, int id) {
+		statement = question;
+		
+		for(String s : ans) {
+			answers.add(s);
+		}
+		
+		qID = id;
+	}
 
 	public String getStatement() {
 		return statement;
@@ -36,6 +46,18 @@ public class QuestionResponse implements Question {
 	public int solve() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public String toHTMLString() {
+		StringBuilder html = new StringBuilder();
+		
+		html.append(statement);
+		html.append("<br><input type = \"text\" name = \"");
+		html.append(qID);
+		html.append("\" />");
+		
+		return html.toString();
 	}
 
 }
