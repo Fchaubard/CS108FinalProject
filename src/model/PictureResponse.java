@@ -7,7 +7,17 @@ public class PictureResponse implements Question {
 	public static final int type=4;
 	private String url;
 	private Set<String> answers;
+	private int qID;
 	
+	public PictureResponse(String picture, Set<String> ans, int id) {
+		url = picture;
+		
+		for(String s : ans) {
+			answers.add(s);
+		}
+		
+		qID = id;
+	}
 
 	public String getURL() {
 		return url;
@@ -40,8 +50,14 @@ public class PictureResponse implements Question {
 
 	@Override
 	public String toHTMLString() {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder html = new StringBuilder();
+		
+		html.append("<img src=\"" + url + "\" width=\"304\" height=\"228\" />" );
+        html.append("<br /><input type=\"text\" name=\"");
+        html.append(qID);
+        html.append("\" />");
+		
+		return html.toString();
 	}
 
 

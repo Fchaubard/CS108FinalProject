@@ -7,7 +7,17 @@ public class MultipleAnswer implements Question {
 	public static final int type=5;
 	private String statement;
 	private Set<String> answers;
+	private int qID;
 	
+	public MultipleAnswer(String question, Set<String> ans, int id) {
+		statement = question;
+		
+		for(String s : ans) {
+			answers.add(s);
+		}
+		
+		qID = id;
+	}
 
 	public String getStatement() {
 		return statement;
@@ -40,7 +50,6 @@ public class MultipleAnswer implements Question {
 
 	@Override
 	public String toHTMLString() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

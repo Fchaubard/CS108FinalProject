@@ -50,14 +50,14 @@ public class FillInTheBlank implements Question {
 
 	@Override
 	public String toHTMLString() {
-		int index = this.statement.indexOf(""); //this is where we find where the blank is gonna go
+		int index = this.statement.indexOf("__________");
 		
 		StringBuilder html = new StringBuilder();
 		html.append(this.statement.substring(0, index));
 		html.append("<input type=\"text\" name=\"");
 		html.append(qID);
 		html.append("\" />");
-		html.append(this.statement.substring(index)); //TODO: increment index by length of string that denotes where the blank shit goes
+		html.append(this.statement.substring(index + 10));
 		
 		return html.toString();
 	}

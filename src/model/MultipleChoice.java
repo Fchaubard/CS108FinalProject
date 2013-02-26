@@ -8,6 +8,18 @@ public class MultipleChoice implements Question {
 	private String statement;
 	private Set<String> wrongAnswers;
 	private String answer;
+	private int qID;
+	
+	public MultipleChoice(String question, Set<String> wrong, String ans, int id) {
+		statement = question;
+		
+		for(String s : wrong) {
+			wrongAnswers.add(s);
+		}
+		
+		answer = ans;
+		qID = id;
+	}
 
 	public String getStatement() {
 		return statement;
@@ -48,8 +60,22 @@ public class MultipleChoice implements Question {
 
 	@Override
 	public String toHTMLString() {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder html = new StringBuilder();
+		
+        html.append(statement);
+        html.append("<br />");
+        
+        for(String s : wrongAnswers) {
+                html.append("<input type=\"radio\" name=\""+ qID + "\" value=\"");
+                html.append(s + "\"> " + s);
+                html.append("<br />");       
+        }
+        
+        html.append("<input type=\"radio\" name=\""+ qID + "\" value=\"");
+        html.append(answer + "\"> " + answer);
+        html.append("<br />");
+        
+		return html.toString();
 	}
 
 }
