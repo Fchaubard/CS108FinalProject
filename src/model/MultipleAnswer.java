@@ -8,13 +8,16 @@ public class MultipleAnswer implements Question {
 	private String statement;
 	private Set<String> answers;
 	private int qID;
+	private int numAnswers;
 	
-	public MultipleAnswer(String question, Set<String> ans, int id) {
+	public MultipleAnswer(String question, Set<String> ans, int id, int numAnswers) {
 		statement = question;
 		
 		for(String s : ans) {
 			answers.add(s);
 		}
+		
+		this.numAnswers = numAnswers;
 		
 		qID = id;
 	}
@@ -50,7 +53,18 @@ public class MultipleAnswer implements Question {
 
 	@Override
 	public String toHTMLString() {
-		return null;
+		StringBuilder html = new StringBuilder();
+		
+		html.append(statement);
+		html.append("<br />");
+		
+		for(int i = 0; i < numAnswers; i++) {
+			html.append("<input type = \"text\" name = \"");
+			html.append(i);
+			html.append("\" /><br />");
+		}
+		
+		return html.toString();
 	}
 
 
