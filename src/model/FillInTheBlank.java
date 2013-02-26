@@ -7,7 +7,17 @@ public class FillInTheBlank implements Question {
 	public static final int type=2;
 	private String statement;
 	private Set<String> answers;
+	private int qID;
 	
+	public FillInTheBlank(String question, Set<String> ans, int id) {
+		statement = question;
+		
+		for(String s : ans) {
+			answers.add(s);
+		}
+		
+		qID = id;
+	}
 
 	public String getStatement() {
 		return statement;
@@ -40,8 +50,16 @@ public class FillInTheBlank implements Question {
 
 	@Override
 	public String toHTMLString() {
-		// TODO Auto-generated method stub
-		return null;
+		int index = this.statement.indexOf(""); //this is where we find where the blank is gonna go
+		
+		StringBuilder html = new StringBuilder();
+		html.append(this.statement.substring(0, index));
+		html.append("<input type=\"text\" name=\"");
+		html.append(qID);
+		html.append("\" />");
+		html.append(this.statement.substring(index)); //TODO: increment index by length of string that denotes where the blank shit goes
+		
+		return html.toString();
 	}
 
 }
