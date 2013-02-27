@@ -35,8 +35,8 @@ public class Matching implements Question {
 	}
 
 	@Override
-	public int solve() {
-		// TODO Auto-generated method stub
+	public int solve(Set<String> answer) {
+		//TODO implement this shit
 		return 0;
 	}
 

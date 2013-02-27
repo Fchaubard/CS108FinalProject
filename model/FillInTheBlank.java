@@ -43,8 +43,8 @@ public class FillInTheBlank implements Question {
 	}
 
 	@Override
-	public int solve() {
-		// TODO Auto-generated method stub
+	public int solve(Set<String> answer) {
+		//TODO
 		return 0;
 	}
 

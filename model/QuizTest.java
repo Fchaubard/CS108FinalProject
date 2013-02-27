@@ -14,7 +14,6 @@ public class QuizTest {
 	@Before
 	public void setUp(){
 		bunnyQuiz = Quiz("bunny");
-		
 	}
 	
 	

@@ -23,7 +23,8 @@ public class Quiz {
 		double score = 0;
 		
 		for(int i = 0; i < questions.size(); i++) {
-			score += questions.get(i).solve();
+			//TODO fix this to get user answer for each question.
+			score += questions.get(i).solve(null);
 		}
 		
 		return score;

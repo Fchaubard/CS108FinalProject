@@ -45,7 +45,7 @@ public class MultipleChoice implements Question {
 	}
 
 	@Override
-	public int solve() {
+	public int solve(Set<String> answer) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
