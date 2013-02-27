@@ -1,8 +1,12 @@
 package model;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 public class MultipleChoice implements Question {
 
@@ -21,6 +25,26 @@ public class MultipleChoice implements Question {
 		
 		answer = ans;
 		qID = id;
+	}
+	
+	public MultipleChoice(Integer id, Connection con) throws SQLException {
+		this.qID = id;
+		
+		PreparedStatement ps = con.prepareStatement("select * from multiple_choice_question where question_id = ?");
+		ps.setInt(1, id);
+		ResultSet rs = ps.executeQuery();
+		
+		String wrong = new String();
+		while(rs.next()) {
+			statement = rs.getString("statement");
+			answer = rs.getString("answer");
+			wrong = rs.getString("wrong_answers");
+		}
+		
+		StringTokenizer tokenizer = new StringTokenizer(wrong, "&&&");
+		while(tokenizer.hasMoreTokens()) {
+			wrongAnswers.add(tokenizer.nextToken());
+		}
 	}
 
 	public String getStatement() {
