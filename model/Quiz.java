@@ -74,37 +74,37 @@ public class Quiz {
 			int questionID = resultSet.getInt("question_id");
 			switch(questionType) {
 				case 1: 
-					QuestionResponse qr = new QuestionResponse(questionID);
+					QuestionResponse qr = new QuestionResponse(questionID, con);
 					questions.add(qr);
 					break;
 				
 				case 2:
-					FillInTheBlank fb = new FillInTheBlank(questionID);
+					FillInTheBlank fb = new FillInTheBlank(questionID, con);
 					questions.add(fb);
 					break;
 					
 				case 3:
-					MultipleChoice mc = new MultipleChoice(questionID);
+					MultipleChoice mc = new MultipleChoice(questionID, con);
 					questions.add(mc);
 					break;
 					
 				case 4:
-					PictureResponse pr = new PictureResponse(questionID);
+					PictureResponse pr = new PictureResponse(questionID, con);
 					questions.add(pr);
 					break;
 					
 				case 5:
-					MultipleAnswer ma = new MultipleAnswer(questionID);
+					MultipleAnswer ma = new MultipleAnswer(questionID, con);
 					questions.add(ma);
 					break;
 					
 				case 6:
-					MultipleChoiceMultipleAnswer mcma = new MultipleChoiceMultipleAnswer(questionID);
+					MultipleChoiceMultipleAnswer mcma = new MultipleChoiceMultipleAnswer(questionID, con );
 					questions.add(mcma);
 					break;
 					
 				case 7:
-					Matching m = new Matching(questionID);
+					Matching m = new Matching(questionID, con);
 					questions.add(m);
 					break;
 			}
