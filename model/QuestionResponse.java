@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -39,6 +40,7 @@ public class QuestionResponse implements Question {
 		}
 		
 		StringTokenizer tokenizer = new StringTokenizer(ans, "&&&");
+		answers = new HashSet<String>();
 		while(tokenizer.hasMoreTokens()) {
 			answers.add(tokenizer.nextToken());
 		}

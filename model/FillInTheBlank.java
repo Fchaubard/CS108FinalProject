@@ -68,7 +68,7 @@ public class FillInTheBlank implements Question {
 		Statement stmt;
 		try {
 			stmt = con.createStatement();
-			StringBuilder sqlString = new StringBuilder("SELECT * FROM fill_in_the_blank_question WHERE id=\"\"");
+			StringBuilder sqlString = new StringBuilder("SELECT * FROM fill_in_the_blank_question WHERE id=\"");
 			sqlString.append(id);
 			sqlString.append("\" ");
 			

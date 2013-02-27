@@ -77,7 +77,7 @@ public class PictureResponse implements Question {
 		Statement stmt;
 		try {
 			stmt = con.createStatement();
-			StringBuilder sqlString = new StringBuilder("SELECT * FROM picture_response_question WHERE id=\"\"");
+			StringBuilder sqlString = new StringBuilder("SELECT * FROM picture_response_question WHERE id=\"");
 			sqlString.append(id);
 			sqlString.append("\" ");
 			

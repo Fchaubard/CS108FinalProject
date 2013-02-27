@@ -70,7 +70,7 @@ public class MultipleAnswer implements Question {
 		Statement stmt;
 		try {
 			stmt = con.createStatement();
-			StringBuilder sqlString = new StringBuilder("SELECT * FROM multiple_answer_question WHERE id=\"\"");
+			StringBuilder sqlString = new StringBuilder("SELECT * FROM multiple_answer_question WHERE id=\"");
 			sqlString.append(id);
 			sqlString.append("\" ");
 			

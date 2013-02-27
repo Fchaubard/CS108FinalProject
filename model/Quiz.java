@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Quiz {
 	
@@ -68,7 +69,7 @@ public class Quiz {
 		PreparedStatement questionQuery = con.prepareStatement("select * from quiz_question_mapping where quiz_id = ?");
 		questionQuery.setInt(1, id);
 		ResultSet resultSet = questionQuery.executeQuery();
-		
+		questions = new ArrayList<Question>();
 		while(resultSet.next()) {
 			int questionType = resultSet.getInt("question_type");
 			int questionID = resultSet.getInt("question_id");
