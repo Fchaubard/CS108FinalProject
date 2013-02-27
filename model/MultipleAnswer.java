@@ -78,7 +78,7 @@ public class MultipleAnswer implements Question {
 			
 			String ans = new String();
 			while (resultSet.next()) {
-				statement = resultSet.getString(1);
+				statement = resultSet.getString("statement");
 				ans = resultSet.getString(2);
 				
 			}

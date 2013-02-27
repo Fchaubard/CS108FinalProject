@@ -1,6 +1,11 @@
 package model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 public class QuestionResponse implements Question {
 
@@ -17,6 +22,25 @@ public class QuestionResponse implements Question {
 		}
 		
 		qID = id;
+	}
+	
+	public QuestionResponse(Integer id, Connection con) throws SQLException {
+		this.qID = id;
+		
+		PreparedStatement ps = con.prepareStatement("select * from question_response where question_id = ?");
+		ps.setInt(1, id);
+		ResultSet rs = ps.executeQuery();
+		
+		String ans = new String();
+		while(rs.next()) {
+			statement = rs.getString("statement");
+			ans = rs.getString("answer");
+		}
+		
+		StringTokenizer tokenizer = new StringTokenizer(ans, "&&&");
+		while(tokenizer.hasMoreTokens()) {
+			answers.add(tokenizer.nextToken());
+		}
 	}
 
 	public String getStatement() {
