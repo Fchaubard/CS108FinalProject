@@ -5,7 +5,11 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
-	<classpathentry kind="lib" path="/Users/AprilYu/Downloads/apache-tomcat-7.0.35/lib/mysql-connector-java-5.1.23-bin.jar"/>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="/Users/AprilYu/Downloads/apache-tomcat-7.0.35/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="/Users/AprilYu/Downloads/apache-tomcat-7.0.35/lib/mysql-connector-java-5.1.23-bin.jar"/>
+=======
+	<classpathentry kind="lib" path="/Users/francoischaubard/Downloads/apache-tomcat-7.0.35/lib/servlet-api.jar"/>
+>>>>>>> All things
 	<classpathentry kind="output" path="bin"/>
 </classpath>
