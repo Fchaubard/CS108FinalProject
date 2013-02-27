@@ -5,32 +5,12 @@ import static org.junit.Assert.assertTrue;
 
 import java.sql.SQLException;
 
-import org.junit.Before;
 import org.junit.Test;
 
 public class QuizTest {
 	//Ramon Iglesias: I am still uncertain on how the implementation
 	//Will actually be, but I'll take my best guess.
 	private Quiz bunnyQuiz;
-	
-	/*
-	@Before
-	public void setUp(){
-<<<<<<< HEAD
-		bunnyQuiz = Quiz("bunny");
-<<<<<<< HEAD
-=======
-		try {
-			bunnyQuiz = new Quiz(1);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
->>>>>>> added quiz implementation
-=======
->>>>>>> All things
-	}
-	*/
 	
 	@Test
 	public void testBunnyQuiz() throws SQLException {

@@ -112,6 +112,8 @@ public class Quiz {
 		}
 		
 		currentQuestionInteger = -1;
+		
+		con.close();
 	}
 
 	public double score(){
