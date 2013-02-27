@@ -1,12 +1,14 @@
 package model;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 
 public class PictureResponse implements Question {
 
@@ -74,29 +76,26 @@ public class PictureResponse implements Question {
 	
 	public void generate(int id, Connection con) {
 		setqID(id);
-		Statement stmt;
 		try {
-			stmt = con.createStatement();
-			StringBuilder sqlString = new StringBuilder("SELECT * FROM picture_response_question WHERE id=\"");
-			sqlString.append(id);
-			sqlString.append("\" ");
 			
-			System.out.print(sqlString.toString());
-			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
+			PreparedStatement ps = con.prepareStatement("select * from picture_response_question where question_id = ?");
+			ps.setInt(1, id);
+			ResultSet resultSet = ps.executeQuery();
+			
 			
 			String ans = new String();
 			while (resultSet.next()) {
 				url = resultSet.getString("url");
-				ans = resultSet.getString(2);
+				ans = resultSet.getString("answer");
 				
 			}
 			
-			StringTokenizer tokenizer = new StringTokenizer(ans, "&&&");
+			String[] strings = ans.split(Pattern.quote(" &&& "));
 			answers = new HashSet<String>();
-			while(tokenizer.hasMoreTokens()) {
-				answers.add(tokenizer.nextToken());
+			for (String string : strings) {
+				answers.add(string);
 			}
-			
+				
 			
 			
 		}catch(Exception e){

@@ -155,7 +155,8 @@ public class Quiz {
 	}
 	
 	public Question getNextQuestion(){
-		return questions.get(currentQuestionInteger+1);
+		currentQuestionInteger++;
+		return questions.get(currentQuestionInteger);
 	}
 	
 	public String getCategory() {

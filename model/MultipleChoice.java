@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 
 public class MultipleChoice implements Question {
 
@@ -42,11 +43,14 @@ public class MultipleChoice implements Question {
 			wrong = rs.getString("wrong_answers");
 		}
 		
-		StringTokenizer tokenizer = new StringTokenizer(wrong, "&&&");
+		
+		String[] strings = wrong.split(Pattern.quote(" &&& "));
 		wrongAnswers = new HashSet<String>();
-		while(tokenizer.hasMoreTokens()) {
-			wrongAnswers.add(tokenizer.nextToken());
+		for (String string : strings) {
+			wrongAnswers.add(string);
 		}
+			
+		
 	}
 
 	public String getStatement() {

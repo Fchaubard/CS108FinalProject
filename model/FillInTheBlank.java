@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -65,20 +66,17 @@ public class FillInTheBlank implements Question {
 	@Override
 	public void generate(int id, Connection con) {
 		this.qID = id;
-		Statement stmt;
 		try {
-			stmt = con.createStatement();
-			StringBuilder sqlString = new StringBuilder("SELECT * FROM fill_in_the_blank_question WHERE id=\"");
-			sqlString.append(id);
-			sqlString.append("\" ");
 			
-			System.out.print(sqlString.toString());
-			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
+			PreparedStatement ps = con.prepareStatement("select * from fill_in_the_blank_question where question_id = ?");
+			ps.setInt(1, id);
+			ResultSet resultSet = ps.executeQuery();
+			
 			
 			String ans = new String();
 			while (resultSet.next()) {
-				statement = resultSet.getString(1);
-				ans = resultSet.getString(2);
+				statement = resultSet.getString("statement");
+				ans = resultSet.getString("answer");
 				
 			}
 			

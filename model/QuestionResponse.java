@@ -39,7 +39,7 @@ public class QuestionResponse implements Question {
 			ans = rs.getString("answer");
 		}
 		
-		StringTokenizer tokenizer = new StringTokenizer(ans, "&&&");
+		StringTokenizer tokenizer = new StringTokenizer(ans, " &&& ");
 		answers = new HashSet<String>();
 		while(tokenizer.hasMoreTokens()) {
 			answers.add(tokenizer.nextToken());

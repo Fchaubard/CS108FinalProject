@@ -44,7 +44,7 @@ public class QuizTest {
 		assertTrue(bunnyQuestion1.getAnswers().contains("Leporidae"));
 		
 		FillInTheBlank bunnyQuestion2 = (FillInTheBlank) bunnyQuiz.getNextQuestion();
-		assertEquals("The book__________Down, about a bunch of rabbits, won the 1972 Carnegie Medal", (String) (bunnyQuestion2.getStatement()));
+		assertEquals("The book __________ Down, about a bunch of rabbits, won the 1972 Carnegie Medal", (String) (bunnyQuestion2.getStatement()));
 		assertTrue(bunnyQuestion2.getAnswers().contains("Watership"));
 		
 		MultipleChoice bunnyQuestion3 = (MultipleChoice) bunnyQuiz.getNextQuestion();

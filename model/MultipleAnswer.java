@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -67,16 +68,12 @@ public class MultipleAnswer implements Question {
 	
 	public void generate(int id, Connection con) {
 		setqID(id);
-		Statement stmt;
 		try {
-			stmt = con.createStatement();
-			StringBuilder sqlString = new StringBuilder("SELECT * FROM multiple_answer_question WHERE id=\"");
-			sqlString.append(id);
-			sqlString.append("\" ");
 			
-			System.out.print(sqlString.toString());
-			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
-			
+			PreparedStatement ps = con.prepareStatement("select * from multiple_answer_question where question_id = ?");
+			ps.setInt(1, id);
+			ResultSet resultSet = ps.executeQuery();
+		
 			String ans = new String();
 			while (resultSet.next()) {
 				statement = resultSet.getString("statement");
@@ -84,7 +81,7 @@ public class MultipleAnswer implements Question {
 				
 			}
 			
-			StringTokenizer tokenizer = new StringTokenizer(ans, "&&&");
+			StringTokenizer tokenizer = new StringTokenizer(ans, " &&& ");
 			answers = new HashSet<String>();
 			while(tokenizer.hasMoreTokens()) {
 				answers.add(tokenizer.nextToken());
