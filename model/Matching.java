@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -26,14 +27,6 @@ public class Matching implements Question {
 	public void setAnswers(Set<Integer> answers) {
 		this.answers = answers;
 	}
-	
-
-	@Override
-	public void generate() {
-		// TODO Auto-generated method stub
-
-	}
-
 
 	public int solve(ArrayList<String>  answer) {
 		//TODO implement this shit
@@ -60,6 +53,12 @@ public class Matching implements Question {
 	public String toHTMLString() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void generate(int id, Connection con) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

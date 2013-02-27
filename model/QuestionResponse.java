@@ -59,13 +59,6 @@ public class QuestionResponse implements Question {
 	public void setAnswers(Set<String> answers) {
 		this.answers = answers;
 	}
-	
-
-	@Override
-	public void generate() {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public int solve(ArrayList<String> answer) {
@@ -83,6 +76,12 @@ public class QuestionResponse implements Question {
 		html.append("\" />");
 		
 		return html.toString();
+	}
+
+	@Override
+	public void generate(int id, Connection con) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
