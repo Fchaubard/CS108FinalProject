@@ -3,6 +3,8 @@ package model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.sql.SQLException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,19 +13,31 @@ public class QuizTest {
 	//Will actually be, but I'll take my best guess.
 	private Quiz bunnyQuiz;
 	
+	/*
 	@Before
 	public void setUp(){
+<<<<<<< HEAD
 		bunnyQuiz = Quiz("bunny");
+=======
+		try {
+			bunnyQuiz = new Quiz(1);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+>>>>>>> added quiz implementation
 	}
+	*/
 	
 	
 	@Test
-	public void testBunnyQuiz() {
+	public void testBunnyQuiz() throws SQLException {
+		bunnyQuiz = new Quiz(1);
 		assertEquals("Animals", (String) bunnyQuiz.getCategory());
 		
 		assertEquals("An homage to the departed, legendary Bunny World project.", (String) bunnyQuiz.getDescription());
 		
-		QuestionResponse bunnyQuestion1 = (QuestionResponse) bunnyQuiz.getNextQuestion();
+		QuestionResponse bunnyQuestion1 = (QuestionResponse)bunnyQuiz.getNextQuestion();
 		assertEquals("What is the Biological Family for Bunnies?", (String) bunnyQuestion1.getStatement());
 		assertTrue(bunnyQuestion1.getAnswers().contains("Leporidae"));
 		
