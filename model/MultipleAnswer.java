@@ -1,6 +1,12 @@
 package model;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Set;
+import java.util.StringTokenizer;
+
 
 public class MultipleAnswer implements Question {
 	
@@ -10,10 +16,87 @@ public class MultipleAnswer implements Question {
 	private int qID;
 	private int numAnswers;
 	
-	public MultipleAnswer(String question, Set<String> ans, int id, int numAnswers) {
-		generate(question, ans, id, numAnswers);
+	public MultipleAnswer(String question, Set<String> ans, int numAnswers, Connection con) { // pushes to database
+		Statement stmt;
+		this.numAnswers = numAnswers;
+		this.statement = question;
+		this.answers = ans;
+		
+		try {
+			stmt = con.createStatement();
+			StringBuilder sqlString = new StringBuilder("INSERT INTO multiple_answer_question VALUES(null,\"");
+			sqlString.append(question);
+			sqlString.append("\",\" ");
+			for (String string : ans) {
+				sqlString.append(string);
+				sqlString.append(" &&& ");
+			}
+			sqlString.append("\" ");
+			
+			System.out.print(sqlString.toString());
+			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
+			
+			stmt = con.createStatement();
+			sqlString = new StringBuilder("SELECT * FROM multiple_answer_question WHERE statement=\"\"");
+			sqlString.append(statement);
+			sqlString.append("\" ");
+			
+			System.out.print(sqlString.toString());
+			resultSet = stmt.executeQuery(sqlString.toString());
+			
+			
+			while (resultSet.next()) {
+				this.setqID(resultSet.getInt(0)); // will always be the last one
+			}
+			
+			
+			
+			
+		}catch(Exception e){
+			
+		}
+		
+		
+		
 	}
 
+	public MultipleAnswer(int id, Connection con) { // pulls from database
+		generate(id, con);
+	}
+	
+	public void generate(int id, Connection con) {
+		setqID(id);
+		Statement stmt;
+		try {
+			stmt = con.createStatement();
+			StringBuilder sqlString = new StringBuilder("SELECT * FROM multiple_answer_question WHERE id=\"\"");
+			sqlString.append(id);
+			sqlString.append("\" ");
+			
+			System.out.print(sqlString.toString());
+			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
+			
+			String ans = new String();
+			while (resultSet.next()) {
+				statement = resultSet.getString(1);
+				ans = resultSet.getString(2);
+				
+			}
+			
+			StringTokenizer tokenizer = new StringTokenizer(ans, "&&&");
+			while(tokenizer.hasMoreTokens()) {
+				answers.add(tokenizer.nextToken());
+			}
+			
+			this.numAnswers = answers.size();
+			
+			
+		}catch(Exception e){
+			
+		}
+		
+	}
+	
 	public String getStatement() {
 		return statement;
 	}
@@ -30,21 +113,10 @@ public class MultipleAnswer implements Question {
 		this.answers = answers;
 	}
 	
-	public void generate(String question, Set<String> ans, int id, int numAnswers) {
-		statement = question;
-		
-		for(String s : ans) {
-			answers.add(s);
-		}
-		
-		this.numAnswers = numAnswers;
-		
-		qID = id;
-
-	}
+	
 
 	@Override
-	public int solve(Set<String> answer) {
+	public int solve(ArrayList<String> answer) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -69,6 +141,14 @@ public class MultipleAnswer implements Question {
 	public void generate() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public int getqID() {
+		return qID;
+	}
+
+	public void setqID(int qID) {
+		this.qID = qID;
 	}
 
 
