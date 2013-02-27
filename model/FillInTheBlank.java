@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -82,6 +83,7 @@ public class FillInTheBlank implements Question {
 			}
 			
 			StringTokenizer tokenizer = new StringTokenizer(ans, "&&&");
+			answers = new HashSet<String>();
 			while(tokenizer.hasMoreTokens()) {
 				answers.add(tokenizer.nextToken());
 			}

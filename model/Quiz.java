@@ -99,13 +99,13 @@ public class Quiz {
 					break;
 					
 				case 6:
-					MultipleChoiceMultipleAnswer mcma = new MultipleChoiceMultipleAnswer(questionID, con );
-					questions.add(mcma);
+					//MultipleChoiceMultipleAnswer mcma = new MultipleChoiceMultipleAnswer(questionID, con );
+					//questions.add(mcma);
 					break;
 					
 				case 7:
-					Matching m = new Matching(questionID, con);
-					questions.add(m);
+					//Matching m = new Matching(questionID, con);
+					//questions.add(m);
 					break;
 			}
 		}

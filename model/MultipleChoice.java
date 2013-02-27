@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -42,6 +43,7 @@ public class MultipleChoice implements Question {
 		}
 		
 		StringTokenizer tokenizer = new StringTokenizer(wrong, "&&&");
+		wrongAnswers = new HashSet<String>();
 		while(tokenizer.hasMoreTokens()) {
 			wrongAnswers.add(tokenizer.nextToken());
 		}
