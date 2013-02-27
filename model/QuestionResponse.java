@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,14 +17,49 @@ public class QuestionResponse implements Question {
 	private Set<String> answers;
 	private int qID;
 	
-	public QuestionResponse(String question, Set<String> ans, int id) {
-		statement = question;
+	public int getqID() {
+		return qID;
+	}
+
+	public void setqID(int qID) {
+		this.qID = qID;
+	}
+
+	public QuestionResponse(String question, HashSet<String> ans, Connection con) { // pushes to database
+		Statement stmt;
+		this.statement = question;
+		this.answers = ans;
 		
-		for(String s : ans) {
-			answers.add(s);
+		try {
+			stmt = con.createStatement();
+			StringBuilder sqlString = new StringBuilder("INSERT INTO question_response VALUES(null,");
+			sqlString.append(question);
+			sqlString.append("\",\" ");
+			for (String string : ans) {
+				sqlString.append(string);
+				sqlString.append(" &&& ");
+			}
+			sqlString.append("\" ");
+			
+			System.out.print(sqlString.toString());
+			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
+			
+			stmt = con.createStatement();
+			sqlString = new StringBuilder("SELECT * FROM question_response WHERE statement=\"");
+			sqlString.append(statement);
+			sqlString.append("\" ");
+			
+			System.out.print(sqlString.toString());
+			resultSet = stmt.executeQuery(sqlString.toString());
+			
+			
+			while (resultSet.next()) {
+				this.setqID(resultSet.getInt("question_id")); // will always be the last one
+			}
+		}catch(Exception e){
+			
 		}
 		
-		qID = id;
 	}
 	
 	public QuestionResponse(Integer id, Connection con) throws SQLException {

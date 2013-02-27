@@ -36,7 +36,7 @@ public class FillInTheBlank implements Question {
 			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
 			
 			stmt = con.createStatement();
-			sqlString = new StringBuilder("SELECT * FROM fill_in_the_blank_question WHERE statement=\"\"");
+			sqlString = new StringBuilder("SELECT * FROM fill_in_the_blank_question WHERE statement=\"");
 			sqlString.append(statement);
 			sqlString.append("\" ");
 			
@@ -45,12 +45,8 @@ public class FillInTheBlank implements Question {
 			
 			
 			while (resultSet.next()) {
-				this.qID = resultSet.getInt(0); // will always be the last one
+				this.qID = resultSet.getInt("question_id"); // will always be the last one
 			}
-			
-			
-			
-			
 		}catch(Exception e){
 			
 		}
@@ -110,10 +106,6 @@ public class FillInTheBlank implements Question {
 		this.answers = answers;
 	}
 	
-
-	
-
-
 	public int solve(ArrayList<String> answer) {
 
 		//TODO

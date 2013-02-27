@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,15 +19,49 @@ public class MultipleChoice implements Question {
 	private String answer;
 	private int qID;
 	
-	public MultipleChoice(String question, Set<String> wrong, String ans, int id) {
-		statement = question;
+	public int getqID() {
+		return qID;
+	}
+
+	public void setqID(int qID) {
+		this.qID = qID;
+	}
+
+	public MultipleChoice(String question, HashSet<String> wrongAns, Connection con) { // pushes to database
+		Statement stmt;
+		this.statement = question;
+		this.wrongAnswers = wrongAns;
 		
-		for(String s : wrong) {
-			wrongAnswers.add(s);
+		try {
+			stmt = con.createStatement();
+			StringBuilder sqlString = new StringBuilder("INSERT INTO multiple_choice_question VALUES(null,");
+			sqlString.append(question);
+			sqlString.append("\",\" ");
+			for (String string : wrongAnswers) {
+				sqlString.append(string);
+				sqlString.append(" &&& ");
+			}
+			sqlString.append("\" ");
+			
+			System.out.print(sqlString.toString());
+			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
+			
+			stmt = con.createStatement();
+			sqlString = new StringBuilder("SELECT * FROM multiple_choice_question WHERE statement=\"");
+			sqlString.append(statement);
+			sqlString.append("\" ");
+			
+			System.out.print(sqlString.toString());
+			resultSet = stmt.executeQuery(sqlString.toString());
+			
+			
+			while (resultSet.next()) {
+				this.setqID(resultSet.getInt("question_id")); // will always be the last one
+			}
+		}catch(Exception e){
+			
 		}
 		
-		answer = ans;
-		qID = id;
 	}
 	
 	public MultipleChoice(Integer id, Connection con) throws SQLException {

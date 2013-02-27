@@ -47,7 +47,7 @@ public class PictureResponse implements Question {
 			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
 			
 			stmt = con.createStatement();
-			sqlString = new StringBuilder("SELECT * FROM picture_response_question WHERE statement=\"\"");
+			sqlString = new StringBuilder("SELECT * FROM picture_response_question WHERE statement=\"");
 			sqlString.append(url);
 			sqlString.append("\" ");
 			

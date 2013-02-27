@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 
 
 public class MultipleAnswer implements Question {
@@ -26,7 +27,7 @@ public class MultipleAnswer implements Question {
 		
 		try {
 			stmt = con.createStatement();
-			StringBuilder sqlString = new StringBuilder("INSERT INTO multiple_answer_question VALUES(null,\"");
+			StringBuilder sqlString = new StringBuilder("INSERT INTO multiple_answer_question VALUES(null,");
 			sqlString.append(question);
 			sqlString.append("\",\" ");
 			for (String string : ans) {
@@ -39,7 +40,7 @@ public class MultipleAnswer implements Question {
 			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
 			
 			stmt = con.createStatement();
-			sqlString = new StringBuilder("SELECT * FROM multiple_answer_question WHERE statement=\"\"");
+			sqlString = new StringBuilder("SELECT * FROM multiple_answer_question WHERE statement=\"");
 			sqlString.append(statement);
 			sqlString.append("\" ");
 			
@@ -48,7 +49,7 @@ public class MultipleAnswer implements Question {
 			
 			
 			while (resultSet.next()) {
-				this.setqID(resultSet.getInt(0)); // will always be the last one
+				this.setqID(resultSet.getInt("question_id")); // will always be the last one
 			}
 			
 			
@@ -81,12 +82,11 @@ public class MultipleAnswer implements Question {
 				
 			}
 			
-			StringTokenizer tokenizer = new StringTokenizer(ans, " &&& ");
+			String[] strings = ans.split(Pattern.quote(" &&& "));
 			answers = new HashSet<String>();
-			while(tokenizer.hasMoreTokens()) {
-				answers.add(tokenizer.nextToken());
+			for (String string : strings) {
+				answers.add(string);
 			}
-			
 			this.numAnswers = answers.size();
 			
 			
