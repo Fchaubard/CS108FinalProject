@@ -5,8 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import com.mysql.jdbc.Statement;
+import java.sql.Statement;
 
 public class AccountManager {
 	
