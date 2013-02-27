@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -40,17 +41,8 @@ public class MultipleChoice implements Question {
 	
 
 	@Override
-	public void generate() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-<<<<<<< HEAD
-	public int solve(Set<String> answer) {
-=======
 	public int solve(ArrayList<String> answer) {
->>>>>>> All things
+
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -81,6 +73,12 @@ public class MultipleChoice implements Question {
         html.append("<br />");
         
 		return html.toString();
+	}
+
+	@Override
+	public void generate(int id, Connection con) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -113,12 +113,9 @@ public class FillInTheBlank implements Question {
 
 	
 
-	@Override
-<<<<<<< HEAD
-	public int solve(Set<String> answer) {
-=======
+
 	public int solve(ArrayList<String> answer) {
->>>>>>> All things
+
 		//TODO
 		return 0;
 	}

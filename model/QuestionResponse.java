@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -67,7 +68,7 @@ public class QuestionResponse implements Question {
 	}
 
 	@Override
-	public int solve(Set<String> answer) {
+	public int solve(ArrayList<String> answer) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

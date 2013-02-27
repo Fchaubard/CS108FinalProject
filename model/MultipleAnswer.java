@@ -137,12 +137,6 @@ public class MultipleAnswer implements Question {
 		return html.toString();
 	}
 
-	@Override
-	public void generate() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public int getqID() {
 		return qID;
 	}
