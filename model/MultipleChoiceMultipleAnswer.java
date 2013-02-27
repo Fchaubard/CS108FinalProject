@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 public class MultipleChoiceMultipleAnswer implements Question {
@@ -9,7 +10,6 @@ public class MultipleChoiceMultipleAnswer implements Question {
 	private Set<String> answers;
 	private Set<String> wrongAnswers;
 	
-
 	public String getStatement() {
 		return statement;
 	}
@@ -34,7 +34,11 @@ public class MultipleChoiceMultipleAnswer implements Question {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public int solve(Set<String> answer) {
+=======
+	public int solve(ArrayList<String> answer) {
+>>>>>>> All things
 		// TODO Auto-generated method stub
 		return 0;
 	}

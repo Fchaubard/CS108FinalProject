@@ -1,6 +1,11 @@
 package model;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 public class FillInTheBlank implements Question {
 
@@ -9,16 +14,86 @@ public class FillInTheBlank implements Question {
 	private Set<String> answers;
 	private int qID;
 	
-	public FillInTheBlank(String question, Set<String> ans, int id) {
-		statement = question;
+	public FillInTheBlank(String question, Set<String> ans, Connection con) { // pushes to database
+		Statement stmt;
+		this.statement = question; // this should have the ________ in it already
+		this.answers = ans; // need to add the &&&
 		
-		for(String s : ans) {
-			answers.add(s);
+		try {
+			stmt = con.createStatement();
+			StringBuilder sqlString = new StringBuilder("INSERT INTO fill_in_the_blank_question VALUES(null,\"");
+			sqlString.append(question);
+			sqlString.append("\",\" ");
+			for (String string : ans) {
+				sqlString.append(string);
+				sqlString.append(" &&& ");
+			}
+			sqlString.append("\" ");
+			
+			System.out.print(sqlString.toString());
+			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
+			
+			stmt = con.createStatement();
+			sqlString = new StringBuilder("SELECT * FROM fill_in_the_blank_question WHERE statement=\"\"");
+			sqlString.append(statement);
+			sqlString.append("\" ");
+			
+			System.out.print(sqlString.toString());
+			resultSet = stmt.executeQuery(sqlString.toString());
+			
+			
+			while (resultSet.next()) {
+				this.qID = resultSet.getInt(0); // will always be the last one
+			}
+			
+			
+			
+			
+		}catch(Exception e){
+			
 		}
 		
-		qID = id;
+		
+		
 	}
 
+	public FillInTheBlank(int id, Connection con) { // pulls from database
+		generate(id, con);
+	}
+	
+	@Override
+	public void generate(int id, Connection con) {
+		this.qID = id;
+		Statement stmt;
+		try {
+			stmt = con.createStatement();
+			StringBuilder sqlString = new StringBuilder("SELECT * FROM fill_in_the_blank_question WHERE id=\"\"");
+			sqlString.append(id);
+			sqlString.append("\" ");
+			
+			System.out.print(sqlString.toString());
+			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
+			
+			String ans = new String();
+			while (resultSet.next()) {
+				statement = resultSet.getString(1);
+				ans = resultSet.getString(2);
+				
+			}
+			
+			StringTokenizer tokenizer = new StringTokenizer(ans, "&&&");
+			while(tokenizer.hasMoreTokens()) {
+				answers.add(tokenizer.nextToken());
+			}
+			
+			
+			
+		}catch(Exception e){
+			
+		}
+		
+	}
+	
 	public String getStatement() {
 		return statement;
 	}
@@ -36,14 +111,14 @@ public class FillInTheBlank implements Question {
 	}
 	
 
-	@Override
-	public void generate() {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 	@Override
+<<<<<<< HEAD
 	public int solve(Set<String> answer) {
+=======
+	public int solve(ArrayList<String> answer) {
+>>>>>>> All things
 		//TODO
 		return 0;
 	}
@@ -62,4 +137,5 @@ public class FillInTheBlank implements Question {
 		return html.toString();
 	}
 
+	
 }

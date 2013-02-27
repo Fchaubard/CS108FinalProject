@@ -18,6 +18,7 @@ public class QuizTest {
 	public void setUp(){
 <<<<<<< HEAD
 		bunnyQuiz = Quiz("bunny");
+<<<<<<< HEAD
 =======
 		try {
 			bunnyQuiz = new Quiz(1);
@@ -26,9 +27,10 @@ public class QuizTest {
 			e.printStackTrace();
 		}
 >>>>>>> added quiz implementation
+=======
+>>>>>>> All things
 	}
 	*/
-	
 	
 	@Test
 	public void testBunnyQuiz() throws SQLException {

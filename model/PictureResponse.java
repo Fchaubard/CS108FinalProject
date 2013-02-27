@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 public class PictureResponse implements Question {
@@ -43,7 +44,11 @@ public class PictureResponse implements Question {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public int solve(Set<String> answer) {
+=======
+	public int solve(ArrayList<String> answer) {
+>>>>>>> All things
 		// TODO Auto-generated method stub
 		return 0;
 	}

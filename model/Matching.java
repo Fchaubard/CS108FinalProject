@@ -35,7 +35,11 @@ public class Matching implements Question {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public int solve(Set<String> answer) {
+=======
+	public int solve(ArrayList<String>  answer) {
+>>>>>>> All things
 		//TODO implement this shit
 		return 0;
 	}
