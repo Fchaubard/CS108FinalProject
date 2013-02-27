@@ -11,15 +11,7 @@ public class MultipleAnswer implements Question {
 	private int numAnswers;
 	
 	public MultipleAnswer(String question, Set<String> ans, int id, int numAnswers) {
-		statement = question;
-		
-		for(String s : ans) {
-			answers.add(s);
-		}
-		
-		this.numAnswers = numAnswers;
-		
-		qID = id;
+		generate(question, ans, id, numAnswers);
 	}
 
 	public String getStatement() {
@@ -38,10 +30,16 @@ public class MultipleAnswer implements Question {
 		this.answers = answers;
 	}
 	
-
-	@Override
-	public void generate() {
-		// TODO Auto-generated method stub
+	public void generate(String question, Set<String> ans, int id, int numAnswers) {
+		statement = question;
+		
+		for(String s : ans) {
+			answers.add(s);
+		}
+		
+		this.numAnswers = numAnswers;
+		
+		qID = id;
 
 	}
 
@@ -65,6 +63,12 @@ public class MultipleAnswer implements Question {
 		}
 		
 		return html.toString();
+	}
+
+	@Override
+	public void generate() {
+		// TODO Auto-generated method stub
+		
 	}
 
 
