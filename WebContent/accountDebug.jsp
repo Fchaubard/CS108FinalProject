@@ -16,5 +16,8 @@
 <input type="submit" value="Delete Account">
 </form>
 <a href = "homeDebug.jsp">Home</a>
+<a href = "newMessage.jsp?user=<%out.print(name);%>">Compose Mail</a>
+<a href = "MailManagementServlet?&index=inbox&user=<%out.print(name);%>">inbox</a>
+<a href = "MailManagementServlet?&index=outbox&user=<%out.print(name);%>">outbox</a>
 </body>
 </html>

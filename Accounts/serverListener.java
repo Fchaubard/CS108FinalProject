@@ -28,6 +28,8 @@ public class serverListener implements ServletContextListener {
     	ServletContext sc = arg0.getServletContext();
     	AccountManager am = new AccountManager();
     	sc.setAttribute("accounts", am);
+    	MailManager mm = new MailManager();
+    	sc.setAttribute("mail", mm);
         // TODO Auto-generated method stub
     }
 
