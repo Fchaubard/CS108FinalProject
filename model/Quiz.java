@@ -23,6 +23,10 @@ public class Quiz {
 	
 	public Quiz(ArrayList<Question> q, boolean random, boolean onePage, boolean immediateCorrect, boolean practice, String userName, String description, ArrayList<QuizAttempts> history, String category){
 		generate(q, random, onePage, immediateCorrect, practice, userName, description, history, category);
+		
+		Connection con = MyDB.getConnection();
+		
+		
 	}
 	
 	public Quiz(int id) throws SQLException {
@@ -46,7 +50,7 @@ public class Quiz {
 			description = rs.getString("description");
 		}
 		
-		//TODO get Creator Username
+		// get Creator Username
 		PreparedStatement userQuery = con.prepareStatement("select * from user where user_id = ?");
 		userQuery.setInt(1, creatorID);
 		ResultSet r = userQuery.executeQuery();
@@ -55,7 +59,7 @@ public class Quiz {
 			creatorUserName = r.getString("username");
 		}
 		
-		//TODO get history of quiz
+		// get history of quiz
 		PreparedStatement historyQuery = con.prepareStatement("select * from history where quiz_id = ?");
 		historyQuery.setInt(1, id);
 		ResultSet set = historyQuery.executeQuery();
@@ -65,7 +69,7 @@ public class Quiz {
 			history.add(qa);
 		}
 		
-		//TODO get questions from table
+		// get questions from table
 		PreparedStatement questionQuery = con.prepareStatement("select * from quiz_question_mapping where quiz_id = ?");
 		questionQuery.setInt(1, id);
 		ResultSet resultSet = questionQuery.executeQuery();
