@@ -21,7 +21,7 @@ public class Account {
 	
 	public Account(ResultSet rs) {
 		try {
-			id = rs.getInt("user_id");
+			setId(rs.getInt("user_id"));
 			name = rs.getString("username");
 			System.out.println(name);
 			
@@ -56,5 +56,13 @@ public class Account {
 	
 	public void giveAcheivement(String key) {
 		acheivements.put(key, true);
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

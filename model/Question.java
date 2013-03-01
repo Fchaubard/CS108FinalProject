@@ -11,7 +11,8 @@ public interface Question {
 	public void generate(int id, Connection con);
 	
 	public int solve(ArrayList<String> answer);
-
+	
+	public int getqID();
 	
 	public String toHTMLString();
 	

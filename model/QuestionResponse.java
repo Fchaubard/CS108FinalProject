@@ -20,10 +20,10 @@ public class QuestionResponse implements Question {
 	
 	
 	public QuestionResponse(String question, HashSet<String> ans, Connection con) { // pushes to database
-		Statement stmt;
+		
 		this.statement = question;
 		this.answers = ans;
-		
+		Statement stmt;
 		try {
 			stmt = con.createStatement();
 			StringBuilder sqlString = new StringBuilder("INSERT INTO question_response VALUES(null,");
