@@ -106,10 +106,15 @@ public class MultipleChoice implements Question {
 	
 
 	@Override
-	public int solve(ArrayList<String> answer) {
-
-		// TODO Auto-generated method stub
-		return 0;
+	public int solve(ArrayList<String> ans) {
+		if (ans.size()!=1) {
+			return 0; // input cleansing
+		}
+		if (this.answer.equals(ans)) {
+			return 1;
+		}else{
+			return 0;
+		}
 	}
 
 	public String getAnswer() {

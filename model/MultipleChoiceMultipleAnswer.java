@@ -28,8 +28,19 @@ public class MultipleChoiceMultipleAnswer implements Question {
 	}
 
 	public int solve(ArrayList<String> answer) {
-		// TODO Auto-generated method stub
-		return 0;
+		//if (answer.size()!=numAnswers) {
+		//	return 0; // input cleansing
+		//}
+		// need to implement error checking TODO
+		int score =0;
+		for (String string : answer) {
+			if (this.answers.contains(string)) { //TODO this might not be good
+				return 1;
+			}else{
+				return 0;
+			}
+		}
+		return score;
 	}
 
 	public Set<String> getWrongAnswers() {

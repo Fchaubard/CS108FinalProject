@@ -112,12 +112,21 @@ public class MultipleAnswer implements Question {
 		this.answers = answers;
 	}
 	
-	
-
 	@Override
 	public int solve(ArrayList<String> answer) {
-		// TODO Auto-generated method stub
-		return 0;
+		if (answer.size()!=numAnswers) {
+			return 0; // input cleansing
+		}
+		int score =0;
+		for (String string : answer) {
+			if (this.answers.contains(string)) { //TODO this might not be good
+				return 1;
+			}else{
+				return 0;
+			}
+		}
+		return score;
+	
 	}
 
 	@Override

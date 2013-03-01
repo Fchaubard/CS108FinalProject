@@ -120,9 +120,16 @@ public class PictureResponse implements Question {
 		this.answers = answers;
 	}
 
-	public int solve(ArrayList<String> answer) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int solve(ArrayList<String> ans) {
+		if (ans.size()!=1) {
+			return 0; // input cleansing
+		}
+		
+		if (answers.contains(ans)) {
+			return 1;
+		}else{
+			return 0;
+		}	
 	}
 
 	@Override

@@ -18,14 +18,7 @@ public class QuestionResponse implements Question {
 	private Set<String> answers;
 	private int qID;
 	
-	public int getqID() {
-		return qID;
-	}
-
-	public void setqID(int qID) {
-		this.qID = qID;
-	}
-
+	
 	public QuestionResponse(String question, HashSet<String> ans, Connection con) { // pushes to database
 		Statement stmt;
 		this.statement = question;
@@ -103,9 +96,16 @@ public class QuestionResponse implements Question {
 	}
 
 	@Override
-	public int solve(ArrayList<String> answer) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int solve(ArrayList<String> ans) {
+		if (ans.size()!=1) {
+			return 0; // input cleansing
+		}
+		
+		if (answers.contains(ans)) {
+			return 1;
+		}else{
+			return 0;
+		}
 	}
 
 	@Override
@@ -124,6 +124,13 @@ public class QuestionResponse implements Question {
 	public void generate(int id, Connection con) {
 		// TODO Auto-generated method stub
 		
+	}
+	public int getqID() {
+		return qID;
+	}
+
+	public void setqID(int qID) {
+		this.qID = qID;
 	}
 
 }

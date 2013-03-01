@@ -14,7 +14,7 @@ public class Matching implements Question {
 
 	public static final int type = 7;
 	private String statement;
-	private ArrayList<Integer> answers;
+	private ArrayList<Integer> correctIndexesOfRow1MappingtoRow2;
 	private ArrayList<String> rowOne;
 	private ArrayList<String> rowTwo;
 	private int qID;
@@ -22,7 +22,7 @@ public class Matching implements Question {
 
 	public Matching(String statement, ArrayList<Integer> ans, ArrayList<String> rowOne,ArrayList<String> rowTwo, Connection con) { // pushes to database
 		this.statement = statement;
-		this.answers = ans;
+		this.correctIndexesOfRow1MappingtoRow2 = ans;
 		this.rowOne = rowOne;
 		this.rowTwo = rowTwo;
 		
@@ -113,9 +113,9 @@ public class Matching implements Question {
 			}
 
 			strings = ans.split(Pattern.quote(" &&& "));
-			answers = new ArrayList<Integer>();
+			correctIndexesOfRow1MappingtoRow2 = new ArrayList<Integer>();
 			for (String string : strings) {
-				answers.add(Integer.parseInt(string));
+				correctIndexesOfRow1MappingtoRow2.add(Integer.parseInt(string));
 			}
 				
 			
@@ -138,17 +138,26 @@ public class Matching implements Question {
 		this.statement = statement;
 	}
 
-	public Set<Integer> getAnswers() {
-		return answers;
+	public ArrayList<Integer> getAnswers() {
+		return correctIndexesOfRow1MappingtoRow2;
 	}
 
-	public void setAnswers(Set<Integer> answers) {
-		this.answers = answers;
+	public void setAnswers(ArrayList<Integer> answers) {
+		this.correctIndexesOfRow1MappingtoRow2 = answers;
 	}
 
 	public int solve(ArrayList<String>  answer) {
-		//TODO implement this shit
-		return 0;
+		int score =0;
+		if (answer.size()!=rowOne.size()) {
+			return 0; // input cleansing
+		}
+		for (int i = 0; i < answer.size(); i++) {
+			if (correctIndexesOfRow1MappingtoRow2.get(i)==Integer.parseInt(answer.get(i))) {
+				score++;
+			}
+		}
+		return score;
+		
 	}
 
 	public ArrayList<String> getRowOne() {
