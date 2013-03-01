@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 
 public class FillInTheBlank implements Question {
 
@@ -30,6 +31,8 @@ public class FillInTheBlank implements Question {
 				sqlString.append(string);
 				sqlString.append(" &&& ");
 			}
+			
+			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
 			sqlString.append("\" ");
 			
 			System.out.print(sqlString.toString());
@@ -75,14 +78,13 @@ public class FillInTheBlank implements Question {
 				ans = resultSet.getString("answer");
 				
 			}
-			
-			StringTokenizer tokenizer = new StringTokenizer(ans, "&&&");
+
+			String[] strings = ans.split(Pattern.quote(" &&& "));
 			answers = new HashSet<String>();
-			while(tokenizer.hasMoreTokens()) {
-				answers.add(tokenizer.nextToken());
+			for (String string : strings) {
+				answers.add(string);
 			}
-			
-			
+				
 			
 		}catch(Exception e){
 			
@@ -106,16 +108,23 @@ public class FillInTheBlank implements Question {
 		this.answers = answers;
 	}
 	
-	public int solve(ArrayList<String> answer) {
+	public int solve(ArrayList<String> ans) {
 
-		//TODO
-		return 0;
+		if (ans.size()!=1) {
+			return 0; // input cleansing
+		}
+		
+		if (answers.contains(ans)) {
+			return 1;
+		}else{
+			return 0;
+		}		
 	}
 
+	
 	@Override
 	public String toHTMLString() {
 		int index = this.statement.indexOf("__________");
-		
 		StringBuilder html = new StringBuilder();
 		html.append(this.statement.substring(0, index));
 		html.append("<input type=\"text\" name=\"");

@@ -40,6 +40,7 @@ public class PictureResponse implements Question {
 				sqlString.append(string);
 				sqlString.append(" &&& ");
 			}
+			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
 			sqlString.append("\" ");
 			
 			System.out.print(sqlString.toString());

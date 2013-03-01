@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 
 public class QuestionResponse implements Question {
 
@@ -39,6 +40,7 @@ public class QuestionResponse implements Question {
 				sqlString.append(string);
 				sqlString.append(" &&& ");
 			}
+			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
 			sqlString.append("\" ");
 			
 			System.out.print(sqlString.toString());
@@ -75,11 +77,13 @@ public class QuestionResponse implements Question {
 			ans = rs.getString("answer");
 		}
 		
-		StringTokenizer tokenizer = new StringTokenizer(ans, " &&& ");
+
+		String[] strings = ans.split(Pattern.quote(" &&& "));
 		answers = new HashSet<String>();
-		while(tokenizer.hasMoreTokens()) {
-			answers.add(tokenizer.nextToken());
+		for (String string : strings) {
+			answers.add(string);
 		}
+			
 	}
 
 	public String getStatement() {
