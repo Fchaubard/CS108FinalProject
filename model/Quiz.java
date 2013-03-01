@@ -40,11 +40,11 @@ public class Quiz {
 		int creatorID = -1;
 		
 		while(rs.next()) {
-			quizName = rs.getString("name");
-			random = rs.getBoolean("random");
-			onePageMultiPage = rs.getBoolean("one_page");
-			immediateCorrection = rs.getBoolean("immediate_correction");
-			practiceMode = rs.getBoolean("practice_mode");
+			setQuizName(rs.getString("name"));
+			setRandom(rs.getBoolean("random"));
+			setOnePageMultiPage(rs.getBoolean("one_page"));
+			setImmediateCorrection(rs.getBoolean("immediate_correction"));
+			setPracticeMode(rs.getBoolean("practice_mode"));
 			creatorID = rs.getInt("creator_id");
 			category = rs.getString("category");
 			description = rs.getString("description");
@@ -56,7 +56,7 @@ public class Quiz {
 		ResultSet r = userQuery.executeQuery();
 		
 		while(r.next()) {
-			creatorUserName = r.getString("username");
+			setCreatorUserName(r.getString("username"));
 		}
 		
 		// get history of quiz
@@ -104,13 +104,13 @@ public class Quiz {
 					break;
 					
 				case 6:
-					//MultipleChoiceMultipleAnswer mcma = new MultipleChoiceMultipleAnswer(questionID, con );
-					//questions.add(mcma);
+					MultipleChoiceMultipleAnswer mcma = new MultipleChoiceMultipleAnswer(questionID, con );
+					questions.add(mcma);
 					break;
 					
 				case 7:
-					//Matching m = new Matching(questionID, con);
-					//questions.add(m);
+					Matching m = new Matching(questionID, con);
+					questions.add(m);
 					break;
 			}
 		}
@@ -139,15 +139,15 @@ public class Quiz {
 			questions.add(quest);
 		}
 		
-		this.random = random;
+		this.setRandom(random);
 		
-		onePageMultiPage = onePage;
+		setOnePageMultiPage(onePage);
 		
-		immediateCorrection = immediateCorrect;
+		setImmediateCorrection(immediateCorrect);
 		
-		practiceMode = practice;
+		setPracticeMode(practice);
 		
-		creatorUserName = userName;
+		setCreatorUserName(userName);
 		
 		this.description = description;
 		
@@ -171,5 +171,53 @@ public class Quiz {
 	
 	public String getDescription() {
 		return description;
+	}
+
+	public String getQuizName() {
+		return quizName;
+	}
+
+	public void setQuizName(String quizName) {
+		this.quizName = quizName;
+	}
+
+	public boolean isRandom() {
+		return random;
+	}
+
+	public void setRandom(boolean random) {
+		this.random = random;
+	}
+
+	public boolean isOnePageMultiPage() {
+		return onePageMultiPage;
+	}
+
+	public void setOnePageMultiPage(boolean onePageMultiPage) {
+		this.onePageMultiPage = onePageMultiPage;
+	}
+
+	public boolean isImmediateCorrection() {
+		return immediateCorrection;
+	}
+
+	public void setImmediateCorrection(boolean immediateCorrection) {
+		this.immediateCorrection = immediateCorrection;
+	}
+
+	public boolean isPracticeMode() {
+		return practiceMode;
+	}
+
+	public void setPracticeMode(boolean practiceMode) {
+		this.practiceMode = practiceMode;
+	}
+
+	public String getCreatorUserName() {
+		return creatorUserName;
+	}
+
+	public void setCreatorUserName(String creatorUserName) {
+		this.creatorUserName = creatorUserName;
 	}
 }
