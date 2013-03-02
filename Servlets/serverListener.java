@@ -1,9 +1,12 @@
-package Accounts;
+package Servlets;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+
+import Accounts.AccountManager;
+import Accounts.MailManager;
 
 
 

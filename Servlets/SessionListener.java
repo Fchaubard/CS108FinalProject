@@ -1,8 +1,11 @@
-package Accounts;
+package Servlets;
 
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
+
+import Accounts.Account;
+import Accounts.AccountManager;
 
 
 /**

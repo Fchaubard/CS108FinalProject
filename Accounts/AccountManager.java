@@ -102,9 +102,38 @@ public class AccountManager {
 		}
 	}
 	
-	public void makeFriend(String name) {
-		//if name in friendrequest tbale, make friend
-		//else add friendrequest
+	public void makeFriend(int sender, int friend) {
+		Statement stmt;
+		try {
+			stmt = (Statement) con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM pending_friends WHERE pending_user_id = " + sender +";");
+			if (rs.next()) { //someone has requested to be your friend, make friends
+				stmt.executeUpdate("INSERT INTO friends_mapping VALUES("+sender+", "+friend+");");
+				stmt.executeUpdate("INSERT INTO friends_mapping VALUES("+friend+", "+sender+");");
+				stmt.executeUpdate("DELETE FROM pending_friends where pending_user_id = ("+sender+");");
+			} else { //send request
+				rs = stmt.executeQuery("SELECT * FROM pending_friends WHERE accepted_user_id = " + sender +";");
+				if (rs.next()) return; //already sent request
+				stmt.executeUpdate("INSERT INTO pending_friends VALUES("+sender+", "+friend+");");
+			}
+		} catch (SQLException e) {
+		}
+	}
+	
+	public void deleteFriend(String name) {
+		Statement stmt;
+		try {
+			stmt = (Statement) con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM pending_friends WHERE pending_user_id = " + name +";");
+			if (rs.next()) { //someone has requested to be your friend, make friends
+				
+			} else { //send request
+				rs = stmt.executeQuery("SELECT * FROM pending_friends WHERE accepted_user_id = " + name +";");
+				if (rs.next()) return; //already sent request
+				//stmt.executeUpdate("INSERT INTO pending_friends VALUES("+sender+", "++");");
+			}
+		} catch (SQLException e) {
+		}
 	}
 	
 	public ArrayList<Account> getFriendRequests(String recipient) {
