@@ -135,5 +135,10 @@ public class FillInTheBlank implements Question {
 		return html.toString();
 	}
 
+	@Override
+	public int getqID() {
+		return qID;
+	}
+
 	
 }
