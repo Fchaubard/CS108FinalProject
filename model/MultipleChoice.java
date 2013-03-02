@@ -144,6 +144,11 @@ public class MultipleChoice implements Question {
         
 		return html.toString();
 	}
+	
+	@Override
+	public String getCorrectAnswers() {
+		return answer;
+	}
 
 	@Override
 	public void generate(int id, Connection con) {

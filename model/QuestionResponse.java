@@ -133,6 +133,17 @@ public class QuestionResponse implements Question {
 		this.qID = qID;
 	}
 
+	@Override
+	public String getCorrectAnswers() {
+		StringBuilder correctAnswers = new StringBuilder();
+		
+		for(String s : answers) {
+			correctAnswers.append(s);
+			correctAnswers.append(" ");
+		}
+		
+		return correctAnswers.toString();
+	}
 }
 
 

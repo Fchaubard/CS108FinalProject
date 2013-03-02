@@ -16,5 +16,5 @@ public interface Question {
 	
 	public String toHTMLString();
 	
-	
+	public String getCorrectAnswers();
 }

@@ -190,6 +190,19 @@ public class Matching implements Question {
 		this.qID = qID;
 	}
 
-
+	@Override
+	public String getCorrectAnswers() {
+		StringBuilder correctAnswers = new StringBuilder();
+		
+		for(int i = 0; i < correctIndexesOfRow1MappingtoRow2.size(); i++) {
+			int x = correctIndexesOfRow1MappingtoRow2.get(i);
+			correctAnswers.append(rowOne.get(i));
+			correctAnswers.append(" ");
+			correctAnswers.append(rowTwo.get(x));
+			correctAnswers.append("\n");
+		}
+		
+		return correctAnswers.toString();
+	}
 
 }
