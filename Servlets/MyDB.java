@@ -50,4 +50,9 @@ public class MyDB {
 			e.printStackTrace();
 		}
 	}
+	
+	/*
+	 * CS108 student: Do not add/remove any methods to this file since this file will be replaced
+	 * when we test your code!
+	 */
 }
