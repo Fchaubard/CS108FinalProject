@@ -200,7 +200,7 @@ public class Quiz {
 		ResultSet set = historyQuery.executeQuery();
 		
 		while(set.next()) {
-			QuizAttempts qa = new QuizAttempts(set.getInt("user_id"), set.getInt("score"), set.getDate("date"), set.getInt("time_took"));
+			QuizAttempts qa = new QuizAttempts(set.getInt("user_id"), id, set.getInt("score"), set.getDate("date"), set.getInt("time_took"));
 			history.add(qa);
 		}
 		

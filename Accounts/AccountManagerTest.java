@@ -2,6 +2,8 @@ package Accounts;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,7 +16,11 @@ public class AccountManagerTest {
 		am = new AccountManager();
 		am.createAccount("Menin", "Pinguin");
 		acct1 = am.loginAccount("Menin", "Pinguin");
-		
+		am.addQuizResult(21,1,100,new java.sql.Date(System.currentTimeMillis()), 243);
+		ArrayList<model.QuizAttempts> his = am.getHistory(21);
+		for (model.QuizAttempts qa : his) {
+			System.out.println(qa.quizID + " " + qa.score);
+		}
 	}
 	
 	@Test

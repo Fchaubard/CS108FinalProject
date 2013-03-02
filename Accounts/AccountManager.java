@@ -6,6 +6,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 
 public class AccountManager {
 	
@@ -97,6 +100,48 @@ public class AccountManager {
 			stmt.executeUpdate("DELETE from user WHERE username = \"" + name + "\";");
 		} catch (SQLException e) {
 		}
+	}
+	
+	public void makeFriend(String name) {
+		//if name in friendrequest tbale, make friend
+		//else add friendrequest
+	}
+	
+	public ArrayList<Account> getFriendRequests(String recipient) {
+		//table (sender|recipient)
+		//return list of sender accounts for parameter recipient
+		return null;
+	}
+	
+	public ArrayList<Account> getFriends(String name) {
+		return null;
+	}
+	
+	public void addQuizResult(int userID, int quizID, int score, java.sql.Date date, int time) {
+		Statement stmt;
+		try {
+			stmt = (Statement) con.createStatement();
+			stmt.executeUpdate("INSERT INTO history VALUES ("+userID+", "+quizID+", "+score+", NOW(), "+time+");");
+		} catch (SQLException e) {
+		}
+	}
+	
+	public ArrayList<model.QuizAttempts> getHistory(int id) {
+		ResultSet rs;
+		Statement stmt;
+		ArrayList<model.QuizAttempts> history = null;
+		try {
+			history = new ArrayList<model.QuizAttempts>();
+			stmt = (Statement) con.createStatement();
+			rs = stmt.executeQuery("select * from history where user_id = "+id+";");
+			while (rs.next()) {
+				model.QuizAttempts qa = new model.QuizAttempts(rs.getInt("user_id"), rs.getInt("quiz_id"), rs.getInt("score"), rs.getDate("date"), rs.getInt("time_took"));
+				history.add(qa);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return history;
 	}
 	
 	public static String hexToString(byte[] bytes) {
