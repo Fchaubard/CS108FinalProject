@@ -196,14 +196,22 @@ public class AccountManager {
 		}
 	}
 	
-	public ArrayList<model.QuizAttempts> getHistory(int id) {
+	//pass either arguement as -1 to ignore
+	public ArrayList<model.QuizAttempts> getHistory(int userid, int quizid) {
 		ResultSet rs;
 		Statement stmt;
 		ArrayList<model.QuizAttempts> history = null;
 		try {
 			history = new ArrayList<model.QuizAttempts>();
 			stmt = (Statement) con.createStatement();
-			rs = stmt.executeQuery("select * from history where user_id = "+id+";");
+			StringBuilder sb = new StringBuilder();
+			sb.append("select * from history where ");
+			if (userid > 0)  sb.append("user_id = "+userid);
+			if (userid > 0 && quizid > 0) sb.append(", ");
+			if (quizid > 0) sb.append("quiz_id = "+quizid);
+			sb.append(";");
+					
+			rs = stmt.executeQuery(sb.toString());
 			while (rs.next()) {
 				model.QuizAttempts qa = new model.QuizAttempts(rs.getInt("user_id"), rs.getInt("quiz_id"), rs.getInt("score"), rs.getDate("date"), rs.getInt("time_took"));
 				history.add(qa);
