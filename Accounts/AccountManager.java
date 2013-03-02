@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import Servlets.MyDB;
+
 public class AccountManager {
 	
 	private static Connection con;

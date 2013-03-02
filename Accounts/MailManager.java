@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+import Servlets.MyDB;
+
 import com.mysql.jdbc.Statement;
 
 public class MailManager {
