@@ -7,8 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 
 import Servlets.MyDB;
 
@@ -17,7 +15,7 @@ public class AccountManager {
 	private static Connection con;
 	
 	public AccountManager() {
-		con = MyDB.getConnection();
+		con = Servlets.MyDB.getConnection();
 	}
 	
 	public boolean accountExists(String name) {
@@ -39,7 +37,23 @@ public class AccountManager {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM user WHERE username = \"" + name +"\"");
 			if (rs.next()) {
 				Account acct =  new Account(rs);
-				stmt.executeUpdate("UPDATE user SET online = 1 WHERE username = \"" + name +"\"");
+			//	stmt.executeUpdate("UPDATE user SET online = 1 WHERE username = \"" + name +"\"");
+				return acct;	
+			}
+			else return null;
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+	
+	public Account getAccount(int id) {
+		Statement stmt;
+		try {
+			stmt = (Statement) con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM user WHERE user_id = "+ id +");");
+			if (rs.next()) {
+				Account acct =  new Account(rs);
+			//	stmt.executeUpdate("UPDATE user SET online = 1 WHERE username = \"" + name +"\"");
 				return acct;	
 			}
 			else return null;
@@ -108,13 +122,13 @@ public class AccountManager {
 		Statement stmt;
 		try {
 			stmt = (Statement) con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM pending_friends WHERE pending_user_id = " + sender +";");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM pending_friends WHERE pending_user_id = " + sender +" AND accepted_user_id = "+ friend +";");
 			if (rs.next()) { //someone has requested to be your friend, make friends
 				stmt.executeUpdate("INSERT INTO friends_mapping VALUES("+sender+", "+friend+");");
 				stmt.executeUpdate("INSERT INTO friends_mapping VALUES("+friend+", "+sender+");");
-				stmt.executeUpdate("DELETE FROM pending_friends where pending_user_id = ("+sender+");");
+				stmt.executeUpdate("DELETE FROM pending_friends where pending_user_id = ("+sender+") AND accepted_user_id = "+ friend +";");
 			} else { //send request
-				rs = stmt.executeQuery("SELECT * FROM pending_friends WHERE accepted_user_id = " + sender +";");
+				rs = stmt.executeQuery("SELECT * FROM pending_friends WHERE accepted_user_id = " + sender +"; AND pending_user_id = "+ friend +"");
 				if (rs.next()) return; //already sent request
 				stmt.executeUpdate("INSERT INTO pending_friends VALUES("+sender+", "+friend+");");
 			}
@@ -122,30 +136,55 @@ public class AccountManager {
 		}
 	}
 	
-	public void deleteFriend(String name) {
+	public void deleteFriend(int lousyFriend, int foreverAlone) {
 		Statement stmt;
 		try {
 			stmt = (Statement) con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM pending_friends WHERE pending_user_id = " + name +";");
-			if (rs.next()) { //someone has requested to be your friend, make friends
-				
-			} else { //send request
-				rs = stmt.executeQuery("SELECT * FROM pending_friends WHERE accepted_user_id = " + name +";");
-				if (rs.next()) return; //already sent request
-				//stmt.executeUpdate("INSERT INTO pending_friends VALUES("+sender+", "++");");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM pending_friends WHERE pending_user_id = " + lousyFriend +" AND accepted_user_id = " + foreverAlone +";");
+			if (rs.next()) { //someone has requested to be your friend, say no
+				stmt.executeUpdate("DELETE FROM pending_friends where pending_user_id = ("+lousyFriend+") AND accepted_user_id = " + foreverAlone +";");
+			} else { //burn bridge
+				stmt.executeUpdate("delete from friends_mapping where first_user_id = "+lousyFriend+" AND second_user_id = " + foreverAlone +";");
+				stmt.executeUpdate("delete from friends_mapping where second_user_id = "+lousyFriend+" AND first_user_id = " + foreverAlone +";");
 			}
 		} catch (SQLException e) {
 		}
 	}
 	
-	public ArrayList<Account> getFriendRequests(String recipient) {
-		//table (sender|recipient)
-		//return list of sender accounts for parameter recipient
-		return null;
+	public ArrayList<Account> getFriendRequests(int id) {
+		ResultSet rs;
+		Statement stmt;
+		ArrayList<Account> friendsList = null;
+		try {
+			friendsList = new ArrayList<Account>();
+			stmt = (Statement) con.createStatement();
+			rs = stmt.executeQuery("select * from pending_friends where pending_user_id = "+id+";");
+			while (rs.next()) {
+				Account acct = new Account(rs);
+				friendsList.add(acct);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return friendsList;
 	}
 	
-	public ArrayList<Account> getFriends(String name) {
-		return null;
+	public ArrayList<Account> getFriends(int id) {
+		ResultSet rs;
+		Statement stmt;
+		ArrayList<Account> friendsList = null;
+		try {
+			friendsList = new ArrayList<Account>();
+			stmt = (Statement) con.createStatement();
+			rs = stmt.executeQuery("select * from friends_mapping where first_user_id = "+id+";");
+			while (rs.next()) {
+				Account acct = new Account(rs);
+				friendsList.add(acct);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return friendsList;
 	}
 	
 	public void addQuizResult(int userID, int quizID, int score, java.sql.Date date, int time) {

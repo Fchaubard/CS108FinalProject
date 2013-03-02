@@ -35,6 +35,9 @@ public class AccountManagerTest {
 		assertFalse(am.accountExists("Don"));
 		am.makeFriend(2, 1);
 		am.makeFriend(1, 2);
+		am.makeFriend(3, 1);
+		am.makeFriend(1, 3);
+		am.deleteFriend(1, 2);
 	}
 	
 	@Test

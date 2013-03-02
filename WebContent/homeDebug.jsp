@@ -10,7 +10,7 @@
 <body>
 <div style= "font-size: large"><b>Account System Test</b></div>
 
-<% Account acct = (Account) request.getSession().getAttribute("account"); %>
+<% Accounts.Account acct = (Account) request.getSession().getAttribute("account"); %>
 
 Logged in as <% if (acct != null) out.println(acct.getName()); else out.println("guest"); %>
 

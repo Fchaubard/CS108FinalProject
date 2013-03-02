@@ -18,7 +18,7 @@ public class MailManager {
 	private static Connection con;
 	
 	public MailManager() {
-		con = MyDB.getConnection();
+		con = Servlets.MyDB.getConnection();
 	}
 	
 	public void sendMessage(Message mail) {
