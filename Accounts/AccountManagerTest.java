@@ -17,7 +17,7 @@ public class AccountManagerTest {
 		am.createAccount("Menin", "Pinguin");
 		acct1 = am.loginAccount("Menin", "Pinguin");
 		am.addQuizResult(21,1,100,new java.sql.Date(System.currentTimeMillis()), 243);
-		ArrayList<model.QuizAttempts> his = am.getHistory(21);
+		ArrayList<model.QuizAttempts> his = am.getHistory(21, 42);
 		for (model.QuizAttempts qa : his) {
 			System.out.println(qa.quizID + " " + qa.score);
 		}

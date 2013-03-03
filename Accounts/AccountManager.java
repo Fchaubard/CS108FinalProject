@@ -207,7 +207,7 @@ public class AccountManager {
 			StringBuilder sb = new StringBuilder();
 			sb.append("select * from history where ");
 			if (userid > 0)  sb.append("user_id = "+userid);
-			if (userid > 0 && quizid > 0) sb.append(", ");
+			if (userid > 0 && quizid > 0) sb.append(" AND ");
 			if (quizid > 0) sb.append("quiz_id = "+quizid);
 			sb.append(";");
 					
