@@ -56,11 +56,11 @@ public class AcctManagementServlet extends HttpServlet {
     		}
     	} else if (action.equals("Delete")) {
     		am.deleteAccount(name);
-    		request.getRequestDispatcher("/homeDebug.jsp").forward(request, response);
+    		request.getRequestDispatcher("/HomePage").forward(request, response);
     	}  else if (action.equals("Logout")) {
     		am.logoutAccount((Account) request.getSession().getAttribute("account"));
     		request.getSession().setAttribute("account", null);
-    		request.getRequestDispatcher("/homeDebug.jsp").forward(request, response);
+    		request.getRequestDispatcher("/HomePage").forward(request, response);
     	}
     }
 }

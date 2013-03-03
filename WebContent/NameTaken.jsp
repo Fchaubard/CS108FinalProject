@@ -11,9 +11,10 @@
 <div style= "font-size: large"><b><%out.println(name + " in use.");%></b></div>
 <% out.println(name + " is taken; please enter a different name."); %> 
 
-<form action="CreationServlet" method="post">
-Username: <input type="text" name="NewUser"><br>
-Password: <input type="text" name="NewPass">
+<form action="AcctManagerServlet" method="post">
+<input type="hidden" name="Action" value ="Create">
+Username: <input type="text" name="User"><br>
+Password: <input type="text" name="Pass">
 <input type="submit" value="Create Account">
 </form>
 </body>
