@@ -5,6 +5,8 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
+import com.mysql.jdbc.Connection;
+
 import Accounts.AccountManager;
 import Accounts.MailManager;
 
@@ -28,10 +30,13 @@ public class serverListener implements ServletContextListener {
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent arg0) {
+    	
     	ServletContext sc = arg0.getServletContext();
-    	AccountManager am = new AccountManager();
+    	Connection con = (Connection) MyDB.getConnection();
+    	sc.setAttribute("connect", con);
+    	AccountManager am = new AccountManager(con);
     	sc.setAttribute("accounts", am);
-    	MailManager mm = new MailManager();
+    	MailManager mm = new MailManager(con);
     	sc.setAttribute("mail", mm);
         // TODO Auto-generated method stub
     }

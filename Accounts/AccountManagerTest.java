@@ -13,7 +13,7 @@ public class AccountManagerTest {
 	
 	@Before
 	public void setUp(){
-		am = new AccountManager();
+		am = new AccountManager(Servlets.MyDB.getConnection());
 		am.createAccount("Menin", "Pinguin");
 		acct1 = am.loginAccount("Menin", "Pinguin");
 		am.addQuizResult(21,1,100,new java.sql.Date(System.currentTimeMillis()), 243);

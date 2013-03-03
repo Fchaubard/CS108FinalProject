@@ -19,7 +19,7 @@ public class MailManagerTest {
 	
 	@Before
 	public void setUp(){
-		mm = new MailManager();	
+		mm = new MailManager(Servlets.MyDB.getConnection());	
 		HashMap<Integer, Message> ib = mm.listInbox("Sally");
 		for (Integer i : ib.keySet()) {
 			System.out.println(i + " " + ib.get(i).toString());
