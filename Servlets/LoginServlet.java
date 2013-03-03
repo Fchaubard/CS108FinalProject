@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Accounts.Account;
-import Accounts.AccountManager;
+import Accounts.*;
 
 
 /**
@@ -43,11 +42,13 @@ public class LoginServlet extends HttpServlet {
 
 		ServletContext sc = request.getServletContext();
 		AccountManager am = (AccountManager) sc.getAttribute("accounts");
+		if (am == null) System.out.println("Huh?");
 		Account acct = am.loginAccount(name, pass);
 		if (acct != null) {
 			sc.setAttribute("user", name);
 			request.getSession().setAttribute("account", acct);
-			request.getRequestDispatcher("/accountDebug.jsp" ).forward( request, response );
+			System.out.println("This assignment is unpleasant.");
+			request.getRequestDispatcher("/UserHome.jsp").forward( request, response );
 		} else {
 			request.getRequestDispatcher("/badPass.html" ).forward( request, response );
 		}

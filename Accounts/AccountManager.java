@@ -8,11 +8,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import Servlets.MyDB;
 
 public class AccountManager {
 	
-	private static Connection con;
+	private Connection con;
 	
 	public AccountManager(Connection con) {
 		this.con = con;//Servlets.MyDB.getConnection();
