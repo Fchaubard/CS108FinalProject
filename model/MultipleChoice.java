@@ -26,16 +26,19 @@ public class MultipleChoice implements Question {
 		this.qID = qID;
 	}
 
-	public MultipleChoice(String question, HashSet<String> wrongAns, Connection con) { // pushes to database
+	public MultipleChoice(String question, HashSet<String> wrongAns, String ans, Connection con) { // pushes to database
 		Statement stmt;
 		this.statement = question;
 		this.wrongAnswers = wrongAns;
+		this.answer = ans;
 		
 		try {
 			stmt = con.createStatement();
 			StringBuilder sqlString = new StringBuilder("INSERT INTO multiple_choice_question VALUES(null,");
 			sqlString.append(question);
-			sqlString.append("\",\" ");
+			sqlString.append("\",\"");
+			sqlString.append(ans);
+			sqlString.append("\",\"");
 			for (String string : wrongAnswers) {
 				sqlString.append(string);
 				sqlString.append(" &&& ");
