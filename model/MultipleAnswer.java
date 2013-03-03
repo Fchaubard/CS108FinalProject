@@ -120,9 +120,7 @@ public class MultipleAnswer implements Question {
 		int score =0;
 		for (String string : answer) {
 			if (this.answers.contains(string)) { //TODO this might not be good
-				return 1;
-			}else{
-				return 0;
+				score++;
 			}
 		}
 		return score;
@@ -137,7 +135,7 @@ public class MultipleAnswer implements Question {
 		html.append("<br />");
 		
 		for(int i = 0; i < numAnswers; i++) {
-			html.append("<input type = \"text\" name = \"");
+			html.append("<input type = \"text\" name = \""+qID +"_");
 			html.append(i);
 			html.append("\" /><br />");
 		}

@@ -5,7 +5,12 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="C:/Users/Sean/Desktop/CS108/Eclipse EE/apache-tomcat-7.0.35/lib/mysql-connector-java-5.1.22-bin.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Sean/Desktop/CS108/Eclipse EE/apache-tomcat-7.0.35/lib/servlet-api.jar"/>
+=======
+	<classpathentry kind="lib" path="/Users/francoischaubard/Downloads/apache-tomcat-7.0.35/lib/mysql-connector-java-5.1.23-bin.jar"/>
+	<classpathentry kind="lib" path="/Users/francoischaubard/Downloads/apache-tomcat-7.0.35/lib/servlet-api.jar"/>
+>>>>>>> Added SinglePage Quiz.. and it works.. just not for multi browser because of mysql connection pulling.
 	<classpathentry kind="output" path="bin"/>
 </classpath>

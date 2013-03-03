@@ -18,6 +18,8 @@ public class Quiz {
 	
 	private String quizName;
 	private ArrayList<Question> questions;
+
+
 	private boolean random;
 	private boolean onePageMultiPage; //is this true for one page and false for multi-page?
 	private boolean immediateCorrection;
@@ -159,11 +161,10 @@ public class Quiz {
 	public Account getCreatorFromID(int id){
 		PreparedStatement ps;
 		try {
-			ps = con.prepareStatement("select * from users where user_id = ?");
-		
-		ps.setInt(1, id);
-		ResultSet rs = ps.executeQuery();
-		
+			ps = con.prepareStatement("select * from user where user_id = ?");
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			
 		return new Account(rs);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -174,7 +175,7 @@ public class Quiz {
 	
 	public Quiz(int id) throws SQLException {
 		this.quiz_id = id;
-		Connection con = MyDB.getConnection();
+		con = MyDB.getConnection();
 		
 		PreparedStatement quizQuery = con.prepareStatement("select * from quiz where quiz_id = ?");
 		
@@ -195,13 +196,13 @@ public class Quiz {
 		}
 		
 		
-		this.creator =getCreatorFromID(creatorID);
+		this.creator = null;//getCreatorFromID(creatorID);
 		
 		// get history of quiz
 		PreparedStatement historyQuery = con.prepareStatement("select * from history where quiz_id = ?");
 		historyQuery.setInt(1, id);
 		ResultSet set = historyQuery.executeQuery();
-		
+		history = new ArrayList<QuizAttempts>();
 		while(set.next()) {
 			QuizAttempts qa = new QuizAttempts(set.getInt("user_id"), id, set.getInt("score"), set.getDate("date"), set.getInt("time_took"));
 			history.add(qa);
@@ -377,5 +378,12 @@ public class Quiz {
 
 	public void setQuiz_id(int quiz_id) {
 		this.quiz_id = quiz_id;
+	}
+
+	public ArrayList<Question> getQuestions() {
+		return questions;
+	}
+	public void setQuestions(ArrayList<Question> questions) {
+		this.questions = questions;
 	}
 }

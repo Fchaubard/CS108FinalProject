@@ -136,7 +136,7 @@ public class PictureResponse implements Question {
 	public String toHTMLString() {
 		StringBuilder html = new StringBuilder();
 		
-		html.append("<img src=\"" + url + "\" width=\"304\" height=\"228\" />" );
+		html.append("<img src=\"" + url + "\" width=\"200\" height=\"200\" />" );
         html.append("<br /><input type=\"text\" name=\"");
         html.append(qID);
         html.append("\" />");
