@@ -95,7 +95,6 @@ public class Quiz {
 		}
 	}
 	
-	
 	public Account getCreatorFromID(int id){
 		PreparedStatement ps;
 		try {
