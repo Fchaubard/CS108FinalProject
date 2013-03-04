@@ -14,7 +14,7 @@ public class AccountManager {
 	private Connection con;
 	
 	public AccountManager(Connection con) {
-		this.con = con;//Servlets.MyDB.getConnection();
+		this.con = con;
 	}
 	
 	public boolean accountExists(String name) {

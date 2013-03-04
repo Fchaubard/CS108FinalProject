@@ -5,6 +5,8 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
+import model.QuizManager;
+
 import com.mysql.jdbc.Connection;
 
 import Accounts.AccountManager;
@@ -38,6 +40,8 @@ public class serverListener implements ServletContextListener {
     	sc.setAttribute("accounts", am);
     	MailManager mm = new MailManager(con);
     	sc.setAttribute("mail", mm);
+    	QuizManager qm = new QuizManager(con);
+    	sc.setAttribute("quizes", qm);
         // TODO Auto-generated method stub
     }
 
