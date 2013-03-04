@@ -72,7 +72,6 @@ public class SolveServlet extends HttpServlet {
 					ArrayList<String> answersArrayList = new ArrayList<String>();
 					String paramterString = Integer.toString(q.getType())+"_"+Integer.toString(q.getqID());
 					String string = (String) request.getParameter(paramterString);
-					System.out.println(string);
 					answersArrayList.add(string);
 					score+=q.solve(answersArrayList);
 				}

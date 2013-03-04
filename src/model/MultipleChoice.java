@@ -26,45 +26,10 @@ public class MultipleChoice implements Question {
 		this.qID = qID;
 	}
 
-	public MultipleChoice(String question, HashSet<String> wrongAns, String ans, Connection con) { // pushes to database
-		Statement stmt;
+	public MultipleChoice(String question, HashSet<String> wrongAns, String ans) { // pushes to database
 		this.statement = question;
 		this.wrongAnswers = wrongAns;
 		this.answer = ans;
-		
-		try {
-			stmt = con.createStatement();
-			StringBuilder sqlString = new StringBuilder("INSERT INTO multiple_choice_question VALUES(null,");
-			sqlString.append(question);
-			sqlString.append("\",\"");
-			sqlString.append(ans);
-			sqlString.append("\",\"");
-			for (String string : wrongAnswers) {
-				sqlString.append(string);
-				sqlString.append(" &&& ");
-			}
-			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
-			sqlString.append("\" ");
-			
-			System.out.print(sqlString.toString());
-			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
-			
-			stmt = con.createStatement();
-			sqlString = new StringBuilder("SELECT * FROM multiple_choice_question WHERE statement=\"");
-			sqlString.append(statement);
-			sqlString.append("\" ");
-			
-			System.out.print(sqlString.toString());
-			resultSet = stmt.executeQuery(sqlString.toString());
-			
-			
-			while (resultSet.next()) {
-				this.setqID(resultSet.getInt("question_id")); // will always be the last one
-			}
-		}catch(Exception e){
-			
-		}
-		
 	}
 	
 	public MultipleChoice(Integer id, Connection con) throws SQLException {
@@ -173,6 +138,44 @@ public class MultipleChoice implements Question {
 	}
 	public int getType(){
 		return type;
+	}
+
+	@Override
+	public void pushToDB(Connection con) {
+		Statement stmt;
+		
+		try {
+			stmt = con.createStatement();
+			StringBuilder sqlString = new StringBuilder("INSERT INTO multiple_choice_question VALUES(null,");
+			sqlString.append(statement);
+			sqlString.append("\",\"");
+			sqlString.append(answer);
+			sqlString.append("\",\"");
+			for (String string : wrongAnswers) {
+				sqlString.append(string);
+				sqlString.append(" &&& ");
+			}
+			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
+			sqlString.append("\" ");
+			
+			System.out.print(sqlString.toString());
+			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
+			
+			stmt = con.createStatement();
+			sqlString = new StringBuilder("SELECT * FROM multiple_choice_question WHERE statement=\"");
+			sqlString.append(statement);
+			sqlString.append("\" ");
+			
+			System.out.print(sqlString.toString());
+			resultSet = stmt.executeQuery(sqlString.toString());
+			
+			
+			while (resultSet.next()) {
+				this.setqID(resultSet.getInt("question_id")); // will always be the last one
+			}
+		}catch(Exception e){
+			
+		}		
 	}
 
 }

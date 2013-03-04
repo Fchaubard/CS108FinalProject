@@ -25,49 +25,9 @@ public class PictureResponse implements Question {
 		this.qID = qID;
 	}
 
-	public PictureResponse(String url, Set<String> ans, int numAnswers, Connection con) { // pushes to database
-		Statement stmt;
-		
+	public PictureResponse(String url, Set<String> ans, int numAnswers) { // pushes to database
 		this.url = url;
 		this.answers = ans;
-		
-		try {
-			stmt = con.createStatement();
-			StringBuilder sqlString = new StringBuilder("INSERT INTO picture_response_question VALUES(null,\"");
-			sqlString.append(url);
-			sqlString.append("\",\" ");
-			for (String string : ans) {
-				sqlString.append(string);
-				sqlString.append(" &&& ");
-			}
-			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
-			sqlString.append("\" ");
-			
-			System.out.print(sqlString.toString());
-			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
-			
-			stmt = con.createStatement();
-			sqlString = new StringBuilder("SELECT * FROM picture_response_question WHERE statement=\"");
-			sqlString.append(url);
-			sqlString.append("\" ");
-			
-			System.out.print(sqlString.toString());
-			resultSet = stmt.executeQuery(sqlString.toString());
-			
-			
-			while (resultSet.next()) {
-				this.setqID(resultSet.getInt(0)); // will always be the last one
-			}
-			
-			
-			
-			
-		}catch(Exception e){
-			
-		}
-		
-		
-		
 	}
 
 	public PictureResponse(int id, Connection con) { // pulls from database
@@ -162,5 +122,41 @@ public class PictureResponse implements Question {
 	}
 	public int getType(){
 		return type;
+	}
+
+	@Override
+	public void pushToDB(Connection con) {
+		Statement stmt;
+		
+		try {
+			stmt = con.createStatement();
+			StringBuilder sqlString = new StringBuilder("INSERT INTO picture_response_question VALUES(null,\"");
+			sqlString.append(url);
+			sqlString.append("\",\" ");
+			for (String string : answers) {
+				sqlString.append(string);
+				sqlString.append(" &&& ");
+			}
+			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
+			sqlString.append("\" ");
+			
+			System.out.print(sqlString.toString());
+			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
+			
+			stmt = con.createStatement();
+			sqlString = new StringBuilder("SELECT * FROM picture_response_question WHERE statement=\"");
+			sqlString.append(url);
+			sqlString.append("\" ");
+			
+			System.out.print(sqlString.toString());
+			resultSet = stmt.executeQuery(sqlString.toString());
+			
+			
+			while (resultSet.next()) {
+				this.setqID(resultSet.getInt(0)); // will always be the last one
+			}
+		}catch(Exception e){
+			
+		}		
 	}
 }

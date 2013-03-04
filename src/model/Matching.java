@@ -19,62 +19,11 @@ public class Matching implements Question {
 	private ArrayList<String> rowTwo;
 	private int qID;
 
-
-	public Matching(String statement, ArrayList<Integer> ans, ArrayList<String> rowOne,ArrayList<String> rowTwo, Connection con) { // pushes to database
+	public Matching(String statement, ArrayList<Integer> ans, ArrayList<String> rowOne,ArrayList<String> rowTwo) { // pushes to database
 		this.statement = statement;
 		this.correctIndexesOfRow1MappingtoRow2 = ans;
 		this.rowOne = rowOne;
 		this.rowTwo = rowTwo;
-		
-		// now create a row in the database
-		Statement stmt;
-		try {
-			stmt = con.createStatement();
-			StringBuilder sqlString = new StringBuilder("INSERT INTO matching_question VALUES(null,\"");
-			
-			sqlString.append(statement);
-			
-			sqlString.append("\",\" ");
-			for (String strings : rowOne) {
-				sqlString.append(strings);
-				sqlString.append(" &&& ");
-			}
-			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
-			sqlString.append("\",\" ");
-			for (String strings : rowTwo) {
-				sqlString.append(strings);
-				sqlString.append(" &&& ");
-			}
-			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
-			sqlString.append("\",\" ");
-			for (Integer ints : ans) {
-				sqlString.append(ints);
-				sqlString.append(" &&& ");
-			}
-			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
-			sqlString.append("\" ");
-			
-			System.out.print(sqlString.toString());
-			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
-			
-			stmt = con.createStatement();
-			sqlString = new StringBuilder("SELECT * FROM matching_question WHERE statement=\"");
-			sqlString.append(statement);
-			sqlString.append("\" ");
-			
-			System.out.print(sqlString.toString());
-			resultSet = stmt.executeQuery(sqlString.toString());
-			
-			
-			while (resultSet.next()) {
-				this.qID = resultSet.getInt("question_id"); // will always be the last one
-			}
-		}catch(Exception e){
-			
-		}
-		
-		
-		
 	}
 
 	public Matching(int id, Connection con) { // pulls from database
@@ -124,12 +73,7 @@ public class Matching implements Question {
 		}
 		
 	}
-	
-	
-	
-	
-	
-	
+
 	public String getStatement() {
 		return statement;
 	}
@@ -206,5 +150,55 @@ public class Matching implements Question {
 	}
 	public int getType(){
 		return type;
+	}
+
+	@Override
+	public void pushToDB(Connection con) {
+		// now create a row in the database
+		Statement stmt;
+		try {
+			stmt = con.createStatement();
+			StringBuilder sqlString = new StringBuilder("INSERT INTO matching_question VALUES(null,\"");
+			
+			sqlString.append(statement);
+			
+			sqlString.append("\",\" ");
+			for (String strings : rowOne) {
+				sqlString.append(strings);
+				sqlString.append(" &&& ");
+			}
+			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
+			sqlString.append("\",\" ");
+			for (String strings : rowTwo) {
+				sqlString.append(strings);
+				sqlString.append(" &&& ");
+			}
+			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
+			sqlString.append("\",\" ");
+			for (Integer ints : correctIndexesOfRow1MappingtoRow2) {
+				sqlString.append(ints);
+				sqlString.append(" &&& ");
+			}
+			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
+			sqlString.append("\" ");
+			
+			System.out.print(sqlString.toString());
+			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
+			
+			stmt = con.createStatement();
+			sqlString = new StringBuilder("SELECT * FROM matching_question WHERE statement=\"");
+			sqlString.append(statement);
+			sqlString.append("\" ");
+			
+			System.out.print(sqlString.toString());
+			resultSet = stmt.executeQuery(sqlString.toString());
+			
+			
+			while (resultSet.next()) {
+				this.qID = resultSet.getInt("question_id"); // will always be the last one
+			}
+		}catch(Exception e){
+			
+		}
 	}
 }

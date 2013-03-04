@@ -37,124 +37,56 @@ public class Quiz {
 	public Quiz(ArrayList<Question> q, boolean random, boolean onePage, boolean immediateCorrect, boolean practice, int userID, String quizName, String description, String category){
 		con = MyDB.getConnection(); // should probably get passed in when the site is ready
 		
-		this.quizName=quizName;
-		this.questions=q;
-		this.random=random;
-		this.onePageMultiPage=onePage; //is this true for one page and false for multi-page?
-		this.immediateCorrection=immediateCorrect;
-		this.practiceMode=practice;
-		this.description=description;
-		this.category=category;
-		this.creator =getCreatorFromID(userID);
+		this.quizName = quizName;
+		this.questions = q;
+		this.random = random;
+		this.onePageMultiPage = onePage; //is this true for one page and false for multi-page?
+		this.immediateCorrection = immediateCorrect;
+		this.practiceMode = practice;
+		this.description = description;
+		this.category = category;
+		this.creator = getCreatorFromID(userID);
+		
+		
 	}
 	// inserting a quiz into the database
-	public void finishAndStoreQuizInDatabase(){
+	public void finishAndStoreQuizInDatabase() throws SQLException{
 		
-		StringBuilder sqlString = new StringBuilder("INSERT INTO quiz VALUES(null,\"");
+		PreparedStatement stat = con.prepareStatement("insert into quiz values(null, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		
-		//name
-		sqlString.append(quizName);
-		sqlString.append("\",\" ");
-		//random
-		sqlString.append(random);
-		sqlString.append("\",\" ");
-		//one_page
-		sqlString.append(onePageMultiPage);
-		sqlString.append("\",\" ");
-		//immediate_correction
-		sqlString.append(immediateCorrection);
-		sqlString.append("\",\" ");
-		//practice_mode	
-		sqlString.append(practiceMode);
-		sqlString.append("\",\" ");
-		//creator_id	
-		sqlString.append(creator.getId());
-		sqlString.append("\",\" ");
-		//create_date	
-		Calendar c = Calendar.getInstance();
-		c.setTime(new Date());
-		String d = c.get(Calendar.YEAR) + "-" + c.get(Calendar.MONTH) + "-" + c.get(Calendar.DATE);
-		sqlString.append(d);
-		sqlString.append("\",\" ");
-		//category	
-		sqlString.append(category);
-		sqlString.append("\",\" ");
-		//description
-		sqlString.append(description);
-		sqlString.append("\" ");
+		stat.setString(1, quizName);
+		stat.setBoolean(2, random);
+		stat.setBoolean(3, onePageMultiPage);
+		stat.setBoolean(4, immediateCorrection);
+		stat.setBoolean(5, practiceMode);
+		stat.setInt(6, creator.getId());
+		stat.setDate(7, (java.sql.Date) new Date());
+		stat.setString(8, category);
+		stat.setString(9, description);
 		
-		System.out.println(sqlString.toString());
+		System.out.println(stat.toString());
 		
-		try {
-			Statement stmt;
-			stmt = con.createStatement();
-			ResultSet resultSet;
-			resultSet = stmt.executeQuery(sqlString.toString());
-			stmt = con.createStatement();
-			sqlString = new StringBuilder("SELECT * FROM quiz WHERE name=\"");
-			sqlString.append(quizName);
-			sqlString.append("\" ");
-			System.out.println(sqlString.toString());
-			resultSet = stmt.executeQuery(sqlString.toString());
-			
-			while (resultSet.next()) {
-				this.setQuiz_id(resultSet.getInt("question_id")); // will always be the last one
-			}
-			
-			for (int j = 0; j < questions.size(); j++) {
-				String databaseName = new String();
-				switch(questions.get(j).getType()) {
-				case 1: 
-					databaseName = "question_response";
-					break;
-				
-				case 2:
-					databaseName = "fill_in_the_blank_question";
-					
-					break;
-					
-				case 3:
-					databaseName = "multiple_choice_question";
-					
-					break;
-					
-				case 4:
-					databaseName = "picture_response_question";
-					break;
-					
-				case 5:
-					databaseName= "multiple_answer_question";
-					break;
-					
-				case 6:
-					databaseName="multiple_choice_multiple_answer_question";
-					break;
-					
-				case 7:
-					databaseName="matching_question";
-					
-					break;
-			}
-				//input question quiz mappings
-				sqlString = new StringBuilder("INSERT INTO " + databaseName +
-												" VALUES(null,"+quiz_id+","
-												+questions.get(j).getqID()+","
-												+questions.get(j).getType()+""
-												);
-			}
-			
-			
-			System.out.println(sqlString.toString());
-			resultSet = stmt.executeQuery(sqlString.toString());
+		ResultSet r = stat.executeQuery();
 		
+		PreparedStatement prep = con.prepareStatement("select * from quiz where name = ?");
+		prep.setString(1, quizName);
 		
+		System.out.println(prep.toString());
+		ResultSet resultSet = prep.executeQuery();
 		
-		
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		while (resultSet.next()) {
+			this.setQuiz_id(resultSet.getInt("quiz_id")); // will always be the last one
 		}
-		//TODO
+		
+		for(Question q : questions) {
+			q.pushToDB(con);
+			
+			PreparedStatement ps = con.prepareStatement("insert into quiz_question_mapping values(?, ?, ?)");
+			ps.setInt(1, quiz_id);
+			ps.setInt(2, q.getqID());
+			ps.setInt(3, q.getType());
+			ResultSet rs = ps.executeQuery();
+		}
 	}
 	
 	

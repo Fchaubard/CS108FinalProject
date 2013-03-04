@@ -19,42 +19,9 @@ public class QuestionResponse implements Question {
 	private int qID;
 	
 	
-	public QuestionResponse(String question, HashSet<String> ans, Connection con) { // pushes to database
-		
+	public QuestionResponse(String question, HashSet<String> ans) { // pushes to database
 		this.statement = question;
 		this.answers = ans;
-		Statement stmt;
-		try {
-			stmt = con.createStatement();
-			StringBuilder sqlString = new StringBuilder("INSERT INTO question_response VALUES(null,");
-			sqlString.append(question);
-			sqlString.append("\",\" ");
-			for (String string : ans) {
-				sqlString.append(string);
-				sqlString.append(" &&& ");
-			}
-			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
-			sqlString.append("\" ");
-			
-			System.out.print(sqlString.toString());
-			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
-			
-			stmt = con.createStatement();
-			sqlString = new StringBuilder("SELECT * FROM question_response WHERE statement=\"");
-			sqlString.append(statement);
-			sqlString.append("\" ");
-			
-			System.out.print(sqlString.toString());
-			resultSet = stmt.executeQuery(sqlString.toString());
-			
-			
-			while (resultSet.next()) {
-				this.setqID(resultSet.getInt("question_id")); // will always be the last one
-			}
-		}catch(Exception e){
-			
-		}
-		
 	}
 	
 	public QuestionResponse(Integer id, Connection con) throws SQLException {
@@ -152,6 +119,42 @@ public class QuestionResponse implements Question {
 	}
 	public int getType(){
 		return type;
+	}
+
+	@Override
+	public void pushToDB(Connection con) {
+		Statement stmt;
+		
+		try {
+			stmt = con.createStatement();
+			StringBuilder sqlString = new StringBuilder("INSERT INTO question_response VALUES(null,");
+			sqlString.append(statement);
+			sqlString.append("\",\" ");
+			for (String string : answers) {
+				sqlString.append(string);
+				sqlString.append(" &&& ");
+			}
+			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
+			sqlString.append("\" ");
+			
+			System.out.print(sqlString.toString());
+			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
+			
+			stmt = con.createStatement();
+			sqlString = new StringBuilder("SELECT * FROM question_response WHERE statement=\"");
+			sqlString.append(statement);
+			sqlString.append("\" ");
+			
+			System.out.print(sqlString.toString());
+			resultSet = stmt.executeQuery(sqlString.toString());
+			
+			
+			while (resultSet.next()) {
+				this.setqID(resultSet.getInt("question_id")); // will always be the last one
+			}
+		}catch(Exception e){
+			
+		}		
 	}
 }
 

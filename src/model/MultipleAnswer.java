@@ -18,49 +18,10 @@ public class MultipleAnswer implements Question {
 	private int qID;
 	private int numAnswers;
 	
-	public MultipleAnswer(String question, Set<String> ans, int numAnswers, Connection con) { // pushes to database
-		Statement stmt;
+	public MultipleAnswer(String question, Set<String> ans, int numAnswers) { // pushes to database
 		this.numAnswers = numAnswers;
 		this.statement = question;
 		this.answers = ans;
-		
-		try {
-			stmt = con.createStatement();
-			StringBuilder sqlString = new StringBuilder("INSERT INTO multiple_answer_question VALUES(null,");
-			sqlString.append(question);
-			sqlString.append("\",\" ");
-			for (String string : ans) {
-				sqlString.append(string);
-				sqlString.append(" &&& ");
-			}
-			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
-			sqlString.append("\" ");
-			
-			System.out.print(sqlString.toString());
-			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
-			
-			stmt = con.createStatement();
-			sqlString = new StringBuilder("SELECT * FROM multiple_answer_question WHERE statement=\"");
-			sqlString.append(statement);
-			sqlString.append("\" ");
-			
-			System.out.print(sqlString.toString());
-			resultSet = stmt.executeQuery(sqlString.toString());
-			
-			
-			while (resultSet.next()) {
-				this.setqID(resultSet.getInt("question_id")); // will always be the last one
-			}
-			
-			
-			
-			
-		}catch(Exception e){
-			
-		}
-		
-		
-		
 	}
 
 	public MultipleAnswer(int id, Connection con) { // pulls from database
@@ -165,5 +126,42 @@ public class MultipleAnswer implements Question {
 
 	public int getType(){
 		return type;
+	}
+
+	@Override
+	public void pushToDB(Connection con) {
+		Statement stmt;
+		
+		try {
+			stmt = con.createStatement();
+			StringBuilder sqlString = new StringBuilder("INSERT INTO multiple_answer_question VALUES(null,");
+			sqlString.append(statement);
+			sqlString.append("\",\" ");
+			for (String string : answers) {
+				sqlString.append(string);
+				sqlString.append(" &&& ");
+			}
+			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
+			sqlString.append("\" ");
+			
+			System.out.print(sqlString.toString());
+			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
+			
+			stmt = con.createStatement();
+			sqlString = new StringBuilder("SELECT * FROM multiple_answer_question WHERE statement=\"");
+			sqlString.append(statement);
+			sqlString.append("\" ");
+			
+			System.out.print(sqlString.toString());
+			resultSet = stmt.executeQuery(sqlString.toString());
+			
+			
+			while (resultSet.next()) {
+				this.setqID(resultSet.getInt("question_id")); // will always be the last one
+			}
+			
+		}catch(Exception e){
+			
+		}		
 	}
 }

@@ -69,8 +69,8 @@ public class QuizResultsServlet extends HttpServlet {
 			out.println("</head>");
 			out.println("<body>");
 			out.println("<h1>"+quiz.getQuizName()+"</h1><br />");
-			out.println("<h3>Score:"+qa.score+"</h3><br />");
-			out.println("<h3>Time:"+qa.time+"</h3><br />");
+			out.println("<h3>Score: "+qa.score+"</h3><br />");
+			out.println("<h3>Time: "+qa.time+" ms" +"</h3><br />");
 			
 			/*for (int j = 0; j < quiz.getQuestions().size(); j++) {
 				// output the questions and the answers

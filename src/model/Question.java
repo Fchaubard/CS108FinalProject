@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -17,4 +18,6 @@ public interface Question {
 	public String toHTMLString();
 	
 	public String getCorrectAnswers();
+	
+	public void pushToDB(Connection con) throws SQLException;
 }

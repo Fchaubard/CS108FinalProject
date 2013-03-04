@@ -3,6 +3,7 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,47 +18,38 @@ public class FillInTheBlank implements Question {
 	private Set<String> answers;
 	private int qID;
 	
-	
-	
-	public FillInTheBlank(String question, Set<String> ans, Connection con) { // pushes to database
-		Statement stmt;
-		this.statement = question; // this should have the ________ in it already
-		this.answers = ans; // need to add the &&&
+	public void pushToDB(Connection con) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("insert into fill_in_the_blank_question values(null, ?, ?)");
 		
-		try {
-			stmt = con.createStatement();
-			StringBuilder sqlString = new StringBuilder("INSERT INTO fill_in_the_blank_question VALUES(null,\"");
-			sqlString.append(question);
-			sqlString.append("\",\" ");
-			for (String string : ans) {
-				sqlString.append(string);
-				sqlString.append(" &&& ");
-			}
-			
-			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
-			sqlString.append("\" ");
-			
-			System.out.print(sqlString.toString());
-			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
-			
-			stmt = con.createStatement();
-			sqlString = new StringBuilder("SELECT * FROM fill_in_the_blank_question WHERE statement=\"");
-			sqlString.append(statement);
-			sqlString.append("\" ");
-			
-			System.out.print(sqlString.toString());
-			resultSet = stmt.executeQuery(sqlString.toString());
-			
-			
-			while (resultSet.next()) {
-				this.qID = resultSet.getInt("question_id"); // will always be the last one
-			}
-		}catch(Exception e){
-			
+		ps.setString(1, statement);
+		
+		StringBuilder ans = new StringBuilder();
+		for (String string : answers) {
+			ans.append(string);
+			ans.append(" &&& ");
 		}
 		
+		ans.replace(ans.length()-5, ans.length(), "");
+		ps.setString(2, ans.toString());
+		
+		System.out.print(ans.toString());
+		ResultSet resultSet = ps.executeQuery();
+		
+		PreparedStatement getID = con.prepareStatement("select * from fill_in_the_blank_question where statement = ?");
+		getID.setString(1, statement);
+		
+		System.out.print(getID.toString());
+		resultSet = getID.executeQuery();
 		
 		
+		while (resultSet.next()) {
+			this.qID = resultSet.getInt("question_id"); // will always be the last one
+		}
+	}
+	
+	public FillInTheBlank(String question, Set<String> ans) { 
+		this.statement = question; // this should have the ________ in it already
+		this.answers = ans; // need to add the &&&
 	}
 
 	public FillInTheBlank(int id, Connection con) { // pulls from database
