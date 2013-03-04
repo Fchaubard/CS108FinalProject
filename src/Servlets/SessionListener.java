@@ -27,7 +27,7 @@ public class SessionListener implements HttpSessionListener {
      */
     public void sessionCreated(HttpSessionEvent arg0) {
         Account acct = null;
-        arg0.getSession().setMaxInactiveInterval(2*60);
+        arg0.getSession().setMaxInactiveInterval(5*60);
         arg0.getSession().setAttribute("account", acct);
     }
 

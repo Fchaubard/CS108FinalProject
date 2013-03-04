@@ -19,6 +19,7 @@ import Accounts.MailManager;
 @WebListener
 public class serverListener implements ServletContextListener {
 
+	private MyDB db;
     /**
      * Default constructor. 
      */
@@ -32,6 +33,7 @@ public class serverListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent arg0) {
     	
     	ServletContext sc = arg0.getServletContext();
+    	db = new MyDB();
     	Connection con = (Connection) MyDB.getConnection();
     	sc.setAttribute("connect", con);
     	AccountManager am = new AccountManager(con);
@@ -45,8 +47,7 @@ public class serverListener implements ServletContextListener {
      * @see ServletContextListener#contextDestroyed(ServletContextEvent)
      */
     public void contextDestroyed(ServletContextEvent arg0) {
-    	AccountManager am = (AccountManager) arg0.getServletContext().getAttribute("accounts");
-    	am.kill();
+    	db.close();
     }
 	
 }

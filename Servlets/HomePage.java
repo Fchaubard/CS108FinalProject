@@ -30,7 +30,6 @@ public class HomePage extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Account acct = (Account) request.getSession().getAttribute("account");
-		System.out.println("Home sweet home");
 		if (acct == null) {
 			request.getRequestDispatcher("/GuestHome.jsp").forward(request, response);
 		} else {
