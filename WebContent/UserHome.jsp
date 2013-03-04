@@ -12,7 +12,7 @@
 	<input type="hidden" name ="Action" value="Logout">
 	<input type="submit" value="Logout">
 	</form>
-	<a href = "accountDebug.jsp">Profile</a>
+	<a href = "ProfileServlet?user=<%out.println(((Accounts.Account)request.getSession().getAttribute("account")).getName());%>">Profile</a>
 	<a href = "QuizCatalogServlet">Take a Quiz!</a>
 </body>
 </html>
