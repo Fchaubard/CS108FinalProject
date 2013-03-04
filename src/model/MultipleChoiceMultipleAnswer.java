@@ -173,4 +173,7 @@ public class MultipleChoiceMultipleAnswer implements Question {
 		return correctAnswers.toString();
 	}
 
+	public int getType(){
+		return type;
+	}
 }

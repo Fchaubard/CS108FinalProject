@@ -3,11 +3,17 @@ package Servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
 
 import model.Quiz;
 
@@ -32,10 +38,21 @@ public class SinglePageQuizServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String quizID = "1";// request.getParameter("quizID");
-		
+		HttpSession session = request.getSession(true);
+		session.setAttribute("quizID", quizID);
 		try {
-			quiz = new Quiz(Integer.parseInt(quizID));
 			
+			
+			//means the cart hasnt been initialized
+			if(session.getAttribute("quiz_"+quizID) == null){
+				
+				quiz = new Quiz(Integer.parseInt(quizID));
+				session.setAttribute("quiz_"+quizID, quiz);
+				
+			}
+			else{
+				quiz = (Quiz) session.getAttribute("quiz_"+quizID);
+			}
 			response.setContentType("text/html");
 			PrintWriter out = response.getWriter();
 			out.println("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>");
@@ -49,7 +66,8 @@ public class SinglePageQuizServlet extends HttpServlet {
 			out.println("<body>");
 			out.println("<h1>"+quiz.getQuizName()+"</h1><br />");
 			out.println("<form action=\"SolveServlet\" method=\"post\">");
-			out.println("<br /><input id=\"startTime\" type=\"hidden\" value=\"" + System.currentTimeMillis()+"\"/>");
+			out.println("<br /><input name=\"startTime\" type=\"hidden\" value=\"" + System.currentTimeMillis()+"\"/>");
+			out.println("<br /><input name=\"quizID\" type=\"hidden\" value=\"" +quizID+"\"/>");
 			for (int j = 0; j < quiz.getQuestions().size(); j++) {
 				out.println("<h3>Question "+ (j+1) +"</h3>");
 				out.println(quiz.getNextQuestion().toHTMLString()); // all the ids in the input fields must be unique

@@ -7,31 +7,32 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
-public class FillInTheBlank implements Question {
 
-	public static final int type=2;
+public class MultipleAnswer implements Question {
+	
+	public static final int type=5;
 	private String statement;
 	private Set<String> answers;
 	private int qID;
+	private int numAnswers;
 	
-	public FillInTheBlank(String question, Set<String> ans, Connection con) { // pushes to database
+	public MultipleAnswer(String question, Set<String> ans, int numAnswers, Connection con) { // pushes to database
 		Statement stmt;
-		this.statement = question; // this should have the ________ in it already
-		this.answers = ans; // need to add the &&&
+		this.numAnswers = numAnswers;
+		this.statement = question;
+		this.answers = ans;
 		
 		try {
 			stmt = con.createStatement();
-			StringBuilder sqlString = new StringBuilder("INSERT INTO fill_in_the_blank_question VALUES(null,\"");
+			StringBuilder sqlString = new StringBuilder("INSERT INTO multiple_answer_question VALUES(null,");
 			sqlString.append(question);
 			sqlString.append("\",\" ");
 			for (String string : ans) {
 				sqlString.append(string);
 				sqlString.append(" &&& ");
 			}
-			
 			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
 			sqlString.append("\" ");
 			
@@ -39,7 +40,7 @@ public class FillInTheBlank implements Question {
 			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
 			
 			stmt = con.createStatement();
-			sqlString = new StringBuilder("SELECT * FROM fill_in_the_blank_question WHERE statement=\"");
+			sqlString = new StringBuilder("SELECT * FROM multiple_answer_question WHERE statement=\"");
 			sqlString.append(statement);
 			sqlString.append("\" ");
 			
@@ -48,8 +49,12 @@ public class FillInTheBlank implements Question {
 			
 			
 			while (resultSet.next()) {
-				this.qID = resultSet.getInt("question_id"); // will always be the last one
+				this.setqID(resultSet.getInt("question_id")); // will always be the last one
 			}
+			
+			
+			
+			
 		}catch(Exception e){
 			
 		}
@@ -58,33 +63,32 @@ public class FillInTheBlank implements Question {
 		
 	}
 
-	public FillInTheBlank(int id, Connection con) { // pulls from database
+	public MultipleAnswer(int id, Connection con) { // pulls from database
 		generate(id, con);
 	}
 	
-	@Override
 	public void generate(int id, Connection con) {
-		this.qID = id;
+		setqID(id);
 		try {
 			
-			PreparedStatement ps = con.prepareStatement("select * from fill_in_the_blank_question where question_id = ?");
+			PreparedStatement ps = con.prepareStatement("select * from multiple_answer_question where question_id = ?");
 			ps.setInt(1, id);
 			ResultSet resultSet = ps.executeQuery();
-			
-			
+		
 			String ans = new String();
 			while (resultSet.next()) {
 				statement = resultSet.getString("statement");
-				ans = resultSet.getString("answer");
+				ans = resultSet.getString(2);
 				
 			}
-
+			
 			String[] strings = ans.split(Pattern.quote(" &&& "));
 			answers = new HashSet<String>();
 			for (String string : strings) {
 				answers.add(string);
 			}
-				
+			this.numAnswers = answers.size();
+			
 			
 		}catch(Exception e){
 			
@@ -108,36 +112,43 @@ public class FillInTheBlank implements Question {
 		this.answers = answers;
 	}
 	
-	public int solve(ArrayList<String> ans) {
-
-		if (ans.size()!=1) {
+	@Override
+	public int solve(ArrayList<String> answer) {
+		if (answer.size()!=numAnswers) {
 			return 0; // input cleansing
 		}
-		
-		if (answers.contains(ans)) {
-			return 1;
-		}else{
-			return 0;
-		}		
+		int score =0;
+		for (String string : answer) {
+			if (this.answers.contains(string)) { //TODO this might not be good
+				score++;
+			}
+		}
+		return score;
+	
 	}
 
-	
 	@Override
 	public String toHTMLString() {
-		int index = this.statement.indexOf("__________");
 		StringBuilder html = new StringBuilder();
-		html.append(this.statement.substring(0, index));
-		html.append("<input type=\"text\" name=\"");
-		html.append(qID);
-		html.append("\" />");
-		html.append(this.statement.substring(index + 10));
+		
+		html.append(statement);
+		html.append("<br />");
+		
+		for(int i = 0; i < numAnswers; i++) {
+			html.append("<input type = \"text\" name = \""+qID +"_");
+			html.append(i);
+			html.append("\" /><br />");
+		}
 		
 		return html.toString();
 	}
 
-	@Override
 	public int getqID() {
 		return qID;
+	}
+
+	public void setqID(int qID) {
+		this.qID = qID;
 	}
 
 	@Override
@@ -152,5 +163,7 @@ public class FillInTheBlank implements Question {
 		return correctAnswers.toString();
 	}
 
-	
+	public int getType(){
+		return type;
+	}
 }

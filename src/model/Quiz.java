@@ -103,7 +103,7 @@ public class Quiz {
 			
 			for (int j = 0; j < questions.size(); j++) {
 				String databaseName = new String();
-				switch(questions.get(j).type) {
+				switch(questions.get(j).getType()) {
 				case 1: 
 					databaseName = "question_response";
 					break;
@@ -139,7 +139,7 @@ public class Quiz {
 				sqlString = new StringBuilder("INSERT INTO " + databaseName +
 												" VALUES(null,"+quiz_id+","
 												+questions.get(j).getqID()+","
-												+questions.get(j).type+""
+												+questions.get(j).getType()+""
 												);
 			}
 			

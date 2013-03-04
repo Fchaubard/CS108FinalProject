@@ -204,5 +204,7 @@ public class Matching implements Question {
 		
 		return correctAnswers.toString();
 	}
-
+	public int getType(){
+		return type;
+	}
 }

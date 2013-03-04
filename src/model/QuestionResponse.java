@@ -3,30 +3,30 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
+public class QuestionResponse implements Question {
 
-public class MultipleAnswer implements Question {
-	
-	public static final int type=5;
+	public static final int type=1;
 	private String statement;
 	private Set<String> answers;
 	private int qID;
-	private int numAnswers;
 	
-	public MultipleAnswer(String question, Set<String> ans, int numAnswers, Connection con) { // pushes to database
-		Statement stmt;
-		this.numAnswers = numAnswers;
+	
+	public QuestionResponse(String question, HashSet<String> ans, Connection con) { // pushes to database
+		
 		this.statement = question;
 		this.answers = ans;
-		
+		Statement stmt;
 		try {
 			stmt = con.createStatement();
-			StringBuilder sqlString = new StringBuilder("INSERT INTO multiple_answer_question VALUES(null,");
+			StringBuilder sqlString = new StringBuilder("INSERT INTO question_response VALUES(null,");
 			sqlString.append(question);
 			sqlString.append("\",\" ");
 			for (String string : ans) {
@@ -40,7 +40,7 @@ public class MultipleAnswer implements Question {
 			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
 			
 			stmt = con.createStatement();
-			sqlString = new StringBuilder("SELECT * FROM multiple_answer_question WHERE statement=\"");
+			sqlString = new StringBuilder("SELECT * FROM question_response WHERE statement=\"");
 			sqlString.append(statement);
 			sqlString.append("\" ");
 			
@@ -51,51 +51,34 @@ public class MultipleAnswer implements Question {
 			while (resultSet.next()) {
 				this.setqID(resultSet.getInt("question_id")); // will always be the last one
 			}
-			
-			
-			
-			
 		}catch(Exception e){
 			
 		}
 		
+	}
+	
+	public QuestionResponse(Integer id, Connection con) throws SQLException {
+		this.qID = id;
 		
+		PreparedStatement ps = con.prepareStatement("select * from question_response where question_id = ?");
+		ps.setInt(1, id);
+		ResultSet rs = ps.executeQuery();
 		
+		String ans = new String();
+		while(rs.next()) {
+			statement = rs.getString("statement");
+			ans = rs.getString("answer");
+		}
+		
+
+		String[] strings = ans.split(Pattern.quote(" &&& "));
+		answers = new HashSet<String>();
+		for (String string : strings) {
+			answers.add(string);
+		}
+			
 	}
 
-	public MultipleAnswer(int id, Connection con) { // pulls from database
-		generate(id, con);
-	}
-	
-	public void generate(int id, Connection con) {
-		setqID(id);
-		try {
-			
-			PreparedStatement ps = con.prepareStatement("select * from multiple_answer_question where question_id = ?");
-			ps.setInt(1, id);
-			ResultSet resultSet = ps.executeQuery();
-		
-			String ans = new String();
-			while (resultSet.next()) {
-				statement = resultSet.getString("statement");
-				ans = resultSet.getString(2);
-				
-			}
-			
-			String[] strings = ans.split(Pattern.quote(" &&& "));
-			answers = new HashSet<String>();
-			for (String string : strings) {
-				answers.add(string);
-			}
-			this.numAnswers = answers.size();
-			
-			
-		}catch(Exception e){
-			
-		}
-		
-	}
-	
 	public String getStatement() {
 		return statement;
 	}
@@ -111,20 +94,21 @@ public class MultipleAnswer implements Question {
 	public void setAnswers(Set<String> answers) {
 		this.answers = answers;
 	}
-	
+
 	@Override
-	public int solve(ArrayList<String> answer) {
-		if (answer.size()!=numAnswers) {
+	public int solve(ArrayList<String> ans) {
+		if (ans.size()!=1) {
 			return 0; // input cleansing
 		}
-		int score =0;
-		for (String string : answer) {
-			if (this.answers.contains(string)) { //TODO this might not be good
-				score++;
+		for (String a : ans) {
+		
+			if (answers.contains(a)) {
+				return 1;
 			}
+		
 		}
-		return score;
-	
+		return 0;
+		
 	}
 
 	@Override
@@ -132,17 +116,21 @@ public class MultipleAnswer implements Question {
 		StringBuilder html = new StringBuilder();
 		
 		html.append(statement);
-		html.append("<br />");
-		
-		for(int i = 0; i < numAnswers; i++) {
-			html.append("<input type = \"text\" name = \""+qID +"_");
-			html.append(i);
-			html.append("\" /><br />");
-		}
+		html.append("<br><input type = \"text\" name = \"");
+
+		html.append(type);
+		html.append("_");
+		html.append(qID);
+		html.append("\" />");
 		
 		return html.toString();
 	}
 
+	@Override
+	public void generate(int id, Connection con) {
+		// TODO Auto-generated method stub
+		
+	}
 	public int getqID() {
 		return qID;
 	}
@@ -162,6 +150,9 @@ public class MultipleAnswer implements Question {
 		
 		return correctAnswers.toString();
 	}
-
-
+	public int getType(){
+		return type;
+	}
 }
+
+

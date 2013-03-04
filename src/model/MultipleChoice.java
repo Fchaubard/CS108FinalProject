@@ -113,11 +113,14 @@ public class MultipleChoice implements Question {
 		if (ans.size()!=1) {
 			return 0; // input cleansing
 		}
-		if (this.answer.equals(ans)) {
-			return 1;
-		}else{
-			return 0;
+		for (String a : ans) {
+			
+			if (answer.equals(a)) {
+				return 1;
+			}
+		
 		}
+		return 0;
 	}
 
 	public String getAnswer() {
@@ -136,12 +139,22 @@ public class MultipleChoice implements Question {
         html.append("<br />");
         
         for(String s : wrongAnswers) {
-                html.append("<input type=\"radio\" name=\""+ qID + "\" value=\"");
+                html.append("<input type=\"radio\" name=\"");
+        		html.append(type);
+        		html.append("_");
+                html.append(qID);
+                html.append("\" value=\"");
                 html.append(s + "\"> " + s);
                 html.append("<br />");       
         }
         
-        html.append("<input type=\"radio\" name=\""+ qID + "\" value=\"");
+        html.append("<input type=\"radio\" name=\"");
+
+		html.append(type);
+		html.append("_");
+
+		html.append(qID);
+		html.append("\" value=\"");
         html.append(answer + "\"> " + answer);
         html.append("<br />");
         
@@ -157,6 +170,9 @@ public class MultipleChoice implements Question {
 	public void generate(int id, Connection con) {
 		// TODO Auto-generated method stub
 		
+	}
+	public int getType(){
+		return type;
 	}
 
 }

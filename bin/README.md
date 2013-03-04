@@ -1,4 +1,0 @@
-CS108FinalProject
-=================
-
-MOFOPRO!

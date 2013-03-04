@@ -125,11 +125,14 @@ public class PictureResponse implements Question {
 			return 0; // input cleansing
 		}
 		
-		if (answers.contains(ans)) {
-			return 1;
-		}else{
-			return 0;
-		}	
+		for (String a : ans) {
+			
+			if (answers.contains(a)) {
+				return 1;
+			}
+		
+		}
+		return 0;
 	}
 
 	@Override
@@ -138,6 +141,8 @@ public class PictureResponse implements Question {
 		
 		html.append("<img src=\"" + url + "\" width=\"200\" height=\"200\" />" );
         html.append("<br /><input type=\"text\" name=\"");
+		html.append(type);
+		html.append("_");
         html.append(qID);
         html.append("\" />");
 		
@@ -154,5 +159,8 @@ public class PictureResponse implements Question {
 		}
 		
 		return correctAnswers.toString();
+	}
+	public int getType(){
+		return type;
 	}
 }
