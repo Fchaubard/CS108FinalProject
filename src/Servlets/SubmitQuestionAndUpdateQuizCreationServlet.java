@@ -198,7 +198,7 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 			out.println("<br /><input type=\"submit\" value=\"Add another question\"/>");
 			out.println("</form>");
 			
-			out.println("<form action=\"DoneCreatingQuizServlet\" method=\"post\">");
+			out.println("<form action=\"FinishQuizServlet\" method=\"post\">");
 			out.println("<br /><br />Done Creating Quiz");
 			out.println("<br /><input type=\"submit\" value=\"Done Creating Quiz\"/>");
 			out.println("</form>");
