@@ -177,7 +177,10 @@ public class AccountManager {
 			stmt = (Statement) con.createStatement();
 			rs = stmt.executeQuery("select * from friends_mapping where first_user_id = "+id+";");
 			while (rs.next()) {
-				Account acct = new Account(rs);
+				Statement stmt2 = (Statement) con.createStatement();
+				ResultSet rs2 = stmt2.executeQuery("select * from user where user_id = "+rs.getInt("second_user_id")+";");
+				rs2.next();
+				Account acct = new Account(rs2);
 				friendsList.add(acct);
 			}
 		} catch (SQLException e) {
