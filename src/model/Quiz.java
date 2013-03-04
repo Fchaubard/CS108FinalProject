@@ -4,15 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-
+import Accounts.Account;
 import Servlets.MyDB;
-
-import Accounts.*;
-import model.*;
 
 public class Quiz {
 	
@@ -58,21 +53,22 @@ public class Quiz {
 	// inserting a quiz into the database
 	public void finishAndStoreQuizInDatabase() throws SQLException{
 		
-		PreparedStatement stat = con.prepareStatement("insert into quiz values(null, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		PreparedStatement stat = con.prepareStatement("insert into quiz values(null, ?, ?, ?, ?, ?, ?, CURDATE(), ?, ?)");
 		
 		stat.setString(1, quizName);
 		stat.setBoolean(2, random);
 		stat.setBoolean(3, onePageMultiPage);
 		stat.setBoolean(4, immediateCorrection);
 		stat.setBoolean(5, practiceMode);
-		stat.setInt(6, creator.getId());
-		stat.setDate(7, (java.sql.Date) new Date());
-		stat.setString(8, category);
-		stat.setString(9, description);
+		//stat.setInt(6, creator.getId());
+		stat.setInt(6, 1);
+		//stat.setString(7, "");
+		stat.setString(7, category);
+		stat.setString(8, description);
 		
 		System.out.println(stat.toString());
 		
-		ResultSet r = stat.executeQuery();
+		stat.executeUpdate();
 		
 		PreparedStatement prep = con.prepareStatement("select * from quiz where name = ?");
 		prep.setString(1, quizName);
@@ -91,7 +87,7 @@ public class Quiz {
 			ps.setInt(1, quiz_id);
 			ps.setInt(2, q.getqID());
 			ps.setInt(3, q.getType());
-			ResultSet rs = ps.executeQuery();
+			ps.executeUpdate();
 		}
 	}
 	
