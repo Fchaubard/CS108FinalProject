@@ -45,7 +45,7 @@ public class Quiz {
 		this.practiceMode = practice;
 		this.description = description;
 		this.category = category;
-		this.creator = getCreatorFromID(userID);
+		//this.creator = getCreatorFromID(userID);
 		
 	}
 	

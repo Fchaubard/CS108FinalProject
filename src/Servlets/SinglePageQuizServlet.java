@@ -76,8 +76,6 @@ public class SinglePageQuizServlet extends HttpServlet {
 			out.println("</form>");
 			out.println("</body>");
 			out.println("</html>");
-			
-			
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

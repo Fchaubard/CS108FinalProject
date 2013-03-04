@@ -169,10 +169,23 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 				//question = Matching.getHTMLInputString();
 				break;
 		}
-			
+			session.removeAttribute("Quiz");
 			session.setAttribute("Quiz", quiz);
-			out.println("<form action=\"AddQuestion\" method=\"post\">");
-			out.println("<br />Add another question?");
+			
+			out.println("<br />Quiz Name: "+quiz.getQuizName()+"");
+			out.println("<br />Quiz Description: " +quiz.getDescription()+"");
+			out.println("<br />Quiz Category: " +quiz.getCategory()+"<br />");
+			int counter =1;
+			for (Question q : quiz.getQuestions()) {
+				out.println("<br /><br />Question "+counter +": <br />");
+				out.println(q.toHTMLString());
+				out.println("<br />Answer "+counter +": <br />");
+				out.println(q.getCorrectAnswers());
+				counter++;
+			}
+			
+			out.println("<br /><form action=\"AddQuestion\" method=\"post\">");
+			out.println("<br /><h2>Add another question?</h2>");
 			out.println("<br />Question Type:<select name=\"questionType\">");
 			out.println("<option value=\"1\">Question Response</option>");
 			out.println("<option value=\"2\">Fill in the blank</option>");

@@ -119,21 +119,14 @@ public class AddQuestion extends HttpServlet {
 				break;
 		}
 			out.println("<form action=\"SubmitQuestionAndUpdateQuizCreationServlet\" method=\"post\">");
-			out.println("<br />Quiz Name: <input name=\"quizName\" type=\"text\" value=\"" +quiz.getQuizName()+"\"/>");
-			out.println("<br />Quiz Description: <input name=\"quizDescription\" type=\"text\" value=\"" +quiz.getDescription()+"\"/>");
+			out.println("<input name=\"questionType\" type=\"hidden\" value=\"" +request.getParameter("questionType")+"\"/>");
+			
+			out.println("<br />Quiz Name: "+quiz.getQuizName()+"");
+			out.println("<br />Quiz Description: " +quiz.getDescription()+"");
+			out.println("<br />Quiz Category: "  +quiz.getCategory()+"<br />");
 			out.println(question);
 			
-			out.println("<br />Add another question?");
-			out.println("<br />Question Type:<select name=\"questionType\">");
-			out.println("<option value=\"1\">Question Response</option>");
-			out.println("<option value=\"2\">Fill in the blank</option>");
-			out.println("<option value=\"3\">Multiple Choice</option>");
-			out.println("<option value=\"4\">Picture Response</option>");
-			out.println("<option value=\"5\">Multiple Answer</option>");
-			out.println("<option value=\"6\">Multiple Choice with Multiple Answer</option>");
-			out.println("<option value=\"7\">Matching</option>");
-			out.println("</select>");
-			out.println("<br /><input type=\"submit\" value=\"Add another question\"/>");
+			out.println("<br /><input type=\"submit\" value=\"Submit the question\"/>");
 			out.println("</form>");
 			
 			out.println("</body>");
