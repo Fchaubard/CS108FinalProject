@@ -61,5 +61,15 @@ import Accounts.AccountManager;
     	     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
     	     */
     	    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	    	String action = request.getParameter("action");
+    	    	int friendID = Integer.parseInt(request.getParameter("ID"));
+    	    	AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
+    	    	int myID = ((Account) request.getSession().getAttribute("account")).getId();
+    	    	if (action.equals("delete")) {
+    	    		am.deleteFriend(myID, friendID);
+    	    	} else if (action.equals("add")) {
+    	    		am.makeFriend(myID, friendID);
+    	    	}
+    	    	request.getRequestDispatcher("/UserHome.jsp").forward(request, response);
     	    }
 }

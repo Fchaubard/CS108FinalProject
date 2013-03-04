@@ -47,6 +47,8 @@ import Accounts.AccountManager;
     	    		out.println("<a href = \"newMessage.jsp?user="+profile.getName()+"\">Compose Mail</a>");
     	    		out.println("<a href = \"MailManagementServlet?&index=inbox&user="+profile.getName()+"\">inbox</a>");
     	    		out.println("<a href = \"MailManagementServlet?&index=outbox&user="+profile.getName()+"\">outbox</a>");
+    	    		out.println("<br>");
+    	    		out.println("<a href = \"FriendManagementServlet\">Friends</a>");
     	    	} else if (regViewer) {
     	    		out.println("<a href = \"newMessage.jsp?user="+viewer.getName()+"\">Send Mail</a>");
     	    	}
