@@ -3,6 +3,7 @@ package Accounts;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Set;
 
 public class Account {
 	private int id;
@@ -53,6 +54,12 @@ public class Account {
 		return acheivements.get(key);
 		
 	}
+	
+		public Set<String> getAcheivementKeySet() {
+				return acheivements.keySet();
+		 		
+		 	}
+
 	
 	public void giveAcheivement(String key) {
 		acheivements.put(key, true);
