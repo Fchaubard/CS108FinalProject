@@ -20,4 +20,5 @@ public interface Question {
 	public String getCorrectAnswers();
 	
 	public void pushToDB(Connection con) throws SQLException;
+	
 }

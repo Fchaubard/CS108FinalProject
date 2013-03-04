@@ -47,6 +47,12 @@ public class Quiz {
 		this.category = category;
 		this.creator = getCreatorFromID(userID);
 		
+	}
+	
+	public void addQuestion(Question q){
+		
+		
+		this.questions.add(q);
 		
 	}
 	// inserting a quiz into the database

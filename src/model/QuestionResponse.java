@@ -18,6 +18,16 @@ public class QuestionResponse implements Question {
 	private Set<String> answers;
 	private int qID;
 	
+	public static String getHTMLInputString(){
+		
+		StringBuilder html = new StringBuilder();
+		html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\"statement\" />");
+		html.append("<br />Insert Possible Answer 1:<br /> <input type=\"text\" name=\"answer1\" />");
+		html.append("<br />Insert Possible Answer 2 (optional):<br /> <input type=\"text\" name=\"answer2\" />");
+		html.append("<br />Insert Possible Answer 3 (optional):<br /> <input type=\"text\" name=\"answer3\" />");
+		
+		return html.toString();
+	}
 	
 	public QuestionResponse(String question, HashSet<String> ans) { // pushes to database
 		this.statement = question;

@@ -18,6 +18,18 @@ public class MultipleAnswer implements Question {
 	private int qID;
 	private int numAnswers;
 	
+	// TODO THIS IS NOT RIGHT!
+	public static String getHTMLInputString(){
+		
+		StringBuilder html = new StringBuilder();
+		html.append("<br />Insert picture url: <br /><input type=\"text\" name=\"url\" />");
+		html.append("<br />Insert Possible Answer 1:<br /> <input type=\"text\" name=\"answer1\" />");
+		html.append("<br />Insert Possible Answer 2 (optional):<br /> <input type=\"text\" name=\"answer2\" />");
+		html.append("<br />Insert Possible Answer 3 (optional):<br /> <input type=\"text\" name=\"answer3\" />");
+		
+		return html.toString();
+	}
+	
 	public MultipleAnswer(String question, Set<String> ans, int numAnswers) { // pushes to database
 		this.numAnswers = numAnswers;
 		this.statement = question;

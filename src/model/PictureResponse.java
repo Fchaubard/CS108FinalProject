@@ -16,6 +16,16 @@ public class PictureResponse implements Question {
 	private Set<String> answers;
 	private int qID;
 	
+	public static String getHTMLInputString(){
+		
+		StringBuilder html = new StringBuilder();
+		html.append("<br />Insert picture url: <br /><input type=\"text\" name=\"url\" />");
+		html.append("<br />Insert Possible Answer 1:<br /> <input type=\"text\" name=\"answer1\" />");
+		html.append("<br />Insert Possible Answer 2 (optional):<br /> <input type=\"text\" name=\"answer2\" />");
+		html.append("<br />Insert Possible Answer 3 (optional):<br /> <input type=\"text\" name=\"answer3\" />");
+		
+		return html.toString();
+	}
 
 	public int getqID() {
 		return qID;
@@ -25,7 +35,7 @@ public class PictureResponse implements Question {
 		this.qID = qID;
 	}
 
-	public PictureResponse(String url, Set<String> ans, int numAnswers) { // pushes to database
+	public PictureResponse(String url, Set<String> ans) { // pushes to database
 		this.url = url;
 		this.answers = ans;
 	}

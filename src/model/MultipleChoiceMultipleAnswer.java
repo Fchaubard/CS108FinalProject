@@ -17,6 +17,18 @@ public class MultipleChoiceMultipleAnswer implements Question {
 	private Set<String> wrongAnswers;
 	private int qID;
 	
+	// THIS IS NOT RIGHT TODO
+	public static String getHTMLInputString(){
+		
+		StringBuilder html = new StringBuilder();
+		html.append("<br />Insert picture url: <br /><input type=\"text\" name=\"url\" />");
+		html.append("<br />Insert Possible Answer 1:<br /> <input type=\"text\" name=\"answer1\" />");
+		html.append("<br />Insert Possible Answer 2 (optional):<br /> <input type=\"text\" name=\"answer2\" />");
+		html.append("<br />Insert Possible Answer 3 (optional):<br /> <input type=\"text\" name=\"answer3\" />");
+		
+		return html.toString();
+	}
+	
 	public MultipleChoiceMultipleAnswer(String question, Set<String> ans, Set<String> wrongAns) { // pushes to database
 		this.wrongAnswers = wrongAns;
 		this.statement = question;

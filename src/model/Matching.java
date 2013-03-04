@@ -19,6 +19,18 @@ public class Matching implements Question {
 	private ArrayList<String> rowTwo;
 	private int qID;
 
+	// TODO this is NOT RIGHT
+	public static String getHTMLInputString(){
+		// TODO
+		StringBuilder html = new StringBuilder();
+		html.append("<br />Insert picture url: <br /><input type=\"text\" name=\"url\" />");
+		html.append("<br />Insert Possible Answer 1:<br /> <input type=\"text\" name=\"answer1\" />");
+		html.append("<br />Insert Possible Answer 2 (optional):<br /> <input type=\"text\" name=\"answer2\" />");
+		html.append("<br />Insert Possible Answer 3 (optional):<br /> <input type=\"text\" name=\"answer3\" />");
+		
+		return html.toString();
+	}
+	
 	public Matching(String statement, ArrayList<Integer> ans, ArrayList<String> rowOne,ArrayList<String> rowTwo) { // pushes to database
 		this.statement = statement;
 		this.correctIndexesOfRow1MappingtoRow2 = ans;

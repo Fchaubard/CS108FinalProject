@@ -18,6 +18,18 @@ public class FillInTheBlank implements Question {
 	private Set<String> answers;
 	private int qID;
 	
+	public static String getHTMLInputString(){
+		
+		StringBuilder html = new StringBuilder();
+		html.append("<br />Insert statement before user input: <br /><input type=\"text\" name=\"statementBefore\" />");
+		html.append("<br />Insert statement after user input: <br /><input type=\"text\" name=\"statementAfter\" />");
+		html.append("<br />Insert Possible Answer 1:<br /> <input type=\"text\" name=\"answer1\" />");
+		html.append("<br />Insert Possible Answer 2 (optional):<br /> <input type=\"text\" name=\"answer2\" />");
+		html.append("<br />Insert Possible Answer 3 (optional):<br /> <input type=\"text\" name=\"answer3\" />");
+		
+		return html.toString();
+	}
+	
 	public void pushToDB(Connection con) throws SQLException {
 		PreparedStatement ps = con.prepareStatement("insert into fill_in_the_blank_question values(null, ?, ?)");
 		

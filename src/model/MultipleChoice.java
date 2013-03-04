@@ -18,6 +18,18 @@ public class MultipleChoice implements Question {
 	private String answer;
 	private int qID;
 	
+	public static String getHTMLInputString(){
+		
+		StringBuilder html = new StringBuilder();
+		html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\"statement\" />");
+		html.append("<br />Insert Answer:<br /> <input type=\"text\" name=\"answer1\" />");
+		html.append("<br />Insert Wrong Answer 1:<br /> <input type=\"text\" name=\"wrongAnswer1\" />");
+		html.append("<br />Insert Wrong Answer 2:<br /> <input type=\"text\" name=\"wrongAnswer2\" />");
+		html.append("<br />Insert Wrong Answer 3:<br /> <input type=\"text\" name=\"wrongAnswer3\" />");
+		
+		return html.toString();
+	}
+
 	public int getqID() {
 		return qID;
 	}
