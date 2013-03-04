@@ -2,10 +2,7 @@ package Accounts;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 public class Account {
 	private int id;
@@ -53,11 +50,7 @@ public class Account {
 	}
 	
 	public boolean getAcheivement(String key) {
-		return acheivements.get(key);	
-	}
-	
-	public Set<String> getAcheivementKeySet() {
-		return acheivements.keySet();
+		return acheivements.get(key);
 		
 	}
 	
