@@ -92,7 +92,7 @@ public class SolveServlet extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			
 			out.println("<form action=\"QuizResultsServlet\" method=\"post\">");
-			out.println("<br /><input type=\"submit\" value=\"Exam is Scores.. See results!\"/>");
+			out.println("<br /><input type=\"submit\" value=\"Exam is Scored...Click to see results!\"/>");
 			out.println("</form>");
 			
 			//RequestDispatcher rd = request.getRequestDispatcher("QuizResultsServlet");
