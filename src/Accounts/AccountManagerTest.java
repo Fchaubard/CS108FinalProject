@@ -33,8 +33,8 @@ public class AccountManagerTest {
 		acct2 = null;
 		am.deleteAccount("Don");
 		assertFalse(am.accountExists("Don"));
-		am.makeFriend(11, 9);
-		am.makeFriend(11, 9);
+		am.makeFriend(12, 9);
+		//am.makeFriend(11, 9);
 		//am.makeFriend(1, 2);
 		//am.makeFriend(3, 1);
 		//am.makeFriend(1, 3);

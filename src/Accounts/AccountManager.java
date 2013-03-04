@@ -127,11 +127,13 @@ public class AccountManager {
 				stmt.executeUpdate("INSERT INTO friends_mapping VALUES("+friend+", "+sender+");");
 				stmt.executeUpdate("DELETE FROM pending_friends where pending_user_id = ("+sender+") AND accepted_user_id = "+ friend +";");
 			} else { //send request
-				rs = stmt.executeQuery("SELECT * FROM pending_friends WHERE accepted_user_id = " + sender +"; AND pending_user_id = "+ friend +"");
+				System.out.println("boop");
+				rs = stmt.executeQuery("SELECT * FROM pending_friends WHERE accepted_user_id = " + sender +" AND pending_user_id = "+ friend +"");
 				if (rs.next()) return; //already sent request
 				stmt.executeUpdate("INSERT INTO pending_friends VALUES("+sender+", "+friend+");");
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -159,7 +161,10 @@ public class AccountManager {
 			stmt = (Statement) con.createStatement();
 			rs = stmt.executeQuery("select * from pending_friends where pending_user_id = "+id+";");
 			while (rs.next()) {
-				Account acct = new Account(rs);
+				Statement stmt2 = (Statement) con.createStatement();
+				ResultSet rs2 = stmt2.executeQuery("select * from user where user_id = "+rs.getInt("accepted_user_id")+";");
+				rs2.next();
+				Account acct = new Account(rs2);
 				friendsList.add(acct);
 			}
 		} catch (SQLException e) {
