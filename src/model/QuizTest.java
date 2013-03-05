@@ -7,6 +7,8 @@ import java.sql.SQLException;
 
 import org.junit.Test;
 
+import Servlets.MyDB;
+
 public class QuizTest {
 	//Ramon Iglesias: I am still uncertain on how the implementation
 	//Will actually be, but I'll take my best guess.
@@ -14,7 +16,7 @@ public class QuizTest {
 	
 	@Test
 	public void testBunnyQuiz() throws SQLException {
-		bunnyQuiz = new Quiz(1);
+		bunnyQuiz = new Quiz(1, MyDB.getConnection());
 		assertEquals("Animals", (String) bunnyQuiz.getCategory());
 		
 		assertEquals("An homage to the departed, legendary Bunny World project.", (String) bunnyQuiz.getDescription());

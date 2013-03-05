@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import Accounts.Account;
@@ -29,8 +30,8 @@ public class Quiz {
 	
 
 	//creating a quiz
-	public Quiz(ArrayList<Question> q, boolean random, boolean onePage, boolean immediateCorrect, boolean practice, Account creator, String quizName, String description, String category){
-		con = MyDB.getConnection(); // should probably get passed in when the site is ready
+	public Quiz(Connection con, ArrayList<Question> q, boolean random, boolean onePage, boolean immediateCorrect, boolean practice, Account creator, String quizName, String description, String category){
+		this.con =con; // should probably get passed in when the site is ready
 		
 		this.quizName = quizName;
 		this.questions = q;
@@ -61,7 +62,7 @@ public class Quiz {
 		stat.setBoolean(4, immediateCorrection);
 		stat.setBoolean(5, practiceMode);
 		//stat.setInt(6, creator.getId());
-		stat.setInt(6, 1);
+		stat.setInt(6, creator.getId());
 		//stat.setString(7, "");
 		stat.setString(7, category);
 		stat.setString(8, description);
@@ -92,12 +93,14 @@ public class Quiz {
 	}
 	
 	public Account getCreatorFromID(int id){
-		PreparedStatement ps;
+		
 		try {
-			ps = con.prepareStatement("select * from user where user_id = ?");
-			ps.setInt(1, id);
-			ResultSet rs = ps.executeQuery();
+			PreparedStatement query = con.prepareStatement("select * from user where user_id = ?");
 			
+			query.setInt(1, id);
+			ResultSet rs = query.executeQuery();
+			rs.next();
+			System.out.println("user id is "+rs.getInt("user_id"));
 		return new Account(rs);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -106,9 +109,12 @@ public class Quiz {
 		}
 	}
 	
-	public Quiz(int id) throws SQLException {
+	public Quiz(int id, Connection con) throws SQLException {
 		this.quiz_id = id;
-		con = MyDB.getConnection();
+		if (this.con==null) {
+			this.con = con;
+		}
+		
 		
 		PreparedStatement quizQuery = con.prepareStatement("select * from quiz where quiz_id = ?");
 		

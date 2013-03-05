@@ -7,12 +7,15 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import Accounts.AccountManager;
 
 import model.Question;
 import model.Quiz;
@@ -52,7 +55,9 @@ public class SolveServlet extends HttpServlet {
 			if(session.getAttribute("quiz_"+quizID) == null){
 
 				try {
-					quiz = new Quiz(Integer.parseInt(quizID));
+					ServletContext sc = request.getServletContext();
+					AccountManager am = (AccountManager) sc.getAttribute("accounts");
+					quiz = new Quiz(Integer.parseInt(quizID), am.getCon());
 				} catch (NumberFormatException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

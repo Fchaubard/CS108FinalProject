@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Accounts.Account;
+import Accounts.AccountManager;
 
 import sun.font.TrueTypeFont;
 
@@ -65,7 +67,9 @@ public class AddQuestion extends HttpServlet {
 			String categoryString = (String)request.getParameter("quizDescription");
 			String descriptionString = (String)request.getParameter("quizCategory");
 			Account account =  ((Account)session.getAttribute("account"));
-			quiz = new Quiz(new ArrayList<Question>(), random, onePage, ic, false, account, nameString, categoryString, descriptionString);
+			ServletContext sc = request.getServletContext();
+			AccountManager am = (AccountManager) sc.getAttribute("accounts");
+			quiz = new Quiz( am.getCon(), new ArrayList<Question>(), random, onePage, ic, false, account, nameString, categoryString, descriptionString);
 			session.setAttribute("Quiz", quiz);
 			
 		}

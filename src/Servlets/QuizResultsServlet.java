@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import Accounts.AccountManager;
 
 import model.Quiz;
 import model.QuizAttempts;
@@ -41,15 +44,18 @@ public class QuizResultsServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	String quizID = "1";// request.getParameter("quizID");
+		HttpSession session = request.getSession(true);
+		
+		String quizID = (String)session.getAttribute("quizID");
 		
 		try {
-			HttpSession session = request.getSession(true);
+			
 			
 			//means the cart hasnt been initialized
 			if(session.getAttribute("quiz_"+quizID) == null){
-
-				quiz = new Quiz(Integer.parseInt(quizID));
+				ServletContext sc = request.getServletContext();
+				AccountManager am = (AccountManager) sc.getAttribute("accounts");
+				quiz = new Quiz(Integer.parseInt(quizID), am.getCon());
 				session.setAttribute("quiz_"+quizID, quiz);
 			}
 			else{

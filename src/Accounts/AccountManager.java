@@ -13,6 +13,10 @@ public class AccountManager {
 	
 	private Connection con;
 	
+	public Connection getCon() {
+		return con;
+	}
+
 	public AccountManager(Connection con) {
 		this.con = con;
 	}

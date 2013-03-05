@@ -6,12 +6,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import Accounts.AccountManager;
 
 import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
 
@@ -45,8 +48,9 @@ public class SinglePageQuizServlet extends HttpServlet {
 			
 			//means the cart hasnt been initialized
 			if(session.getAttribute("quiz_"+quizID) == null){
-				
-				quiz = new Quiz(Integer.parseInt(quizID));
+				ServletContext sc = request.getServletContext();
+				AccountManager am = (AccountManager) sc.getAttribute("accounts");
+				quiz = new Quiz(Integer.parseInt(quizID), am.getCon());
 				session.setAttribute("quiz_"+quizID, quiz);
 				
 			}
