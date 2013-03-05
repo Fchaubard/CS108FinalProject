@@ -56,16 +56,7 @@ public class DoneCreatingQuizServlet extends HttpServlet {
 		//public Quiz(ArrayList<Question> q, boolean random, boolean onePage, boolean immediateCorrect, boolean practice, int userID, String quizName, String description, String category){
 		Quiz quiz;
 		if (session.getAttribute("Quiz")==null) {
-			
-			boolean random = (String)request.getParameter("random")!=null ? true : false ;
-			boolean onePage = (String)request.getParameter("multipage")!=null ? true : false ;
-			boolean immeidateCorrect = (String)request.getParameter("immediateCorrection")!=null ? true : false ;
-			String nameString = (String)request.getParameter("quizName");
-			String categoryString = (String)request.getParameter("quizDescription");
-			String descriptionString = (String)request.getParameter("quizCategory");
-			quiz = new Quiz(new ArrayList<Question>(), random, onePage, immeidateCorrect, false, 0, nameString, descriptionString, categoryString);
-			session.setAttribute("Quiz", quiz);
-			
+			return;
 		}
 		else{
 			quiz = (Quiz) session.getAttribute("Quiz");

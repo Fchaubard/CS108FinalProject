@@ -137,7 +137,7 @@ public class QuestionResponse implements Question {
 		
 		try {
 			stmt = con.createStatement();
-			StringBuilder sqlString = new StringBuilder("INSERT INTO question_response VALUES(null,");
+			StringBuilder sqlString = new StringBuilder("INSERT INTO question_response VALUES(null,\"");
 			sqlString.append(statement);
 			sqlString.append("\",\" ");
 			for (String string : answers) {
@@ -145,18 +145,18 @@ public class QuestionResponse implements Question {
 				sqlString.append(" &&& ");
 			}
 			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
-			sqlString.append("\" ");
+			sqlString.append("\") ");
 			
 			System.out.print(sqlString.toString());
-			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
+			stmt.executeUpdate(sqlString.toString());
 			
 			stmt = con.createStatement();
 			sqlString = new StringBuilder("SELECT * FROM question_response WHERE statement=\"");
 			sqlString.append(statement);
 			sqlString.append("\" ");
 			
-			System.out.print(sqlString.toString());
-			resultSet = stmt.executeQuery(sqlString.toString());
+			System.out.println(sqlString.toString());
+			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
 			
 			
 			while (resultSet.next()) {

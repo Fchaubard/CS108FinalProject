@@ -42,17 +42,19 @@ public class FillInTheBlank implements Question {
 		}
 		
 		ans.replace(ans.length()-5, ans.length(), "");
+		
+		
 		ps.setString(2, ans.toString());
 		
-		System.out.print(ans.toString());
-		ResultSet resultSet = ps.executeQuery();
+		System.out.println(ans.toString());
+		System.out.println(ps.toString());
+		ps.executeUpdate();
 		
 		PreparedStatement getID = con.prepareStatement("select * from fill_in_the_blank_question where statement = ?");
 		getID.setString(1, statement);
 		
 		System.out.print(getID.toString());
-		resultSet = getID.executeQuery();
-		
+		ResultSet resultSet = getID.executeQuery();
 		
 		while (resultSet.next()) {
 			this.qID = resultSet.getInt("question_id"); // will always be the last one

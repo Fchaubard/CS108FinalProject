@@ -37,7 +37,7 @@ public class SinglePageQuizServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String quizID = "1";// request.getParameter("quizID");
+		String quizID = request.getParameter("id");
 		HttpSession session = request.getSession(true);
 		session.setAttribute("quizID", quizID);
 		try {

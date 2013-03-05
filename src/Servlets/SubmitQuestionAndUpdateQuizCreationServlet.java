@@ -56,16 +56,8 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 		//public Quiz(ArrayList<Question> q, boolean random, boolean onePage, boolean immediateCorrect, boolean practice, int userID, String quizName, String description, String category){
 		Quiz quiz;
 		if (session.getAttribute("Quiz")==null) {
-			
-			boolean random = (String)request.getParameter("random")!=null ? true : false ;
-			boolean onePage = (String)request.getParameter("multipage")!=null ? true : false ;
-			boolean immeidateCorrect = (String)request.getParameter("immediateCorrection")!=null ? true : false ;
-			String nameString = (String)request.getParameter("quizName");
-			String categoryString = (String)request.getParameter("quizDescription");
-			String descriptionString = (String)request.getParameter("quizCategory");
-			quiz = new Quiz(new ArrayList<Question>(), random, onePage, immeidateCorrect, false, 0, nameString, descriptionString, categoryString);
-			session.setAttribute("Quiz", quiz);
-			
+			//error
+			return;
 		}
 		else{
 			quiz = (Quiz) session.getAttribute("Quiz");
@@ -90,11 +82,11 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 				String statementString = (String)request.getParameter("statement");
 				HashSet<String> hashSet = new HashSet<String>();
 				hashSet.add((String)request.getParameter("answer1"));
-				if ((String)request.getParameter("answer2")!=null) {
+				if (!((String)request.getParameter("answer2")).equals("")) {
 					hashSet.add((String)request.getParameter("answer2"));
 					
 				}
-				if ((String)request.getParameter("answer3")!=null) {
+				if (!((String)request.getParameter("answer3")).equals("")) {
 					hashSet.add((String)request.getParameter("answer3"));
 					
 				}
@@ -109,11 +101,11 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 				statementString = statementStringBefore+ "__________" +statementStringAfter ;
 				hashSet = new HashSet<String>();
 				hashSet.add((String)request.getParameter("answer1"));
-				if ((String)request.getParameter("answer2")!=null) {
+				if (!((String)request.getParameter("answer2")).equals("")) {
 					hashSet.add((String)request.getParameter("answer2"));
 					
 				}
-				if ((String)request.getParameter("answer3")!=null) {
+				if (!((String)request.getParameter("answer3")).equals("")) {
 					hashSet.add((String)request.getParameter("answer3"));
 					
 				}
@@ -126,29 +118,23 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 				statementString = (String)request.getParameter("statement");
 				hashSet = new HashSet<String>();
 				hashSet.add((String)request.getParameter("wrongAnswer1"));
+				hashSet.add((String)request.getParameter("wrongAnswer2"));
+				hashSet.add((String)request.getParameter("wrongAnswer3"));
 				
-				if ((String)request.getParameter("wrongAnswer2")!=null) {
-					hashSet.add((String)request.getParameter("wrongAnswer2"));
-					
-				}
-				if ((String)request.getParameter("wrongAnswer3")!=null) {
-					hashSet.add((String)request.getParameter("wrongAnswer3"));
-					
-				}
 				String answer = (String)request.getParameter("answer1");
 				question = new MultipleChoice(statementString, hashSet, answer);
 				quiz.addQuestion(question);
 				break;
 				
 			case 4:
-				statementString = (String)request.getParameter("statement");
+				statementString = (String)request.getParameter("url");
 				hashSet = new HashSet<String>();
 				hashSet.add((String)request.getParameter("answer1"));
-				if ((String)request.getParameter("answer2")!=null) {
+				if (!((String)request.getParameter("answer2")).equals("")) {
 					hashSet.add((String)request.getParameter("answer2"));
 					
 				}
-				if ((String)request.getParameter("answer3")!=null) {
+				if (!((String)request.getParameter("answer3")).equals("")) {
 					hashSet.add((String)request.getParameter("answer3"));
 					
 				}

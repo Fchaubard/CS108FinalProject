@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import Accounts.Account;
+
 import sun.font.TrueTypeFont;
 
 import model.FillInTheBlank;
@@ -62,8 +64,8 @@ public class AddQuestion extends HttpServlet {
 			String nameString = (String)request.getParameter("quizName");
 			String categoryString = (String)request.getParameter("quizDescription");
 			String descriptionString = (String)request.getParameter("quizCategory");
-			
-			quiz = new Quiz(new ArrayList<Question>(), random, onePage, ic, false, 0, nameString, descriptionString, categoryString);
+			Account account =  ((Account)session.getAttribute("account"));
+			quiz = new Quiz(new ArrayList<Question>(), random, onePage, ic, false, account, nameString, categoryString, descriptionString);
 			session.setAttribute("Quiz", quiz);
 			
 		}

@@ -158,7 +158,7 @@ public class MultipleChoice implements Question {
 		
 		try {
 			stmt = con.createStatement();
-			StringBuilder sqlString = new StringBuilder("INSERT INTO multiple_choice_question VALUES(null,");
+			StringBuilder sqlString = new StringBuilder("INSERT INTO multiple_choice_question VALUES(null,\"");
 			sqlString.append(statement);
 			sqlString.append("\",\"");
 			sqlString.append(answer);
@@ -168,10 +168,10 @@ public class MultipleChoice implements Question {
 				sqlString.append(" &&& ");
 			}
 			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
-			sqlString.append("\" ");
+			sqlString.append("\") ");
 			
 			System.out.print(sqlString.toString());
-			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
+			stmt.executeUpdate(sqlString.toString());
 			
 			stmt = con.createStatement();
 			sqlString = new StringBuilder("SELECT * FROM multiple_choice_question WHERE statement=\"");
@@ -179,7 +179,7 @@ public class MultipleChoice implements Question {
 			sqlString.append("\" ");
 			
 			System.out.print(sqlString.toString());
-			resultSet = stmt.executeQuery(sqlString.toString());
+			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
 			
 			
 			while (resultSet.next()) {

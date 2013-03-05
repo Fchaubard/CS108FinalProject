@@ -29,7 +29,7 @@ public class Quiz {
 	
 
 	//creating a quiz
-	public Quiz(ArrayList<Question> q, boolean random, boolean onePage, boolean immediateCorrect, boolean practice, int userID, String quizName, String description, String category){
+	public Quiz(ArrayList<Question> q, boolean random, boolean onePage, boolean immediateCorrect, boolean practice, Account creator, String quizName, String description, String category){
 		con = MyDB.getConnection(); // should probably get passed in when the site is ready
 		
 		this.quizName = quizName;
@@ -40,7 +40,7 @@ public class Quiz {
 		this.practiceMode = practice;
 		this.description = description;
 		this.category = category;
-		//this.creator = getCreatorFromID(userID);
+		this.creator = creator;
 		
 	}
 	
@@ -115,7 +115,7 @@ public class Quiz {
 		quizQuery.setInt(1, id);
 		ResultSet rs = quizQuery.executeQuery();
 		
-		int creatorID = -1;
+		int creatorID=0; 
 		
 		while(rs.next()) {
 			setQuizName(rs.getString("name"));
@@ -127,9 +127,8 @@ public class Quiz {
 			category = rs.getString("category");
 			description = rs.getString("description");
 		}
+		this.creator = getCreatorFromID(creatorID);
 		
-		
-		this.creator = null;//getCreatorFromID(creatorID);
 		
 		// get history of quiz
 		PreparedStatement historyQuery = con.prepareStatement("select * from history where quiz_id = ?");

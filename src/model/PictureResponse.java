@@ -148,22 +148,22 @@ public class PictureResponse implements Question {
 				sqlString.append(" &&& ");
 			}
 			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
+			sqlString.append("\") ");
+			
+			System.out.print(sqlString.toString());
+			stmt.executeUpdate(sqlString.toString());
+			
+			stmt = con.createStatement();
+			sqlString = new StringBuilder("SELECT * FROM picture_response_question WHERE url=\"");
+			sqlString.append(url);
 			sqlString.append("\" ");
 			
 			System.out.print(sqlString.toString());
 			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
 			
-			stmt = con.createStatement();
-			sqlString = new StringBuilder("SELECT * FROM picture_response_question WHERE statement=\"");
-			sqlString.append(url);
-			sqlString.append("\" ");
-			
-			System.out.print(sqlString.toString());
-			resultSet = stmt.executeQuery(sqlString.toString());
-			
 			
 			while (resultSet.next()) {
-				this.setqID(resultSet.getInt(0)); // will always be the last one
+				this.setqID(resultSet.getInt("question_id")); // will always be the last one
 			}
 		}catch(Exception e){
 			
