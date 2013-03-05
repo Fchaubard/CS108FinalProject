@@ -1,5 +1,6 @@
 package model;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +10,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class MultipleChoice implements Question {
 
@@ -28,6 +34,22 @@ public class MultipleChoice implements Question {
 		html.append("<br />Insert Wrong Answer 3:<br /> <input type=\"text\" name=\"wrongAnswer3\" />");
 		
 		return html.toString();
+		
+		
+		
+	}
+	public static String getRandomHTMLInputString(){
+		String[] strings = getOtherRandomHTML();
+		ArrayList<String> wrongHashSet =getRandomWrongAnswers();
+		StringBuilder html = new StringBuilder();
+		html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\"statement\" value=\" "+strings[1] +"\"  />");
+		html.append("<br />Insert Answer:<br /> <input type=\"text\" name=\"answer1\" value=\" "+strings[0] +"\"/>");
+		html.append("<br />Insert Wrong Answer 1:<br /> <input type=\"text\" name=\"wrongAnswer1\" value=\" "+wrongHashSet.get(0)+"\"/>");
+		html.append("<br />Insert Wrong Answer 2:<br /> <input type=\"text\" name=\"wrongAnswer2\" value=\" "+wrongHashSet.get(1)+"\"/>");
+		html.append("<br />Insert Wrong Answer 3:<br /> <input type=\"text\" name=\"wrongAnswer3\" value=\" "+wrongHashSet.get(2)+"\" />");
+		
+		return html.toString();
+		
 	}
 
 	public int getqID() {
@@ -188,6 +210,41 @@ public class MultipleChoice implements Question {
 		}catch(Exception e){
 			
 		}		
+	}
+	
+	public static ArrayList<String> getRandomWrongAnswers(){
+		ArrayList<String> wrongAnswers = new ArrayList<String>();
+		for(int i =0; i <4; i++){
+			wrongAnswers.add(getOtherRandomHTML()[0]);
+		}
+		return wrongAnswers;
+	}
+	
+	public static String[] getOtherRandomHTML(){
+		Document doc;
+		try {
+			doc = Jsoup.connect("http://en.wikipedia.org/wiki/Special:Random?printable=yes").get();
+			Elements paragraphs = doc.select("p");
+			Element firstParagraph = paragraphs.first();
+			Element respuesta = firstParagraph.select("b").first();
+			//System.out.println(firstParagraph.select("b"));
+			//System.out.println(firstParagraph.html());
+			//System.out.println(firstParagraph.child(0).text());
+			String regex = respuesta.text();
+			String parrafo = firstParagraph.text();
+			String pincheParrafo = parrafo.replace(regex,"__________");
+			String[] setup = {regex, pincheParrafo};
+			return setup;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch(NullPointerException e){
+			//watch out for reaaally long loops
+			return getOtherRandomHTML();
+		}
+		
+		return null;
 	}
 
 }

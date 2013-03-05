@@ -67,6 +67,7 @@ public class BeginQuizCreationServlet extends HttpServlet {
 			out.println("<option value=\"5\">Multiple Answer</option>");
 			out.println("<option value=\"6\">Multiple Choice with Multiple Answer</option>");
 			out.println("<option value=\"7\">Matching</option>");
+			out.println("<option value=\"8\">Random Multiple Choice from Wikipedia</option>");
 			out.println("</select>");
 			out.println("<br /><input type=\"submit\" value=\"Add first question\"/>");
 			out.println("</form>");

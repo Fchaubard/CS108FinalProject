@@ -154,6 +154,8 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 			case 7:
 				//question = Matching.getHTMLInputString();
 				break;
+			
+				
 		}
 			session.removeAttribute("Quiz");
 			session.setAttribute("Quiz", quiz);

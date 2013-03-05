@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -98,8 +99,9 @@ public class AddQuestion extends HttpServlet {
 			out.println("<body>");
 			out.println("<h1>"+quiz.getQuizName()+"</h1>");
 			out.println("<h3>Input Question "+(quiz.getQuestions().size()+1)+"</h3>");
+			String type = request.getParameter("questionType");
 			
-			switch(Integer.parseInt((String)request.getParameter("questionType"))) {
+			switch(Integer.parseInt(type)) {
 			case 1: 
 				question = QuestionResponse.getHTMLInputString();
 				
@@ -130,9 +132,16 @@ public class AddQuestion extends HttpServlet {
 			case 7:
 				question = Matching.getHTMLInputString();
 				break;
+			case 8:
+				question = MultipleChoice.getRandomHTMLInputString();
+				break;
 		}
+			
+			if (type.equals("8")){
+				type = "3"; // map it back to multiple choice
+			}
 			out.println("<form action=\"SubmitQuestionAndUpdateQuizCreationServlet\" method=\"post\">");
-			out.println("<input name=\"questionType\" type=\"hidden\" value=\"" +request.getParameter("questionType")+"\"/>");
+			out.println("<input name=\"questionType\" type=\"hidden\" value=\"" +type+"\"/>");
 			
 			out.println("<br />Quiz Name: "+quiz.getQuizName()+"");
 			out.println("<br />Quiz Description: " +quiz.getDescription()+"");
