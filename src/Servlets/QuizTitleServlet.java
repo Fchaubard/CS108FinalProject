@@ -40,7 +40,7 @@ public class QuizTitleServlet extends HttpServlet {
     	int id = Integer.parseInt(request.getParameter("id"));
     	Quiz q;
 		try {
-			q = new Quiz(id);
+			q = new Quiz(id, am.getCon());
 			String qName = q.getQuizName();
 	    	//Account a = q.getCreator();
 	    	//String author = a.getName();

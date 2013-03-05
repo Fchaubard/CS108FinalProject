@@ -65,19 +65,12 @@ public class AddQuestion extends HttpServlet {
 			boolean onePage = (String)request.getParameter("multipage")!=null ? true : false ;
 			boolean ic = (String)request.getParameter("immediateCorrection")!=null ? true : false ;
 			String nameString = (String)request.getParameter("quizName");
-<<<<<<< HEAD
-			String categoryString = (String)request.getParameter("quizDescription");
-			String descriptionString = (String)request.getParameter("quizCategory");
+			String categoryString = (String)request.getParameter("quizCategory");
+			String descriptionString = (String)request.getParameter("quizDescription");
 			Account account =  ((Account)session.getAttribute("account"));
 			ServletContext sc = request.getServletContext();
 			AccountManager am = (AccountManager) sc.getAttribute("accounts");
 			quiz = new Quiz( am.getCon(), new ArrayList<Question>(), random, onePage, ic, false, account, nameString, categoryString, descriptionString);
-=======
-			String categoryString = (String)request.getParameter("quizCategory");
-			String descriptionString = (String)request.getParameter("quizDescription");
-			
-			quiz = new Quiz(new ArrayList<Question>(), random, onePage, ic, false, 0, nameString, descriptionString, categoryString);
->>>>>>> switched category and description so they are now correct.
 			session.setAttribute("Quiz", quiz);
 			
 		}
