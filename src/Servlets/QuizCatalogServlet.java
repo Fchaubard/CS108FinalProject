@@ -21,7 +21,7 @@ import Accounts.Account;
 @WebServlet("/QuizCatalogServlet")
 public class QuizCatalogServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
