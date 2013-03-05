@@ -14,5 +14,6 @@
 	</form>
 	<a href = "accountDebug.jsp">Profile</a>
 	<a href = "QuizCatalogServlet">Take a Quiz!</a>
+	<a href = "BeginQuizCreationServlet">Create a Quiz!</a>
 </body>
 </html>
