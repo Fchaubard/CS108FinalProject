@@ -52,7 +52,7 @@ public class AcctManagementServlet extends HttpServlet {
     			sc.setAttribute("user", name);
     			Account curracct = (Account) request.getSession().getAttribute("account");
     			curracct = acct;
-    			request.getRequestDispatcher("/accountDebug.jsp").forward(request, response);
+    			request.getRequestDispatcher("/UserHome.jsp").forward(request, response);
     		}
     	} else if (action.equals("Delete")) {
     		am.deleteAccount(name);
