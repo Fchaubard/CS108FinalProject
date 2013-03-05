@@ -21,7 +21,7 @@ public class MailManager {
 		this.con = con;//Servlets.MyDB.getConnection();
 	}
 	
-	public void sendMessage(Message mail) {
+	public boolean sendMessage(Message mail) {
 		Statement stmt;
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT INTO message VALUES (default, \"");
@@ -40,8 +40,9 @@ public class MailManager {
 			stmt.executeUpdate(sb.toString());
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
-		
+		return true;
 	}
 	
 	public Message recieveMessage(int id) {

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Accounts.AccountManager;
 import Accounts.MailManager;
 import Accounts.Message;
 
@@ -65,11 +66,16 @@ public class MailManagementServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	String sender = request.getParameter("sender");
     	String recipient = request.getParameter("recipient");
+    	AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
+    	if (!am.accountExists(recipient)) {
+    		request.getRequestDispatcher("/newMessage.jsp?to=Invalid Name").forward(request, response);
+    	} else {
     	String subject = request.getParameter("subject");
     	String body = request.getParameter("body");
     	Message m = new Message(sender, recipient, subject, body, 0);
     	MailManager mm = (MailManager) request.getServletContext().getAttribute("mail");
     	mm.sendMessage(m);
-    	request.getRequestDispatcher("/homeDebug.jsp").forward(request, response);
+    	request.getRequestDispatcher("/UserHome.jsp").forward(request, response);
+    	}
     }
 }

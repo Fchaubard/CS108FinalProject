@@ -50,7 +50,7 @@ import Accounts.AccountManager;
     	    		out.println("<br>");
     	    		out.println("<a href = \"FriendManagementServlet\">Friends</a>");
     	    	} else if (regViewer) {
-    	    		out.println("<a href = \"newMessage.jsp?user="+viewer.getName()+"\">Send Mail</a>");
+    	    		out.println("<a href = \"newMessage.jsp?&user="+viewer.getName()+"&to="+profile.getName()+"\">Send Mail</a>");
     	    		out.println("<br>");
     	    		out.println("<li><form action=\"FriendManagementServlet\" method=\"post\">");
     	    		out.println("<input type=\"hidden\" name=\"ID\" value=\""+profile.getId()+"\">");

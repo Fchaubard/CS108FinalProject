@@ -64,6 +64,7 @@ public class AccountManager {
 	public Account loginAccount(String name, String pass) {
 		pass = hashString(pass);
 		Statement stmt;
+		
 		try {
 			stmt = (Statement) con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM user WHERE username = \"" + name +"\"");
@@ -203,7 +204,7 @@ public class AccountManager {
 		}
 	}
 	
-	//pass either arguement as -1 to ignore
+	//pass either arguement as zero or negative to ignore
 	public ArrayList<model.QuizAttempts> getHistory(int userid, int quizid) {
 		ResultSet rs;
 		Statement stmt;
