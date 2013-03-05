@@ -194,7 +194,6 @@ public class Quiz {
 		
 		currentQuestionInteger = -1;
 		
-		con.close();
 	}
 
 	// for scoring the entire quiz in one shot
