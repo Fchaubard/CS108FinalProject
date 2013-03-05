@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.Quiz;
+
 import Accounts.*;
 
 
@@ -37,21 +39,28 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String name = request.getParameter("user");
-		String pass = request.getParameter("pass");
-
-		ServletContext sc = request.getServletContext();
-		AccountManager am = (AccountManager) sc.getAttribute("accounts");
-		if (am == null) System.out.println("Huh?");
-		Account acct = am.loginAccount(name, pass);
-		if (acct != null) {
-			sc.setAttribute("user", name);
-			request.getSession().setAttribute("account", acct);
-			System.out.println("This assignment is unpleasant.");
+		
+		if(request.getSession().getAttribute("account")==null){
+		
+			String name = request.getParameter("user");
+			String pass = request.getParameter("pass");
+			ServletContext sc = request.getServletContext();
+			AccountManager am = (AccountManager) sc.getAttribute("accounts");
+			if (am == null) System.out.println("Huh?");
+			Account acct = am.loginAccount(name, pass);
+			if (acct != null) {
+				sc.setAttribute("user", name);
+				request.getSession().setAttribute("account", acct);
+				System.out.println("This assignment is unpleasant.");
+				request.getRequestDispatcher("/UserHome.jsp").forward( request, response );
+			} else {
+				request.getRequestDispatcher("/badPass.html" ).forward( request, response );
+			}
+		}else{
 			request.getRequestDispatcher("/UserHome.jsp").forward( request, response );
-		} else {
-			request.getRequestDispatcher("/badPass.html" ).forward( request, response );
 		}
+		
+		
 	}
 
 }
