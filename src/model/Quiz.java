@@ -63,7 +63,7 @@ public class Quiz {
 		html.append( "					  $('#questionAnswerDiv"+i+"').text(\"Correct!\");   \n ");  
 		html.append( "				} ");  
 		html.append( "				else{ \n");  
-		html.append( "				  $('#questionAnswerDiv"+i+"').text(responseText);   \n ");  
+		html.append( "				  $('#questionAnswerDiv"+i+"').text(\"Incorrect! Answers are: \"+responseText);   \n ");  
 		html.append( "				} \n");  
 		html.append( "            }); \n");
 		html.append( "         });\n ");
