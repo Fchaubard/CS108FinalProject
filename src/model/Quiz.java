@@ -202,6 +202,14 @@ public class Quiz {
 		currentQuestionInteger = -1;
 		
 	}
+	
+	public ArrayList<QuizAttempts> getHistory() {
+		return history;
+	}
+	
+	public void addToHistory(QuizAttempts qa) {
+		history.add(qa);
+	}
 
 	// for scoring the entire quiz in one shot
 	public double score(ArrayList<ArrayList<String>> answer){

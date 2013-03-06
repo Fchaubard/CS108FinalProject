@@ -3,6 +3,7 @@ package Servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import Accounts.AccountManager;
 
+import model.Question;
 import model.Quiz;
 import model.QuizAttempts;
 
@@ -77,6 +79,20 @@ public class QuizResultsServlet extends HttpServlet {
 			out.println("<h1>"+quiz.getQuizName()+"</h1><br />");
 			out.println("<h3>Score: "+qa.score+"</h3><br />");
 			out.println("<h3>Time: "+(qa.time/1000)+" s" +"</h3><br />");
+			
+			out.println("<h3>Top Scorers</h3>");
+	    	out.println("<ol>");
+	    	//currently prints ALL the scores. Can switch to a for (0-4) but table needs to be sorted first.
+	    	for (QuizAttempts attempt : quiz.getHistory()) {
+	    		out.println("<li>" + attempt.printAttemt((AccountManager)request.getServletContext().getAttribute("accounts")) + "</li>");
+	    	}
+	    	out.println("</ol><br>");
+			
+	    	out.println("<h3>")
+			for(Question q : quiz.getQuestions()) {
+				
+			}
+			
 			out.println("<form action=\"LoginServlet\" method=\"post\">");
 			out.println("<br /><input type=\"submit\" value=\"Go Home\"/>");
 			out.println("</form>");

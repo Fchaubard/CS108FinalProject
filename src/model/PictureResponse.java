@@ -15,6 +15,7 @@ public class PictureResponse implements Question {
 	private String url;
 	private Set<String> answers;
 	private int qID;
+	private ArrayList<String> userAnswers;
 	
 	public static String getHTMLInputString(){
 		
@@ -127,6 +128,7 @@ public class PictureResponse implements Question {
 			correctAnswers.append(s);
 			correctAnswers.append(", ");
 		}
+		correctAnswers.replace(correctAnswers.length()-2, correctAnswers.length(), "");
 		
 		return correctAnswers.toString();
 	}
@@ -168,5 +170,27 @@ public class PictureResponse implements Question {
 		}catch(Exception e){
 			
 		}		
+	}
+
+	@Override
+	public void setUserAnswers(ArrayList<String> ans) {
+		userAnswers = new ArrayList<String>();
+		
+		for(String s : ans) {
+			userAnswers.add(s);
+		}
+	}
+
+	@Override
+	public String getUserAnswers() {
+		StringBuilder userAns = new StringBuilder();
+		
+		for(String s : userAnswers) {
+			userAns.append(s);
+			userAns.append(", ");
+		}
+		userAns.replace(userAns.length()-2, userAns.length(), "");
+		
+		return userAns.toString();
 	}
 }

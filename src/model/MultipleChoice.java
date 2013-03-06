@@ -23,11 +23,12 @@ public class MultipleChoice implements Question {
 	private Set<String> wrongAnswers;
 	private String answer;
 	private int qID;
+	private String userAnswer;
 	
 	public static String getHTMLInputString(){
 		
 		StringBuilder html = new StringBuilder();
-		html.append("<br />Insert Question Statement: <br /><textarea name=\"statement\" row=\"4\" cols=\"75\"> </textarea>");
+		html.append("<br />Insert Question Statement: <br /><textarea name=\"statement\" rows=\"8\" cols=\"75\"> </textarea>");
 		//html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\"statement\" />");
 		html.append("<br />Insert Answer:<br /> <input type=\"text\" name=\"answer1\" />");
 		html.append("<br />Insert Wrong Answer 1:<br /> <input type=\"text\" name=\"wrongAnswer1\" />");
@@ -246,6 +247,19 @@ public class MultipleChoice implements Question {
 		}
 		
 		return null;
+	}
+	
+	@Override
+	public void setUserAnswers(ArrayList<String> ans) {
+		for(String s : ans) {
+			userAnswer = s;
+		}
+		
+	}
+	
+	@Override
+	public String getUserAnswers() {
+		return userAnswer;
 	}
 
 }

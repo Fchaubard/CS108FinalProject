@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Date;
 
+import Accounts.Account;
+import Accounts.AccountManager;
+
 public class QuizAttempts {
 
 	public Integer userID;
@@ -67,6 +70,26 @@ public class QuizAttempts {
 	}
 	
 	public void pushAttemptToDB(Connection con) throws SQLException {
-		PreparedStatement ps = con.prepareStatement("insert into history values(?, ?, ?, ?, ?)");
+		PreparedStatement ps = con.prepareStatement("insert into history values(?, ?, ?, CURDATE(), ?)");
+		
+		ps.setInt(1, userID);
+		ps.setInt(2, quizID);
+		ps.setInt(3, score);
+		ps.setInt(4, time);
+		
+		ps.execute();
+	}
+	
+	public String printAttemt(AccountManager am) {
+		StringBuilder attempt = new StringBuilder();
+		
+		attempt.append(am.getAccount(userID).getName());
+		attempt.append("(score: ");
+		attempt.append(score);
+		attempt.append("; time: ");
+		attempt.append(time/1000);
+		attempt.append(" s)");
+		
+		return attempt.toString();
 	}
 }

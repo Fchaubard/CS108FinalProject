@@ -16,6 +16,7 @@ public class MultipleChoiceMultipleAnswer implements Question {
 	private Set<String> answers;
 	private Set<String> wrongAnswers;
 	private int qID;
+	private ArrayList<String> userAnswers;
 	
 	// THIS IS NOT RIGHT TODO
 	public static String getHTMLInputString(){
@@ -137,6 +138,7 @@ public class MultipleChoiceMultipleAnswer implements Question {
 			correctAnswers.append(s);
 			correctAnswers.append(", ");
 		}
+		correctAnswers.replace(correctAnswers.length()-2, correctAnswers.length(), "");
 		
 		return correctAnswers.toString();
 	}
@@ -188,5 +190,28 @@ public class MultipleChoiceMultipleAnswer implements Question {
 		}catch(Exception e){
 			
 		}		
+	}
+
+	@Override
+	public void setUserAnswers(ArrayList<String> ans) {
+		userAnswers = new ArrayList<String>();
+		
+		for(String s : ans) {
+			userAnswers.add(s);
+		}
+		
+	}
+
+	@Override
+	public String getUserAnswers() {
+		StringBuilder userAns = new StringBuilder();
+		
+		for(String s : userAnswers) {
+			userAns.append(s);
+			userAns.append(", ");
+		}
+		userAns.replace(userAns.length()-2, userAns.length(), "");
+		
+		return userAns.toString();
 	}
 }

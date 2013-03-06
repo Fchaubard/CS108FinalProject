@@ -213,4 +213,16 @@ public class Matching implements Question {
 			
 		}
 	}
+
+	@Override
+	public void setUserAnswers(ArrayList<String> ans) {
+		// TODO IMPLEMENT THIS
+		
+	}
+
+	@Override
+	public String getUserAnswers() {
+		// TODO IMPLEMENT THIS
+		return null;
+	}
 }

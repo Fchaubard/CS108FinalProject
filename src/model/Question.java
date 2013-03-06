@@ -21,4 +21,8 @@ public interface Question {
 	
 	public void pushToDB(Connection con) throws SQLException;
 	
+	public void setUserAnswers(ArrayList<String> ans);
+	
+	public String getUserAnswers();
+	
 }

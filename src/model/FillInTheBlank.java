@@ -17,6 +17,7 @@ public class FillInTheBlank implements Question {
 	private String statement;
 	private Set<String> answers;
 	private int qID;
+	private ArrayList<String> userAnswers;
 	
 	public static String getHTMLInputString(){
 		
@@ -160,12 +161,35 @@ public class FillInTheBlank implements Question {
 			correctAnswers.append(s);
 			correctAnswers.append(", ");
 		}
+		correctAnswers.replace(correctAnswers.length()-2, correctAnswers.length(), "");
 		
 		return correctAnswers.toString();
 	}
 
 	public int getType(){
 		return type;
+	}
+
+	@Override
+	public void setUserAnswers(ArrayList<String> ans) {
+		userAnswers = new ArrayList<String>();
+		
+		for(String s : ans) {
+			userAnswers.add(s);
+		}
+	}
+
+	@Override
+	public String getUserAnswers() {
+		StringBuilder userAns = new StringBuilder();
+		
+		for(String s : userAnswers) {
+			userAns.append(s);
+			userAns.append(", ");
+		}
+		userAns.replace(userAns.length()-2, userAns.length(), "");
+		
+		return userAns.toString();
 	}
 	
 }
