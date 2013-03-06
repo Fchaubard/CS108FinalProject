@@ -8,17 +8,19 @@
 </head>
 <body>
 <form action="MailManagementServlet" method="post">
-<% String from = (String) request.getParameter("user"); 
+<% String from = ((Accounts.Account) request.getSession().getAttribute("account")).getName(); 
 	String to = (String) request.getParameter("to");
+	String quiz = (String) request.getParameter("quiz");
+	String sub = "";
 	if (to == null) to = "";
-	String sub = "RE:" + (String) request.getParameter("sub");
-	if (sub == null) to = "";
+	if (quiz == null) quiz = "";
+	if (request.getParameter("sub") != null) sub = "RE:" + (String) request.getParameter("sub");
 out.println("Sender:" + from);%>
 <br>
 <input type="hidden" name="sender" value = "<% out.print(from); %>">
 Recipient: <input type="text" name="recipient" value = "<% out.println(to); %>"><br>
-subject: <input type="text" name="subject"><br>
-(optional) challenge ID: <input type="text" name="challenge"><br>
+subject: <input type="text" name="subject" value = "<% out.println(sub); %>"><br>
+(optional) challenge ID: <input type="text" name="challenge" value = "<% out.println(quiz); %>"><br>
 message: <textarea cols = "50" rows = "5" name = "body"></textarea>
 <input type="submit" value="Send">
 </form>

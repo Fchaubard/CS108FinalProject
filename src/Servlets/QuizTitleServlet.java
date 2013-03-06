@@ -50,6 +50,7 @@ public class QuizTitleServlet extends HttpServlet {
 	    	out.println("<h1>"+qName+"</h1>");
 	    	out.println("In category: " + q.getCategory() + "<br>");
 	    	out.println("by <a href = \"ProfileServlet?user="+author+"\">"+author+"</a><br>");
+	    	if (request.getSession().getAttribute("account") != null)out.println("<a href = \"newMessage.jsp?quiz="+q.getQuiz_id()+"\">Send to a friend</a><br>");
 	    	out.println(q.getDescription());
 	    	out.println("<br>");
 	    	out.println("<h3>Top Scorers</h3>");

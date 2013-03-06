@@ -39,25 +39,34 @@ public class MailManagementServlet extends HttpServlet {
     	PrintWriter out = response.getWriter();
     	if (request.getParameter("index").equals("inbox")) {
     		HashMap<Integer, Message> inbox = mm.listInbox(user);
+    		out.println("</ul>");
     		for (int i : inbox.keySet()) {
+    			out.println("<li>");
     			out.println("<a href = \"MailManagementServlet?&index="+i+"&user="+user+"\">");
-    			out.println(inbox.get(i).toString());
+    			out.println(inbox.get(i).getSender() + " " + inbox.get(i).getSubject() + " " + new java.util.Date(inbox.get(i).getTimestamp())) ;
     			out.println("</a>");
+    			out.println("</li>");
     		}
+    		out.println("</ul>");
     	} else if (request.getParameter("index").equals("outbox")) {
     		HashMap<Integer, Message> outbox = mm.listOutbox(user);
+    		out.println("<ul>");
     		for (int i : outbox.keySet()) {
+    			out.println("<li>");
     			out.println("<a href = \"MailManagementServlet?&index="+i+"&user="+user+"\">");
-    			out.println(outbox.get(i).toString());
+    			out.println(outbox.get(i).getSender() + " " + outbox.get(i).getSubject() + " " + new java.util.Date(outbox.get(i).getTimestamp())) ;
     			out.println("</a>");
+    			out.println("</li>");
     		}
+    		out.println("</ul>");
     	} else {//print specific message
     		int x = 37;
     		try {
     			x = Integer.parseInt(request.getParameter("index"));
     		} catch (NumberFormatException e) {
-    			if (mm == null) System.out.println("mail fail");
+    			System.out.println("mail fail");
     		}
+    		System.out.println(x);
     		Message m = mm.recieveMessage(x);
     		out.println("Subject: " + m.getSubject() + "<br>");
     		if (m.getChallengeName() != null) {

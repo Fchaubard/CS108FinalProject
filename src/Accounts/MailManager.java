@@ -34,12 +34,15 @@ public class MailManager {
 		sb.append(mail.getBody());
 		sb.append("\", \"");
 		sb.append(new Timestamp(mail.getTimestamp()));
-		if (mail.getChallengeID() > 0) {
-			sb.append("\", \"");
+		sb.append("\", ");
+		if (mail.getChallengeID() > 0) {	
 			sb.append(mail.getChallengeID());
+		} else {
+			sb.append("default");
 		}
-		sb.append("\");");
+		sb.append(");");
 		try {
+			System.out.println(sb.toString());
 			stmt = (Statement) con.createStatement();
 			stmt.executeUpdate(sb.toString());
 		} catch (SQLException e) {
@@ -62,7 +65,7 @@ public class MailManager {
 				String subject = rs.getString("subject");
 				String body = rs.getString("message");
 				Date time = rs.getTimestamp("date");
-				int challengeID = rs.getInt("challenge");
+				int challengeID = rs.getInt("quiz_id");
 				String challengeName = null;
 				if (challengeID > 0) {
 					rs = stmt.executeQuery("select name from quiz where quiz_id = " + challengeID + ";");
