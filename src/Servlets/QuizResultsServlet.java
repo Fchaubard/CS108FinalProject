@@ -88,10 +88,12 @@ public class QuizResultsServlet extends HttpServlet {
 	    	}
 	    	out.println("</ol><br>");
 			
-	    	out.println("<h3>")
+	    	out.println("<h3>Correct Answers</h3>");
+	    	out.println("<ol>");
 			for(Question q : quiz.getQuestions()) {
-				
+				out.println("<li>" + q.getCorrectAnswers() + " (Your Answers: " + q.getUserAnswers() + ")");
 			}
+			out.println("</ol><br>");
 			
 			out.println("<form action=\"LoginServlet\" method=\"post\">");
 			out.println("<br /><input type=\"submit\" value=\"Go Home\"/>");

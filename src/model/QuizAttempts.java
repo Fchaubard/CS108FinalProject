@@ -83,7 +83,7 @@ public class QuizAttempts {
 	public String printAttemt(AccountManager am) {
 		StringBuilder attempt = new StringBuilder();
 		
-		attempt.append(am.getAccount(userID).getName());
+		//attempt.append(am.getAccount(userID).getName());
 		attempt.append("(score: ");
 		attempt.append(score);
 		attempt.append("; time: ");
