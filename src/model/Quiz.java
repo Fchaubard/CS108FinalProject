@@ -256,6 +256,9 @@ public class Quiz {
 	
 	public Question getNextQuestion(){
 		currentQuestionInteger++;
+		if( currentQuestionInteger >= questions.size()){
+			currentQuestionInteger = 0;
+		}
 		return questions.get(currentQuestionInteger);
 	}
 	
