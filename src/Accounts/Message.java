@@ -7,13 +7,17 @@ public class Message {
 	private String subject;
 	private String body;
 	private long timestamp;
+	private int challengeID;
+	private String challengeName;
 	
-	public Message(String sender, String recipient, String subject, String body, long timestamp) {
+	public Message(String sender, String recipient, String subject, String body, long timestamp, int challengeID, String challengeName) {
 		this.sender = sender;
 		this.recipient = recipient;
 		this.subject = subject;
 		this.body = body;
 		this.timestamp = (timestamp > 0) ? timestamp : System.currentTimeMillis();
+		this.challengeID  =challengeID;
+		this.challengeName = challengeName;
 	}
 		
 	public String getSender() {
@@ -36,7 +40,13 @@ public class Message {
 		return timestamp;
 	}
 	
+	public int getChallengeID() {
+		return challengeID;
+	}
 	
+	public String getChallengeName() {
+		return challengeName;
+	}
 	
 	@Override
 	public String toString() {

@@ -34,6 +34,10 @@ public class MailManager {
 		sb.append(mail.getBody());
 		sb.append("\", \"");
 		sb.append(new Timestamp(mail.getTimestamp()));
+		if (mail.getChallengeID() > 0) {
+			sb.append("\", \"");
+			sb.append(mail.getChallengeID());
+		}
 		sb.append("\");");
 		try {
 			stmt = (Statement) con.createStatement();
@@ -58,7 +62,13 @@ public class MailManager {
 				String subject = rs.getString("subject");
 				String body = rs.getString("message");
 				Date time = rs.getTimestamp("date");
-				m = new Message(sender, recipient, subject, body, time.getTime());
+				int challengeID = rs.getInt("challenge");
+				String challengeName = null;
+				if (challengeID > 0) {
+					rs = stmt.executeQuery("select name from quiz where quiz_id = " + challengeID + ";");
+					if (rs.next()) challengeName = rs.getString("name");
+				}
+				m = new Message(sender, recipient, subject, body, time.getTime(), challengeID, challengeName);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -79,7 +89,7 @@ public class MailManager {
 				String sender = rs.getString("sender");
 				String subject = rs.getString("subject");
 				Date time = rs.getTimestamp("date");
-				inbox.put(key, new Message(sender, recipient, subject, null, time.getTime()));
+				inbox.put(key, new Message(sender, recipient, subject, null, time.getTime(), 0, null));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -101,7 +111,7 @@ public class MailManager {
 				String recipient = rs.getString("recipient");
 				String subject = rs.getString("subject");
 				Date time = rs.getTimestamp("date");
-				outbox.put(key, new Message(sender, recipient, subject, null, time.getTime()));
+				outbox.put(key, new Message(sender, recipient, subject, null, time.getTime(), 0, null));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

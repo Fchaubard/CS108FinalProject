@@ -52,8 +52,17 @@ public class MailManagementServlet extends HttpServlet {
     			out.println("</a>");
     		}
     	} else {//print specific message
-    		Message m = mm.recieveMessage(Integer.parseInt(request.getParameter("index")));
+    		int x = 37;
+    		try {
+    			x = Integer.parseInt(request.getParameter("index"));
+    		} catch (NumberFormatException e) {
+    			if (mm == null) System.out.println("mail fail");
+    		}
+    		Message m = mm.recieveMessage(x);
     		out.println("Subject: " + m.getSubject() + "<br>");
+    		if (m.getChallengeName() != null) {
+    			out.println("You have been challenged to the <a href = QuizTitleServlet?id="+m.getChallengeID()+">"+m.getChallengeName()+"</a><br>");
+    		}
     		out.println("From: " + m.getSender() + " @ " + new java.util.Date(m.getTimestamp())+ "<br>");
     		out.println(m.getBody());
     		
@@ -72,7 +81,13 @@ public class MailManagementServlet extends HttpServlet {
     	} else {
     	String subject = request.getParameter("subject");
     	String body = request.getParameter("body");
-    	Message m = new Message(sender, recipient, subject, body, 0);
+    	int challenge = -1;
+    	try {
+    		challenge = Integer.parseInt(request.getParameter("challenge"));
+    	} catch (NumberFormatException e) {
+	
+    	}
+    	Message m = new Message(sender, recipient, subject, body, 0, challenge, null);
     	MailManager mm = (MailManager) request.getServletContext().getAttribute("mail");
     	mm.sendMessage(m);
     	request.getRequestDispatcher("/UserHome.jsp").forward(request, response);

@@ -45,6 +45,7 @@ public class QuizTitleServlet extends HttpServlet {
 			String qName = q.getQuizName();
 	    	Account a = q.getCreator();
 	    	String author = a.getName();
+	    	response.setContentType("text/html");
 	    	PrintWriter out = response.getWriter();
 	    	out.println("<h1>"+qName+"</h1>");
 	    	out.println("In category: " + q.getCategory() + "<br>");

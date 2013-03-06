@@ -18,6 +18,7 @@ out.println("Sender:" + from);%>
 <input type="hidden" name="sender" value = "<% out.print(from); %>">
 Recipient: <input type="text" name="recipient" value = "<% out.println(to); %>"><br>
 subject: <input type="text" name="subject"><br>
+(optional) challenge ID: <input type="text" name="challenge"><br>
 message: <textarea cols = "50" rows = "5" name = "body"></textarea>
 <input type="submit" value="Send">
 </form>
