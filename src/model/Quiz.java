@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import Accounts.Account;
 import Servlets.MyDB;
@@ -89,6 +90,12 @@ public class Quiz {
 			ps.setInt(2, q.getqID());
 			ps.setInt(3, q.getType());
 			ps.executeUpdate();
+		}
+	}
+	
+	public void randomizeQuestions() {
+		if(random) {
+			Collections.shuffle(questions);
 		}
 	}
 	
