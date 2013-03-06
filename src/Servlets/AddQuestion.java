@@ -61,16 +61,16 @@ public class AddQuestion extends HttpServlet {
 		Quiz quiz;
 		if (session.getAttribute("Quiz")==null) {
 			
-			boolean random = (String)request.getParameter("random")!=null ? true : false ;
-			boolean onePage = (String)request.getParameter("multipage")!=null ? true : false ;
-			boolean ic = (String)request.getParameter("immediateCorrection")!=null ? true : false ;
+			boolean random = (String)request.getParameter("random") == "true" ? true : false;
+			boolean onePage = (String)request.getParameter("multipage") == "true" ? true : false ;
+			boolean ic = (String)request.getParameter("immediateCorrection") == "true" ? true : false ;
 			String nameString = (String)request.getParameter("quizName");
 			String categoryString = (String)request.getParameter("quizCategory");
 			String descriptionString = (String)request.getParameter("quizDescription");
 			Account account =  ((Account)session.getAttribute("account"));
 			ServletContext sc = request.getServletContext();
 			AccountManager am = (AccountManager) sc.getAttribute("accounts");
-			quiz = new Quiz( am.getCon(), new ArrayList<Question>(), random, onePage, ic, false, account, nameString, categoryString, descriptionString);
+			quiz = new Quiz( am.getCon(), new ArrayList<Question>(), random, onePage, ic, false, account, nameString, descriptionString, categoryString);
 			session.setAttribute("Quiz", quiz);
 			
 		}

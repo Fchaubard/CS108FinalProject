@@ -21,8 +21,8 @@ public class FillInTheBlank implements Question {
 	public static String getHTMLInputString(){
 		
 		StringBuilder html = new StringBuilder();
-		html.append("<br />Insert statement before user input: <br /><input type=\"text\" name=\"statementBefore\" />");
-		html.append("<br />Insert statement after user input: <br /><input type=\"text\" name=\"statementAfter\" />");
+		html.append("<br />Insert statement before user input: <br /><input type=\"text\" name=\"statementBefore\" size=\"75\" />");
+		html.append("<br />Insert statement after user input: <br /><input type=\"text\" name=\"statementAfter\" size=\"75\" >");
 		html.append("<br />Insert Possible Answer 1:<br /> <input type=\"text\" name=\"answer1\" />");
 		html.append("<br />Insert Possible Answer 2 (optional):<br /> <input type=\"text\" name=\"answer2\" />");
 		html.append("<br />Insert Possible Answer 3 (optional):<br /> <input type=\"text\" name=\"answer3\" />");
@@ -158,7 +158,7 @@ public class FillInTheBlank implements Question {
 		
 		for(String s : answers) {
 			correctAnswers.append(s);
-			correctAnswers.append(" ");
+			correctAnswers.append(", ");
 		}
 		
 		return correctAnswers.toString();

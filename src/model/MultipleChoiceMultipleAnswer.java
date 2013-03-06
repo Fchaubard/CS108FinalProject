@@ -135,7 +135,7 @@ public class MultipleChoiceMultipleAnswer implements Question {
 		
 		for(String s : answers) {
 			correctAnswers.append(s);
-			correctAnswers.append(" ");
+			correctAnswers.append(", ");
 		}
 		
 		return correctAnswers.toString();
