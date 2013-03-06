@@ -2,6 +2,7 @@ package Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -86,6 +87,14 @@ public class SolveServlet extends HttpServlet {
 			int time = (int)(-Long.parseLong(timer) + (long)System.currentTimeMillis());
 			
 			QuizAttempts qa = new QuizAttempts(new Integer(1), (Integer) Integer.parseInt(quizID), score, (java.util.Date) new Date(), (int)time);
+			if(!quiz.isPracticeMode()) {
+				try {
+					qa.pushAttemptToDB((Connection)request.getServletContext().getAttribute("connect"));
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			
 			if (session.getAttribute("qa") != null) {
 				session.removeAttribute("qa");

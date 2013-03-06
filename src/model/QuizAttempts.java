@@ -1,5 +1,8 @@
 package model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class QuizAttempts {
@@ -21,8 +24,6 @@ public class QuizAttempts {
 		this.score = score;
 		this.date = date;
 		this.time = time;
-		
-		
 	}
 	
 	public Integer getQuizID() {
@@ -64,5 +65,8 @@ public class QuizAttempts {
 	public void setUserID(Integer userID) {
 		this.userID = userID;
 	}
-
+	
+	public void pushAttemptToDB(Connection con) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("insert into history values(?, ?, ?, ?, ?)");
+	}
 }
