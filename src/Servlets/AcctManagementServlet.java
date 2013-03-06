@@ -47,11 +47,11 @@ public class AcctManagementServlet extends HttpServlet {
     	if (action.equals("Create")) {
     		Account acct = am.createAccount(name, pass);
     		if (acct == null) {
+    			request.getSession().setAttribute("user", name);
     			request.getRequestDispatcher("/NameTaken.jsp").forward(request, response);
     		} else {
-    			sc.setAttribute("user", name);
-    			Account curracct = (Account) request.getSession().getAttribute("account");
-    			curracct = acct;
+    			request.getSession().setAttribute("user", name);
+    			request.getSession().setAttribute("account", acct);
     			request.getRequestDispatcher("/UserHome.jsp").forward(request, response);
     		}
     	} else if (action.equals("Delete")) {

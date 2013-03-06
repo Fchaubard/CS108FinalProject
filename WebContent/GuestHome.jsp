@@ -15,7 +15,7 @@
 You are currently visiting as a guest. Log in to save quiz results.
 <form action="LoginServlet" method="post">
 Username: <input type="text" name="user"><br>
-Password: <input type="text" name="pass">
+Password: <input type="password" name="pass">
 <input type="submit" value="Login">
 </form>
 <a href = "newAccount.html">create new account</a>
