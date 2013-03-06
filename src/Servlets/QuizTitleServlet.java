@@ -37,27 +37,35 @@ public class QuizTitleServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
     	Account user = (Account) request.getSession().getAttribute("account");
+    	//Account user = am.getAccount("Sam I Am");
     	int id = Integer.parseInt(request.getParameter("id"));
     	Quiz q;
 		try {
 			q = new Quiz(id, am.getCon());
 			String qName = q.getQuizName();
-	    	//Account a = q.getCreator();
-	    	//String author = a.getName();
+	    	Account a = q.getCreator();
+	    	String author = a.getName();
 	    	PrintWriter out = response.getWriter();
 	    	out.println("<h1>"+qName+"</h1>");
-	    	//out.println("by <a href = \"ProfileServlet?user="+author+"\">"+author+"</a>");
+	    	out.println("In category: " + q.getCategory() + "<br>");
+	    	out.println("by <a href = \"ProfileServlet?user="+author+"\">"+author+"</a><br>");
+	    	out.println(q.getDescription());
 	    	out.println("<br>");
 	    	out.println("<h3>Top Scorers</h3>");
 	    	out.println("<ol>");
+	    	//currently prints ALL the scores. Can switch to a for (0-4) but table needs to be sorted first.
 	    	for (QuizAttempts qa : am.getHistory(0, id)) {
 	    		out.println("<li>Hello</li>");
 	    	}
 	    	out.println("</ol><br>");
 	    	out.println("<h3>My Scores</h3>");
-	    	out.println("<ol>");
-	    	for (QuizAttempts qa : am.getHistory(user.getId(), id)) {
-	    		out.println("<li>Hello</li>");
+	    	if (user != null) {
+	    		out.println("<ol>");
+	    		for (QuizAttempts qa : am.getHistory(user.getId(), id)) {
+	    			out.println("<li>Hello</li>");
+	    		}
+	    	} else {
+	    		out.println("Log in to see your history");
 	    	}
 	    	out.println("</ol>");
 	    	out.println("<li><a href= \"SinglePageQuizServlet?id="+id+"\">Single Page</a></li>");

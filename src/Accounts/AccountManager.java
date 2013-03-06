@@ -212,9 +212,9 @@ public class AccountManager {
 	public ArrayList<model.QuizAttempts> getHistory(int userid, int quizid) {
 		ResultSet rs;
 		Statement stmt;
-		ArrayList<model.QuizAttempts> history = null;
+		ArrayList<model.QuizAttempts> history = new ArrayList<model.QuizAttempts>();
 		try {
-			history = new ArrayList<model.QuizAttempts>();
+			//history = new ArrayList<model.QuizAttempts>();
 			stmt = (Statement) con.createStatement();
 			StringBuilder sb = new StringBuilder();
 			sb.append("select * from history where ");

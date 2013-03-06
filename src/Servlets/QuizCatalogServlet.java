@@ -45,7 +45,7 @@ public class QuizCatalogServlet extends HttpServlet {
 			while (rs.next()) {
 				String name = rs.getString("name");
 				int id = rs.getInt("quiz_id");
-				out.println("<li><a href= \"SinglePageQuizServlet?id="+id+"\">"+name+"</a></li>");
+				out.println("<li><a href= \"QuizTitleServlet?id="+id+"\">"+name+"</a></li>");
 			}
 			out.println("</ul>");
 		} catch (SQLException e) {
