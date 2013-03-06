@@ -41,6 +41,8 @@ public class MultipleAnswer implements Question {
 		generate(id, con);
 	}
 	
+	
+	
 	public void generate(int id, Connection con) {
 		setqID(id);
 		try {

@@ -14,8 +14,9 @@ public interface Question {
 	public int getqID();
 	
 	public int getType();
-	
+
 	public String toHTMLString();
+	
 	
 	public String getCorrectAnswers();
 	

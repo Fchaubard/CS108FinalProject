@@ -172,7 +172,7 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 				counter++;
 			}
 			
-			out.println("<br /><form action=\"AddQuestion\" method=\"post\">");
+			out.println("<br /><form  action=\"AddQuestion\" method=\"post\">");
 			out.println("<br /><h2>Add another question?</h2>");
 			out.println("<br />Question Type:<select name=\"questionType\">");
 			out.println("<option value=\"1\">Question Response</option>");
@@ -182,6 +182,7 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 			out.println("<option value=\"5\">Multiple Answer</option>");
 			out.println("<option value=\"6\">Multiple Choice with Multiple Answer</option>");
 			out.println("<option value=\"7\">Matching</option>");
+			out.println("<option value=\"8\">Random Multiple Choice from Wikipedia</option>");
 			out.println("</select>");
 			out.println("<br /><input type=\"submit\" value=\"Add another question\"/>");
 			out.println("</form>");

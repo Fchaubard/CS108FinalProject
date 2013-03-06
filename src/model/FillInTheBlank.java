@@ -67,6 +67,7 @@ public class FillInTheBlank implements Question {
 		this.answers = ans; // need to add the &&&
 	}
 
+	
 	public FillInTheBlank(int id, Connection con) { // pulls from database
 		generate(id, con);
 	}

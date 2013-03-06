@@ -30,6 +30,8 @@ public class MultipleChoiceMultipleAnswer implements Question {
 		return html.toString();
 	}
 	
+
+	
 	public MultipleChoiceMultipleAnswer(String question, Set<String> ans, Set<String> wrongAns) { // pushes to database
 		this.wrongAnswers = wrongAns;
 		this.statement = question;

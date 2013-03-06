@@ -99,11 +99,20 @@ public class QuestionResponse implements Question {
 		html.append(type);
 		html.append("_");
 		html.append(qID);
+
+		html.append("\" id=\"");
+		html.append(type);
+		html.append("_");
+		html.append(qID);
+
 		html.append("\" />");
 		
 		return html.toString();
 	}
-
+	
+	
+	
+	
 	@Override
 	public void generate(int id, Connection con) {
 		// TODO Auto-generated method stub

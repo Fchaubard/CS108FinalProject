@@ -60,10 +60,12 @@ public class AddQuestion extends HttpServlet {
 		//public Quiz(ArrayList<Question> q, boolean random, boolean onePage, boolean immediateCorrect, boolean practice, int userID, String quizName, String description, String category){
 		Quiz quiz;
 		if (session.getAttribute("Quiz")==null) {
-			
-			boolean random = (String)request.getParameter("random") == "true" ? true : false;
-			boolean onePage = (String)request.getParameter("multipage") == "true" ? true : false ;
-			boolean ic = (String)request.getParameter("immediateCorrection") == "true" ? true : false ;
+			String randomstring = (String)request.getParameter("random")!=null ? (String)request.getParameter("random") : "blah";
+			boolean random = randomstring.equals("true1") ? true : false;
+			String multipagestring = (String)request.getParameter("multipage")!=null ? (String)request.getParameter("multipage") : "blah";;
+			boolean onePage = multipagestring.equals("true2") ? true : false ;
+			String immediateCorrectionstring = (String)request.getParameter("immediateCorrection")!=null ? (String)request.getParameter("immediateCorrection") : "blah";;
+			boolean ic = immediateCorrectionstring.equals("true3") ? true : false ;
 			String nameString = (String)request.getParameter("quizName");
 			String categoryString = (String)request.getParameter("quizCategory");
 			String descriptionString = (String)request.getParameter("quizDescription");

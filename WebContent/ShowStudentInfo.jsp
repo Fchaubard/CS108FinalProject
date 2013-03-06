@@ -12,16 +12,26 @@
         <div id="somediv"></div>
          <button id="somebutton1">press here1</button>
         <div id="somediv1"></div>
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
          <script>
             $(document).ready(function() {                        // When the HTML DOM is ready loading, then execute the following function...
                 $('#somebutton').click(function() {    
                 									// Locate HTML DOM element with ID "somebutton" and assign the following function to its "click" event...
                     $.get('StudentInfo?id=1', function(responseText) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
-                        $('#somediv').text(responseText);         // Locate HTML DOM element with ID "somediv" and set its text content with the response text.
+                    	var value = $("#txt_name").val(); 
+                    	if ( responseText.indexOf(value) > -1 ) {
+                    		$('#somediv').text("correct!"); 
+                    	}
+                    	else{
+                    		$('#somediv').text(responseText); 
+                    	}
+                    	// Locate HTML DOM element with ID "somediv" and set its text content with the response text.
+                   
                     });
                 });
             });
         </script>
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
           <script>
             $(document).ready(function() {                        // When the HTML DOM is ready loading, then execute the following function...
                 $('#somebutton1').click(function() {    

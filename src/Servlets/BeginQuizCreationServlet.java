@@ -57,9 +57,9 @@ public class BeginQuizCreationServlet extends HttpServlet {
 			out.println("<br />Quiz Description: <textarea name = \"quizDescription\" rows=\"4\" cols=\"50\"> </textarea>");
 			//out.println("<br />Quiz Description: <input name=\"quizDescription\" type=\"text\" rows=\"4\" cols=\"50\" />");
 			out.println("<br />Quiz Category: <input name=\"quizCategory\" type=\"text\" />");
-			out.println("<br /><input type=\"checkbox\" name=\"random\" value=\"true\"> Random Question Ordering?");
-			out.println("<br /><input type=\"checkbox\" name=\"multipage\" value=\"true\"> MultiPage Question Display?");
-			out.println("<br /><input type=\"checkbox\" name=\"immediateCorrection\" value=\"true\"> Immediate Correction?");
+			out.println("<br /><input type=\"checkbox\" name=\"random\" value=\"true1\"> Random Question Ordering?");
+			out.println("<br /><input type=\"checkbox\" name=\"multipage\" value=\"true2\"> MultiPage Question Display?");
+			out.println("<br /><input type=\"checkbox\" name=\"immediateCorrection\" value=\"true3\"> Immediate Correction?");
 			out.println("<br />Question Type:<select name=\"questionType\">");
 			out.println("<option value=\"1\">Question Response</option>");
 			out.println("<option value=\"2\">Fill in the blank</option>");
