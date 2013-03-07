@@ -194,4 +194,10 @@ public class PictureResponse implements Question {
 		
 		return userAns.toString();
 	}
+
+
+	@Override
+	public int getTotalQScore() {
+		return 1;
+	}
 }

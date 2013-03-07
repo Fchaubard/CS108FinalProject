@@ -202,4 +202,9 @@ public class MultipleAnswer implements Question {
 		
 		return userAns.toString();
 	}
+
+	@Override
+	public int getTotalQScore() {
+		return numAnswers;
+	}
 }

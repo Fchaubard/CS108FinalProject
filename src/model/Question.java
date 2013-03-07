@@ -17,7 +17,6 @@ public interface Question {
 
 	public String toHTMLString();
 	
-	
 	public String getCorrectAnswers();
 	
 	public void pushToDB(Connection con) throws SQLException;
@@ -26,4 +25,5 @@ public interface Question {
 	
 	public String getUserAnswers();
 	
+	public int getTotalQScore();
 }

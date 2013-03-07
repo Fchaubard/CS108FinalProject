@@ -262,5 +262,9 @@ public class MultipleChoice implements Question {
 	public String getUserAnswers() {
 		return userAnswer;
 	}
+	@Override
+	public int getTotalQScore() {
+		return 1;
+	}
 
 }

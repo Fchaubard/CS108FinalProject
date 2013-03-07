@@ -77,7 +77,7 @@ public class QuizResultsServlet extends HttpServlet {
 			out.println("</head>");
 			out.println("<body>");
 			out.println("<h1>"+quiz.getQuizName()+"</h1><br />");
-			out.println("<h3>Score: "+qa.score+"</h3><br />");
+			out.println("<h3>Score: "+ qa.score +"% </h3><br />");
 			out.println("<h3>Time: "+(qa.time/1000)+" s" +"</h3><br />");
 			
 			out.println("<h3>Top Scorers</h3>");

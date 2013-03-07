@@ -71,6 +71,7 @@ public class SolveServlet extends HttpServlet {
 			else{
 				quiz = (Quiz) session.getAttribute("quiz_"+quizID);
 			}
+			
 			Integer score = 0;
 			// Solve the exam
 			for (Question q : quiz.getQuestions()) {
@@ -83,6 +84,8 @@ public class SolveServlet extends HttpServlet {
 					q.setUserAnswers(answersArrayList);
 				}
 			}
+			
+			score = (int)(((double)score/quiz.totalScore()) * 100);
 			
 			String timer = (String) request.getParameter("startTime");
 			int time = (int)(-Long.parseLong(timer) + (long)System.currentTimeMillis());

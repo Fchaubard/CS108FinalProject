@@ -365,7 +365,18 @@ public class Quiz {
 	public ArrayList<Question> getQuestions() {
 		return questions;
 	}
+	
 	public void setQuestions(ArrayList<Question> questions) {
 		this.questions = questions;
+	}
+	
+	public int totalScore() {
+		int total = 0;
+		
+		for(Question q : questions) {
+			total += q.getTotalQScore();
+		}
+		
+		return total;
 	}
 }

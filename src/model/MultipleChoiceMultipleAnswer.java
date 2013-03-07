@@ -216,4 +216,11 @@ public class MultipleChoiceMultipleAnswer implements Question {
 		
 		return userAns.toString();
 	}
+
+
+
+	@Override
+	public int getTotalQScore() {
+		return answers.size();
+	}
 }

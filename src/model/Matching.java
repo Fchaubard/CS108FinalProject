@@ -226,4 +226,9 @@ public class Matching implements Question {
 		// TODO IMPLEMENT THIS
 		return null;
 	}
+
+	@Override
+	public int getTotalQScore() {
+		return correctIndexesOfRow1MappingtoRow2.size();
+	}
 }
