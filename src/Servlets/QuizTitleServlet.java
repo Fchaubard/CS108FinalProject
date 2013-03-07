@@ -70,7 +70,13 @@ public class QuizTitleServlet extends HttpServlet {
 	    		out.println("Log in to see your history");
 	    	}
 	    	out.println("</ol>");
-	    	out.println("<li><a href= \"SinglePageQuizServlet?id="+id+"\">Single Page</a></li>");
+	    	if(q.isOnePageMultiPage()){
+
+		    	out.println("<li><a href= \"MultiPageQuiz?id="+id+"\">Multi Page</a></li>");
+			}else{
+
+		    	out.println("<li><a href= \"SinglePageQuizServlet?id="+id+"\">Single Page</a></li>");
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
