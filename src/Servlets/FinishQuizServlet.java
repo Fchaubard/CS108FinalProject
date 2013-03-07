@@ -77,6 +77,8 @@ public class FinishQuizServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
+		request.getSession().removeAttribute("Quiz");
+		
 		out.println("<form action=\"QuizCatalogServlet\" method=\"get\">");
 		out.println("<br /><br />Click to Save Quiz");
 		out.println("<br /><input type=\"submit\" value=\"Save Quiz\"/>");
