@@ -3,6 +3,23 @@ button{
 	border-width: 1px;
 }
 
+a.header{
+	text-decoration:none;
+	color:white;
+}
+
+ul.header{
+	list-style-type:none;
+	margin:0;
+	padding:0;
+}
+
+li.header{
+	float:right;
+	padding-left:10px;
+	padding-right:10px;
+}
+
 input[type="submit"]{
 	background-color: "rgb(170,238,216)";
 	border-width: 1px;
@@ -33,6 +50,7 @@ div.content{
 	margin-left: 35%;
 	margin-top:5%;
 	margin-right:35%;
+	min-width:364px;
 }
 
 div.header{
