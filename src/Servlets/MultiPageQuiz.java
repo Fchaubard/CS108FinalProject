@@ -85,13 +85,17 @@ public class MultiPageQuiz extends HttpServlet {
 			if (request.getParameter("questionIndex") != null){
 				questionIndex = Integer.parseInt(request.getParameter("questionIndex"));
 				System.out.println("this question index is not null");
-				if (questionIndex >= quiz.getQuestions().size() -2 || quiz.getQuestions().size() == 1){
+				if (questionIndex >= quiz.getQuestions().size() -2){
 					out.println("<form action=\"SolveServlet\" method=\"post\">");
 				}
 				
 				else{
 					out.println("<form action=\"MultiPageQuiz\" method=\"post\">");
 				}
+			}
+			
+			else if(quiz.getQuestions().size() == 1){
+				out.println("<form action=\"SolveServlet\" method=\"post\">");
 			}
 			
 			else{
