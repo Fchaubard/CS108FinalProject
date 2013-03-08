@@ -96,9 +96,14 @@ public class SolveServlet extends HttpServlet {
 				if (acct != null) {
 					qa = new QuizAttempts(acct.getId(), (Integer) Integer.parseInt(quizID), score, (java.util.Date) new Date(), (int)time);
 					if(!quiz.isPracticeMode()) {
+						//store and update acheivements
+						AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
 						try {
 							qa.pushAttemptToDB((Connection)request.getServletContext().getAttribute("connect"));
 							quiz.addToHistory(qa);
+							int quizesDone = am.quizesTaken(acct);
+							am.updateAchievements(acct, quizesDone);
+							
 						} catch (SQLException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

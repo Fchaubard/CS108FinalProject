@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import Accounts.Account;
+
 
 public class AccountManager {
 	
@@ -246,6 +248,41 @@ public class AccountManager {
 			e.printStackTrace();
 		}
 		return history;
+	}
+	
+	public int quizesTaken(Account acct) {
+		ResultSet rs;
+		Statement stmt;
+		int history = 0;
+		try {
+			stmt = (Statement) con.createStatement();
+			rs = stmt.executeQuery("select COUNT(*) from history where user_id ="+acct.getId()+"");
+			rs.next();
+			history = rs.getInt("count(*)");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return history;
+	}
+	
+	public void updateAchievements (Account acct, int quizesDone) {
+		/*System.out.println(quizesDone);
+		if (quizesDone > 0) acct.giveAcheivement("amateure");
+		if (quizesDone > 5) acct.giveAcheivement("prolific");
+		if (quizesDone > 10) acct.giveAcheivement("prodigious");
+		if (quizesDone > 50) acct.giveAcheivement("greatest");
+		if (quizesDone > 100) acct.giveAcheivement("quiz_machine");*/
+		Statement stmt;
+		try {
+			stmt = (Statement) con.createStatement();
+			if (quizesDone >= 1) stmt.executeUpdate("update user set amateure = true where user_id = " + acct.getId());
+			if (quizesDone >= 5) stmt.executeUpdate("update user set prolific = true where user_id = " + acct.getId());
+			if (quizesDone >= 10) stmt.executeUpdate("update user set prodigious = true where user_id = " + acct.getId());
+			if (quizesDone >= 50) stmt.executeUpdate("update user set greatest = true where user_id = " + acct.getId());
+			if (quizesDone >= 100) stmt.executeUpdate("update user set quiz_machine = true where user_id = " + acct.getId());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static String hexToString(byte[] bytes) {
