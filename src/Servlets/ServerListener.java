@@ -19,14 +19,15 @@ import Accounts.MailManager;
  *
  */
 @WebListener
-public class serverListener implements ServletContextListener {
-
+public class ServerListener implements ServletContextListener {
+	//me testing shit
+	
 	protected MyDB db;
 	
     /**
      * Default constructor. 
      */
-    public serverListener() {
+    public ServerListener() {
         // TODO Auto-generated constructor stub
     }
 
