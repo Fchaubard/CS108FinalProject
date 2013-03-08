@@ -141,6 +141,20 @@ public class AccountManager {
 			e.printStackTrace();
 		}
 	}
+
+	public boolean isFriend(int user, int friend) {
+		Statement stmt;
+		try {
+			stmt = (Statement) con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM pending_friends WHERE pending_user_id = " + friend +" AND accepted_user_id = "+ user +";");
+			if (rs.next()) return true;
+			rs = stmt.executeQuery("SELECT * FROM friend_mapping WHERE first_user_id = " + user +" AND second_user_id = "+ friend +"");
+			if (rs.next()) return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 	
 	public void deleteFriend(int lousyFriend, int foreverAlone) {
 		Statement stmt;

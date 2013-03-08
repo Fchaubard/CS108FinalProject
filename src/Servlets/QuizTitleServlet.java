@@ -63,25 +63,26 @@ public class QuizTitleServlet extends HttpServlet {
 	    	out.println("<br>");
 	    	out.println(HTMLHelper.contentEnd());
 	    	out.println(HTMLHelper.contentStart());
+	    	if (user == null) {
+	    		out.println("NOTE: You are not logged in. Your quiz results will not be saved.");
+	    	}
 	    	out.println("<h3>Top Scorers</h3>");
 	    	out.println("<ol>");
 	    	//currently prints ALL the scores. Can switch to a for (0-4) but table needs to be sorted first.
 	    	for (QuizAttempts qa : am.getHistory(0, id)) {
-	    		out.println("<li>Hello</li>");
+	    		out.println("<li>" +qa.getScore()+" "+qa.getTime()+"</li>");
 	    	}
 	    	out.println("</ol><br>");
 	    	out.println(HTMLHelper.contentEnd());
 	    	out.println(HTMLHelper.contentStart());
-	    	out.println("<h3>My Scores</h3>");
 	    	if (user != null) {
+	    	out.println("<h3>My Scores</h3>");
 	    		out.println("<ol>");
 	    		for (QuizAttempts qa : am.getHistory(user.getId(), id)) {
-	    			out.println("<li>Hello</li>");
+	    			out.println("<li>"+qa.getScore()+" "+qa.getTime()+"</li>");
 	    		}
-	    	} else {
-	    		out.println("Log in to see your history");
-	    	}
 	    	out.println("</ol>");
+	    	}
 	    	out.println(HTMLHelper.contentEnd());
 	    	out.println(HTMLHelper.contentStart());
 	    	if(q.isOnePageMultiPage()){

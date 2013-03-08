@@ -66,10 +66,15 @@ import Accounts.AccountManager;
     	    		out.println(HTMLHelper.contentStart());
     	    		out.println("<a href = \"newMessage.jsp?&user="+viewer.getName()+"&to="+profile.getName()+"\">Send Mail</a>");
     	    		out.println("<br>");
-    	    		out.println("<li><form action=\"FriendManagementServlet\" method=\"post\">");
+    	    		out.println("<li><form id=\"friend\" action=\"FriendManagementServlet\" method=\"post\">");
     	    		out.println("<input type=\"hidden\" name=\"ID\" value=\""+profile.getId()+"\">");
-    	    		out.println("<input type=\"submit\" name=\"action\" value=\"delete\">");
-    	    		out.println("<input type=\"submit\" name=\"action\" value=\"add\">");
+    	    		if (am.isFriend(viewer.getId(), profile.getId())) {
+    	    			out.println("<input type=\"hidden\" name=\"action\" value=\"delete\">");
+    	    			out.println("<a href=\"#\" onclick=\"document.getElementById(\'friend\').submit();\"> Remove as friend </a>");
+    	    		} else {
+    	    			out.println("<input type=\"hidden\" name=\"action\" value=\"add\">");
+    	    			out.println("<a href=\"#\" onclick=\"document.getElementById(\'friend\').submit();\"> Add as friend </a>");
+    	    		}
     	    		out.println("</form>");
     	    		out.println(HTMLHelper.contentEnd());
     	    	}

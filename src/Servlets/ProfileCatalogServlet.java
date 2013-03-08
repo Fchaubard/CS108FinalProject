@@ -52,6 +52,8 @@ public class ProfileCatalogServlet extends HttpServlet {
 	    	out.println("</head");
 	    	out.println(HTMLHelper.printHeader());
 	    	out.println("<body>");
+	    	
+    		out.println(HTMLHelper.contentStart());
 	    	out.println("<form action=\"ProfileCatalogServlet\" method=\"get\">");
 	    	out.println("Search Users: <input type=\"text\" name=\"search\"/>");
 	    	out.println("<input type=\"submit\" value=\"Search\"/>");
@@ -60,10 +62,10 @@ public class ProfileCatalogServlet extends HttpServlet {
 			out.println("</body>");
 			while (rs.next()) {
 				String name = rs.getString("username");
-				//int id = rs.getInt("quiz_id");
 				out.println("<li><a href= \"ProfileServlet?user="+name+"\">"+name+"</a></li>");
 			}
 			out.println("</ul>");
+			out.println(HTMLHelper.contentEnd());
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("oops!");
