@@ -8,6 +8,7 @@
        
     </head>
     <body>
+    <%= helpers.HTMLHelper.printHeader() %>
         <button id="somebutton">press here</button>
         <div id="somediv"></div>
          <button id="somebutton1">press here1</button>

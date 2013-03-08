@@ -25,7 +25,8 @@ input[type="submit"]{
 	border-width: 1px;
 }
 
-input[type="text"]{
+input[type="text"],
+input[type="password"]{
 	border-radius: 5px;
 	border-color: aliceblue;
 	background-color: aliceblue;

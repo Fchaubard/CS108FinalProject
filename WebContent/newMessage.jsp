@@ -7,6 +7,7 @@
 <title>compose message</title>
 </head>
 <body>
+<%= helpers.HTMLHelper.printHeader() %>
 <form action="MailManagementServlet" method="post">
 <% String from = ((Accounts.Account) request.getSession().getAttribute("account")).getName(); 
 	String to = (String) request.getParameter("to");

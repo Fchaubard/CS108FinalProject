@@ -5,10 +5,12 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="mufasa.css">
 <title>Moses-Foe Quiz Project</title>
 </head>
 <body>
-<div>Ramon trying Shit</div>
+<%= helpers.HTMLHelper.printHeader() %>
+<div class=content>
 <div style= "font-size: large"><b>Account System Test</b></div>
 
 <br>
@@ -20,5 +22,6 @@ Password: <input type="password" name="pass">
 <input type="submit" value="Login">
 </form>
 <a href = "newAccount.html">create new account</a>
+</div>
 </body>
 </html>

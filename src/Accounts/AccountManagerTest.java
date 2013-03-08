@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class AccountManagerTest {
+	//Ramon's testing comment
 	private AccountManager am;
 	private Account acct1;
 	
