@@ -103,24 +103,24 @@ public class MultiPageQuiz extends HttpServlet {
 			}
 			
 			if(request.getParameter("startTime") == null){
-				out.println("<br /><input name=\"startTime\" type=\"hidden\" value=\"" + System.currentTimeMillis()+"\"/>");
+				out.println("<input name=\"startTime\" type=\"hidden\" value=\"" + System.currentTimeMillis()+"\"/>");
 				questionIndex = 0;
-				out.println("<br /><input name = \"questionIndex\" type=\"hidden\" value=\"" +questionIndex+"\"/>");
+				out.println("<input name = \"questionIndex\" type=\"hidden\" value=\"" +questionIndex+"\"/>");
 			}
 			else {
-				out.println("<br /><input name=\"startTime\" type=\"hidden\" value=\"" + request.getParameter("startTime")+"\"/>");
+				out.println("<input name=\"startTime\" type=\"hidden\" value=\"" + request.getParameter("startTime")+"\"/>");
 				questionIndex = Integer.parseInt(request.getParameter("questionIndex")) + 1;
-				out.println("<br /><input name = \"questionIndex\" type=\"hidden\" value=\"" +questionIndex+"\"/>");
+				out.println("<input name = \"questionIndex\" type=\"hidden\" value=\"" +questionIndex+"\"/>");
 				for(int i = 0; i < questionIndex; i++){
 					model.Question quest = quiz.getQuestions().get(i);
 					String parameterString = Integer.toString(quest.getType())+"_"+Integer.toString(quest.getqID());
 					String answerString = request.getParameter(parameterString);
-					out.println("<br /><input name = \""+parameterString+"\" type=\"hidden\" value=\"" +answerString+"\"/>");
+					out.println("<input name = \""+parameterString+"\" type=\"hidden\" value=\"" +answerString+"\"/>");
 				}
 				
 			}
 			
-			out.println("<br /><input name=\"quizID\" type=\"hidden\" value=\"" +quizID+"\"/>");
+			out.println("<input name=\"quizID\" type=\"hidden\" value=\"" +quizID+"\"/>");
 			out.println(HTMLHelper.contentStart());
 			out.println("<h3>Question "+ (questionIndex+1) +"</h3>");
 			out.println(quiz.getQuestions().get(questionIndex).toHTMLString()); // all the ids in the input fields must be unique

@@ -42,6 +42,10 @@ html{
 	background-color:#ddd;
 }
 
+h1{
+	text-align:center;
+}
+
 div.content{
 	padding:10px;
 	box-shadow: 0 2px 2px #aaa;

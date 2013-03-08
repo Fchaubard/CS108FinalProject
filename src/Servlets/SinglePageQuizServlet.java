@@ -88,8 +88,8 @@ public class SinglePageQuizServlet extends HttpServlet {
 				out.println("<h1>"+quiz.getQuizName()+"</h1>");
 				out.println(HTMLHelper.contentEnd());
 				out.println("<form action=\"SolveServlet\" method=\"post\">");
-				out.println("<br /><input name=\"startTime\" type=\"hidden\" value=\"" + System.currentTimeMillis()+"\"/>");
-				out.println("<br /><input name=\"quizID\" type=\"hidden\" value=\"" +quiz.getQuiz_id()+"\"/>");
+				out.println("<input name=\"startTime\" type=\"hidden\" value=\"" + System.currentTimeMillis()+"\"/>");
+				out.println("<input name=\"quizID\" type=\"hidden\" value=\"" +quiz.getQuiz_id()+"\"/>");
 				Question q;
 				for (int j = 0; j < quiz.getQuestions().size(); j++) {
 					out.println(HTMLHelper.contentStart());
