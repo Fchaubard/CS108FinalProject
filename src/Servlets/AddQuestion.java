@@ -130,7 +130,7 @@ public class AddQuestion extends HttpServlet {
 				break;
 				
 			case 7:
-				question = Matching.getHTMLInputString();
+				question = Matching.getTitleHTMLInputString(); // should never happen
 				break;
 			case 8:
 				question = MultipleChoice.getRandomHTMLInputString();
@@ -140,7 +140,11 @@ public class AddQuestion extends HttpServlet {
 			if (type.equals("8")){
 				type = "3"; // map it back to multiple choice
 			}
-			out.println("<form action=\"SubmitQuestionAndUpdateQuizCreationServlet\" method=\"post\">");
+			if (!type.equals("7")) {
+				out.println("<form action=\"SubmitQuestionAndUpdateQuizCreationServlet\" method=\"post\">");
+			}else{
+				out.println("<form action=\"AddMatchingQuestionServlet\" method=\"post\">");
+			}
 			out.println("<input name=\"questionType\" type=\"hidden\" value=\"" +type+"\"/>");
 			
 			out.println("<br />Quiz Name: "+quiz.getQuizName()+"");

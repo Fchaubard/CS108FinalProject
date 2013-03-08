@@ -158,7 +158,11 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 				break;
 				
 			case 7:
-				//question = Matching.getHTMLInputString();
+				Matching matching_question = (Matching)session.getAttribute("matching_question");
+				
+				quiz.addQuestion(matching_question);
+				
+				
 				break;
 			
 				
@@ -175,7 +179,9 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 				out.println(HTMLHelper.contentStart());
 				out.println("<br /><br />Question "+counter +": <br />");
 				out.println(q.toHTMLString());
-				out.println("<br />Answer "+counter +": <br />");
+				if (q.getType()!=7) {
+					out.println("<br />Answer "+counter +": <br />");					
+				}
 				out.println(q.getCorrectAnswers());
 				counter++;
 				out.println(HTMLHelper.contentEnd());

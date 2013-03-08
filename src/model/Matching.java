@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -13,29 +15,41 @@ import java.util.regex.Pattern;
 public class Matching implements Question {
 
 	public static final int type = 7;
-	private String statement;
-	private ArrayList<Integer> correctIndexesOfRow1MappingtoRow2;
-	private ArrayList<String> rowOne;
-	private ArrayList<String> rowTwo;
+	private String title;
+	private  ArrayList<String> userAns;
+	private ArrayList<String>  row1;
+	
+	private ArrayList<String>  row2;
+	private ArrayList<Integer>  shuffleIntegersForRow2; // these numbers start off ordered but then shuffle.
+
+
 	private int qID;
 
-	// TODO this is NOT RIGHT
 	public static String getHTMLInputString(){
 		// TODO
 		StringBuilder html = new StringBuilder();
-		html.append("<br />Insert picture url: <br /><input type=\"text\" name=\"url\" />");
-		html.append("<br />Insert Possible Answer 1:<br /> <input type=\"text\" name=\"answer1\" />");
-		html.append("<br />Insert Possible Answer 2 (optional):<br /> <input type=\"text\" name=\"answer2\" />");
-		html.append("<br />Insert Possible Answer 3 (optional):<br /> <input type=\"text\" name=\"answer3\" />");
 		
+		html.append("<br /><input type=\"text\" name=\"question_row\" />");
+		html.append("matches with <input type=\"text\" name=\"answer_row\" /><br />");
 		return html.toString();
 	}
 	
-	public Matching(String statement, ArrayList<Integer> ans, ArrayList<String> rowOne,ArrayList<String> rowTwo) { // pushes to database
-		this.statement = statement;
-		this.correctIndexesOfRow1MappingtoRow2 = ans;
-		this.rowOne = rowOne;
-		this.rowTwo = rowTwo;
+	
+	public static String getTitleHTMLInputString(){
+		// TODO
+		StringBuilder html = new StringBuilder();
+		
+		html.append("<br />Title of your matching question: <input type=\"text\" name=\"title\" />");
+		return html.toString();
+	}
+	public Matching(String title, ArrayList<String> row1,ArrayList<String> row2) { 
+		this.title = title;
+		this.row1 = row1;
+		this.row2 = row2;
+		shuffleIntegersForRow2 = new ArrayList<Integer>();
+		for (int i = 0; i < row2.size(); i++) {
+			shuffleIntegersForRow2.add(i);
+		}
 	}
 
 	public Matching(int id, Connection con) { // pulls from database
@@ -53,33 +67,24 @@ public class Matching implements Question {
 			ResultSet resultSet = ps.executeQuery();
 			
 			
-			String ans = new String();
-			String row_1 = new String();
-			String row_2 = new String();
-			while (resultSet.next()) {
-				statement = resultSet.getString("statement");
-				ans = resultSet.getString("answer");
-				row_1 = resultSet.getString("row_one");
-				row_2 = resultSet.getString("row_two");
-			}
-			String[] strings = row_1.split(Pattern.quote(" &&& "));
-			rowOne = new ArrayList<String>();
-			for (String string : strings) {
-				rowOne.add((string));
-			}
-			
-			strings = row_2.split(Pattern.quote(" &&& "));
-			rowTwo = new ArrayList<String>();
-			for (String string : strings) {
-				rowTwo.add((string));
-			}
 
-			strings = ans.split(Pattern.quote(" &&& "));
-			correctIndexesOfRow1MappingtoRow2 = new ArrayList<Integer>();
-			for (String string : strings) {
-				correctIndexesOfRow1MappingtoRow2.add(Integer.parseInt(string));
+			while (resultSet.next()) {
+				this.title  = resultSet.getString("title");
 			}
-				
+			ps = con.prepareStatement("select * from matching_question_mapping where matching_entry_id = ?");
+			ps.setInt(1, id);
+			resultSet = ps.executeQuery();
+
+			row1 = new ArrayList<String>();
+			row2 = new ArrayList<String>();
+			// populate the hashmap and ordered arraylist
+			int counter = 0;
+			while (resultSet.next()) {
+				row1.add( resultSet.getString("row1"));
+				row2.add( resultSet.getString("row2"));
+				shuffleIntegersForRow2.add(counter);
+				counter++;
+			}
 			
 		}catch(Exception e){
 			
@@ -87,56 +92,54 @@ public class Matching implements Question {
 		
 	}
 
-	public String getStatement() {
-		return statement;
-	}
 
-	public void setStatement(String statement) {
-		this.statement = statement;
-	}
-
-	public ArrayList<Integer> getAnswers() {
-		return correctIndexesOfRow1MappingtoRow2;
-	}
-
-	public void setAnswers(ArrayList<Integer> answers) {
-		this.correctIndexesOfRow1MappingtoRow2 = answers;
-	}
-
-	public int solve(ArrayList<String>  answer) {
-		int score =0;
-		if (answer.size()!=rowOne.size()) {
-			return 0; // input cleansing
-		}
-		for (int i = 0; i < answer.size(); i++) {
-			if (correctIndexesOfRow1MappingtoRow2.get(i)==Integer.parseInt(answer.get(i))) {
-				score++;
-			}
-		}
-		return score;
-		
-	}
-
-	public ArrayList<String> getRowOne() {
-		return rowOne;
-	}
-
-	public void setRowOne(ArrayList<String> rowOne) {
-		this.rowOne = rowOne;
-	}
-
-	public ArrayList<String> getRowTwo() {
-		return rowTwo;
-	}
-
-	public void setRowTwo(ArrayList<String> rowTwo) {
-		this.rowTwo = rowTwo;
-	}
 
 	@Override
 	public String toHTMLString() {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder html = new StringBuilder();
+		
+        html.append(title);
+        html.append("<br />");
+        Collections.shuffle(shuffleIntegersForRow2);
+
+        html.append(" <script src=\"http://code.jquery.com/jquery-latest.min.js\"></script>\n");
+        html.append(" <script src=\"  http://code.jquery.com/ui/1.10.1/jquery-ui.js\"></script>\n");
+       
+        html.append("		<script>\n");
+    	html.append( "   $(document).ready(function() {   \n");
+        html.append("		$(\"#sortable\").sortable({ });\n");
+        html.append("		 $('form').submit(function () {\n");
+        html.append("		     $('#thedata').val($(\"#sortable\").sortable(\"serialize\"));\n");
+        html.append("		 });\n");
+		html.append( "      });\n ");
+        html.append("		</script>\n");
+        html.append("<!--		<form method=\"POST\" action=\"/vote\">-->\n");
+        html.append("		    <input type=\"hidden\" name=\"key\" value=\"{{ election.key }}\">\n");
+        html.append("		    <input type=\"hidden\" name=\"uuid\" value=\"{{ uuid }}\">\n");
+        html.append("		    <div style=\"float: left; width: 150px;\">\n");
+        html.append("		        <ol>\n");
+        for (int j = 0; j < row1.size(); j++) {
+        html.append("		            <li>"+row1.get(j)+" -> </li>\n");
+        }
+        html.append("		        </ol>\n");
+        html.append("		    </div>\n");
+        html.append("		    <div id=\"ballot\" style=\"float: left; width: 100px;\">\n");
+        html.append("		        <ol id=\"sortable\" class=\"rankings\">\n");
+        for (int j = 0; j < row1.size(); j++) {
+        html.append("		            <li style=\"background-color: #9999ff\" id='"+type+"_"+qID+"_"+(j+1)+"' class=\"ranking\"><b>"+row2.get(shuffleIntegersForRow2.get(j))+"</b></li>\n");	
+		}
+        html.append("		        </ol>\n");
+        html.append("		    </div>\n");
+        html.append("		    <div>\n");
+        html.append("		        <br />\n");
+        html.append("		        <input type='hidden' name='thedata' id='thedata'>\n");
+        html.append("<!--		        <button type='submit'>Submit</button>-->\n");
+        html.append("		    </div><br /><br /><br /><br />\n");
+        html.append("<!--		</form> -->\n");
+        
+        html.append("<br />");
+        
+		return html.toString();
 	}
 
 	public int getqID() {
@@ -151,11 +154,13 @@ public class Matching implements Question {
 	public String getCorrectAnswers() {
 		StringBuilder correctAnswers = new StringBuilder();
 		
-		for(int i = 0; i < correctIndexesOfRow1MappingtoRow2.size(); i++) {
-			int x = correctIndexesOfRow1MappingtoRow2.get(i);
-			correctAnswers.append(rowOne.get(i));
+		for (int i = 0; i < row2.size(); i++) {
+			
+			correctAnswers.append((i+1));
+			correctAnswers.append(": ");
+			correctAnswers.append(row1.get(i));
 			correctAnswers.append(" ");
-			correctAnswers.append(rowTwo.get(x));
+			correctAnswers.append(row2.get(i));
 			correctAnswers.append("\n");
 		}
 		
@@ -168,67 +173,117 @@ public class Matching implements Question {
 	@Override
 	public void pushToDB(Connection con) {
 		// now create a row in the database
-		Statement stmt;
+		
 		try {
-			stmt = con.createStatement();
-			StringBuilder sqlString = new StringBuilder("INSERT INTO matching_question VALUES(null,\"");
+			PreparedStatement ps = con.prepareStatement("insert into matching_question values(null, ?)");
 			
-			sqlString.append(statement);
+			ps.setString(1, title);
 			
-			sqlString.append("\",\" ");
-			for (String strings : rowOne) {
-				sqlString.append(strings);
-				sqlString.append(" &&& ");
-			}
-			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
-			sqlString.append("\",\" ");
-			for (String strings : rowTwo) {
-				sqlString.append(strings);
-				sqlString.append(" &&& ");
-			}
-			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
-			sqlString.append("\",\" ");
-			for (Integer ints : correctIndexesOfRow1MappingtoRow2) {
-				sqlString.append(ints);
-				sqlString.append(" &&& ");
-			}
-			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
-			sqlString.append("\" ");
+			System.out.println(ps.toString());
+			ps.executeUpdate();
 			
-			System.out.print(sqlString.toString());
-			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
+			PreparedStatement getID = con.prepareStatement("select * from matching_question where title = ?");
+			getID.setString(1, title);
 			
-			stmt = con.createStatement();
-			sqlString = new StringBuilder("SELECT * FROM matching_question WHERE statement=\"");
-			sqlString.append(statement);
-			sqlString.append("\" ");
-			
-			System.out.print(sqlString.toString());
-			resultSet = stmt.executeQuery(sqlString.toString());
-			
+			System.out.print(getID.toString());
+			ResultSet resultSet = getID.executeQuery();
 			
 			while (resultSet.next()) {
 				this.qID = resultSet.getInt("question_id"); // will always be the last one
 			}
-		}catch(Exception e){
 			
+			for (int i = 0; i < row2.size(); i++) {
+				ps = con.prepareStatement("insert into matching_question_mapping values(null, ?, ?)");
+				
+				ps.setString(1, row1.get(i));
+				ps.setString(2, row2.get(i));
+				
+				System.out.println(ps.toString());
+				ps.executeUpdate();
+				
+			}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 
-	@Override
-	public void setUserAnswers(ArrayList<String> ans) {
-		// TODO IMPLEMENT THIS
-		
+
+	public String getTitle() {
+		return title;
 	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 
 	@Override
 	public String getUserAnswers() {
-		// TODO IMPLEMENT THIS
-		return null;
+		StringBuilder userAnswers = new StringBuilder();
+		for (int i = 0; i < row2.size(); i++) {
+			
+			userAnswers.append(row1.get(i));
+			userAnswers.append(row1.get(i));
+			userAnswers.append(row2.get(Integer.parseInt(this.userAns.get(i))-1));
+			
+		}
+		return userAnswers.toString();
 	}
 
 	@Override
 	public int getTotalQScore() {
-		return correctIndexesOfRow1MappingtoRow2.size();
+		return row2.size();
+	}
+
+	@Override
+	public int solve(ArrayList<String> ans) { // I get an array of integer strings
+		int score =0;
+		if (ans.size()!=row2.size()) {
+			return 0; // input cleansing
+		}
+		for (int i = 0; i < row2.size(); i++) {
+		
+			if (shuffleIntegersForRow2.get(i).equals(Integer.parseInt(ans.get(i))-1)) {
+				score++;
+			}
+		}
+		return score;
+	}
+
+	@Override
+	public void setUserAnswers(ArrayList<String> ans) {
+		// this is an array of integer strings
+		this.userAns = ans;
+		
+	}
+	public void addRow(String question, String answer) {
+		// this is an array of integer strings
+		this.row1.add(question);
+		this.row2.add(answer);
+		this.shuffleIntegersForRow2.add(shuffleIntegersForRow2.size());
+		
+	}
+	public ArrayList<String> getRow1() {
+		return row1;
+	}
+
+	public void setRow1(ArrayList<String> row1) {
+		this.row1 = row1;
+	}
+
+	public ArrayList<String> getRow2() {
+		return row2;
+	}
+
+	public void setRow2(ArrayList<String> row2) {
+		this.row2 = row2;
+	}
+
+	public ArrayList<Integer> getShuffleIntegersForRow2() {
+		return shuffleIntegersForRow2;
+	}
+
+	public void setShuffleIntegersForRow2(ArrayList<Integer> shuffleIntegersForRow2) {
+		this.shuffleIntegersForRow2 = shuffleIntegersForRow2;
 	}
 }

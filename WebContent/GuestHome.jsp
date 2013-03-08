@@ -9,7 +9,6 @@
 <title>Moses-Foe Quiz Project</title>
 </head>
 <body>
-<%= helpers.HTMLHelper.printHeader() %>
 <div class=content>
 <div style= "font-size: large"><b>Account System Test</b></div>
 
