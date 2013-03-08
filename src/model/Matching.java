@@ -107,13 +107,13 @@ public class Matching implements Question {
        
         html.append("		<script>\n");
     	html.append( "   $(document).ready(function() {   \n");
-        html.append("		$(\"#sortable\").sortable({ });\n");
+        html.append("		$(\"#sortable"+qID+"\").sortable({ });\n");
         html.append("		 $('form').submit(function () {\n");
-        html.append("		     $('#thedata').val($(\"#sortable\").sortable(\"serialize\"));\n");
+        html.append("		     $('#thedata"+qID+"').val($(\"#sortable"+qID+"\").sortable(\"serialize\"));\n");
         html.append("		 });\n");
 		html.append( "      });\n ");
         html.append("		</script>\n");
-        html.append("<!--		<form method=\"POST\" action=\"/vote\">-->\n");
+        //html.append("<!--		<form method=\"POST\" action=\"/vote\">-->\n");
         html.append("		    <input type=\"hidden\" name=\"key\" value=\"{{ election.key }}\">\n");
         html.append("		    <input type=\"hidden\" name=\"uuid\" value=\"{{ uuid }}\">\n");
         html.append("		    <div style=\"float: left; width: 150px;\">\n");
@@ -124,7 +124,7 @@ public class Matching implements Question {
         html.append("		        </ol>\n");
         html.append("		    </div>\n");
         html.append("		    <div id=\"ballot\" style=\"float: left; width: 100px;\">\n");
-        html.append("		        <ol id=\"sortable\" class=\"rankings\">\n");
+        html.append("		        <ol id=\"sortable"+qID+"\" class=\"rankings\">\n");
         for (int j = 0; j < row1.size(); j++) {
         html.append("		            <li style=\"background-color: #9999ff\" id='"+type+"_"+qID+"_"+(j+1)+"' class=\"ranking\"><b>"+row2.get(shuffleIntegersForRow2.get(j))+"</b></li>\n");	
 		}
@@ -132,10 +132,10 @@ public class Matching implements Question {
         html.append("		    </div>\n");
         html.append("		    <div>\n");
         html.append("		        <br />\n");
-        html.append("		        <input type='hidden' name='thedata' id='thedata'>\n");
-        html.append("<!--		        <button type='submit'>Submit</button>-->\n");
+        html.append("		        <input type='hidden' name='thedata"+qID+"' id='thedata"+qID+"'>\n");
+        //html.append("<!--		        <button type='submit'>Submit</button>-->\n");
         html.append("		    </div><br /><br /><br /><br />\n");
-        html.append("<!--		</form> -->\n");
+        //html.append("<!--		</form> -->\n");
         
         html.append("<br />");
         
