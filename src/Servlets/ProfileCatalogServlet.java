@@ -20,14 +20,14 @@ import Accounts.Account;
 /**
  * Servlet implementation class QuizCatalogServlet
  */
-@WebServlet("/QuizCatalogServlet")
-public class QuizCatalogServlet extends HttpServlet {
+@WebServlet("/ProfileCatalogServlet")
+public class ProfileCatalogServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public QuizCatalogServlet() {
+	public ProfileCatalogServlet() {
 		super();
 	}
 
@@ -40,32 +40,30 @@ public class QuizCatalogServlet extends HttpServlet {
 		ResultSet rs;
 		try {
 			stmt = (Statement) con.createStatement();
-			String searchQuizes = "Select quiz_id, name from quiz";
+			String searchUsers = "Select username from user";
 			if (request.getParameter("search") != null && request.getParameter("search").length() > 0) {
-				searchQuizes += " where name like \"%"+request.getParameter("search")+"%\"";
+				searchUsers += " where username like \"%"+request.getParameter("search")+"%\"";
 			}
-			rs = stmt.executeQuery(searchQuizes);
+			rs = stmt.executeQuery(searchUsers);
 			response.setContentType("text/html");
 	    	PrintWriter out = response.getWriter();
 	    	out.println("<head>");
 	    	out.println(HTMLHelper.printCSSLink());
 	    	out.println("</head");
-	    	out.println("<body>");
 	    	out.println(HTMLHelper.printHeader());
-	    	out.println(HTMLHelper.contentStart());
-	    	out.println("<form action=\"QuizCatalogServlet\" method=\"get\">");
-	    	out.println("Search Quizes: <input type=\"text\" name=\"search\"/>");
+	    	out.println("<body>");
+	    	out.println("<form action=\"ProfileCatalogServlet\" method=\"get\">");
+	    	out.println("Search Users: <input type=\"text\" name=\"search\"/>");
 	    	out.println("<input type=\"submit\" value=\"Search\"/>");
 			out.println("</form>");
 			out.println("<ul>");
+			out.println("</body>");
 			while (rs.next()) {
-				String name = rs.getString("name");
-				int id = rs.getInt("quiz_id");
-				out.println("<li><a href= \"QuizTitleServlet?id="+id+"\">"+name+"</a></li>");
+				String name = rs.getString("username");
+				//int id = rs.getInt("quiz_id");
+				out.println("<li><a href= \"ProfileServlet?user="+name+"\">"+name+"</a></li>");
 			}
 			out.println("</ul>");
-			out.println(HTMLHelper.contentEnd());
-			out.println("</body>");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("oops!");
