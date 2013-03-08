@@ -52,13 +52,17 @@ public class QuizTitleServlet extends HttpServlet {
 	    	out.println("<head>");
 	    	out.println(HTMLHelper.printCSSLink());
 	    	out.println("</head>");
+	    	out.println("<body>");
 	    	out.println(HTMLHelper.printHeader());
+	    	out.println(HTMLHelper.contentStart());
 	    	out.println("<h1>"+qName+"</h1>");
 	    	out.println("In category: " + q.getCategory() + "<br>");
 	    	out.println("by <a href = \"ProfileServlet?user="+author+"\">"+author+"</a><br>");
 	    	if (request.getSession().getAttribute("account") != null)out.println("<a href = \"newMessage.jsp?quiz="+q.getQuiz_id()+"\">Send to a friend</a><br>");
 	    	out.println(q.getDescription());
 	    	out.println("<br>");
+	    	out.println(HTMLHelper.contentEnd());
+	    	out.println(HTMLHelper.contentStart());
 	    	out.println("<h3>Top Scorers</h3>");
 	    	out.println("<ol>");
 	    	//currently prints ALL the scores. Can switch to a for (0-4) but table needs to be sorted first.
@@ -66,6 +70,8 @@ public class QuizTitleServlet extends HttpServlet {
 	    		out.println("<li>Hello</li>");
 	    	}
 	    	out.println("</ol><br>");
+	    	out.println(HTMLHelper.contentEnd());
+	    	out.println(HTMLHelper.contentStart());
 	    	out.println("<h3>My Scores</h3>");
 	    	if (user != null) {
 	    		out.println("<ol>");
@@ -76,6 +82,8 @@ public class QuizTitleServlet extends HttpServlet {
 	    		out.println("Log in to see your history");
 	    	}
 	    	out.println("</ol>");
+	    	out.println(HTMLHelper.contentEnd());
+	    	out.println(HTMLHelper.contentStart());
 	    	if(q.isOnePageMultiPage()){
 
 		    	out.println("<li><a href= \"MultiPageQuiz?id="+id+"\">Multi Page</a></li>");
@@ -83,6 +91,8 @@ public class QuizTitleServlet extends HttpServlet {
 
 		    	out.println("<li><a href= \"SinglePageQuizServlet?id="+id+"\">Single Page</a></li>");
 			}
+	    	out.println(HTMLHelper.contentEnd());
+	    	out.println("</body>");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -78,7 +78,9 @@ public class MultiPageQuiz extends HttpServlet {
 			out.println("</head>");
 			out.println("<body>");
 			out.println(HTMLHelper.printHeader());
+			out.println(HTMLHelper.contentStart());
 			out.println("<h1>"+quiz.getQuizName()+"</h1>");
+			out.println(HTMLHelper.contentEnd());
 			
 			if (request.getParameter("questionIndex") != null){
 				questionIndex = Integer.parseInt(request.getParameter("questionIndex"));
@@ -115,7 +117,7 @@ public class MultiPageQuiz extends HttpServlet {
 			}
 			
 			out.println("<br /><input name=\"quizID\" type=\"hidden\" value=\"" +quizID+"\"/>");
-			
+			out.println(HTMLHelper.contentStart());
 			out.println("<h3>Question "+ (questionIndex+1) +"</h3>");
 			out.println(quiz.getQuestions().get(questionIndex).toHTMLString()); // all the ids in the input fields must be unique
 			if (questionIndex == quiz.getQuestions().size() -1){
@@ -125,6 +127,7 @@ public class MultiPageQuiz extends HttpServlet {
 				out.println("<br /><input type=\"submit\" value=\"Next Question\"/>");
 			}
 			out.println("</form>");
+			out.println(HTMLHelper.contentEnd());
 			out.println("</body>");
 			out.println("</html>");
 		} catch (NumberFormatException e) {

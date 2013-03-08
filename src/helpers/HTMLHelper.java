@@ -17,4 +17,11 @@ public class HTMLHelper {
 		return "<link rel=\"stylesheet\" type=\"text/css\" href=\"mufasa.css\">";
 	}
 	
+	public static String contentStart(){
+		return "<div class=content>";
+	}
+	
+	public static String contentEnd(){
+		return "</div>";
+	}
 }

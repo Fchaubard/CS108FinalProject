@@ -48,28 +48,38 @@ import Accounts.AccountManager;
     	    	out.println("<head>");
     	    	out.println(HTMLHelper.printCSSLink());
     	    	out.println("/<head>");
+    	    	out.println("<body>");
     	    	out.println(HTMLHelper.printHeader());
+    	    	out.println(HTMLHelper.contentStart());
     	    	out.println("<h3>Requests</h3>");
+    	    	out.println(HTMLHelper.contentEnd());
     	    	out.println("<ul>");
     	    	for (Account a : requests) {
+    	    		out.println(HTMLHelper.contentStart());
     	    		out.println("<li><form action=\"FriendManagementServlet\" method=\"post\">");
     	    		out.println("<a href = \"ProfileServlet?user="+a.getName()+"\">"+a.getName()+"</a>");
     	    		out.println("<input type=\"hidden\" name=\"ID\" value=\""+a.getId()+"\">");
     	    		out.println("<input type=\"submit\" name=\"action\" value=\"delete\">");
     	    		out.println("<input type=\"submit\" name=\"action\" value=\"add\">");
     	    		out.println("</form></li>");
+    	    		out.println(HTMLHelper.contentEnd());
     	    	}
     	    	out.println("</ul>");
+    	    	out.println(HTMLHelper.contentStart());
     	    	out.println("<h3>Friends</h3>");
+    	    	out.println(HTMLHelper.contentEnd());
     	    	out.println("<ul>");
     	    	for (Account a : friends) {
+    	    		out.println(HTMLHelper.contentStart());
        	    		out.println("<li><form action=\"FriendManagementServlet\" method=\"post\">");
     	    		out.println("<a href = \"ProfileServlet?user="+a.getName()+"\">"+a.getName()+"</a>");
     	    		out.println("<input type=\"hidden\" name=\"ID\" value=\""+a.getId()+"\">");
     	    		out.println("<input type=\"submit\" name=\"action\" value=\"delete\">");
     	    		out.println("</form></li>");
+    	    		out.println(HTMLHelper.contentEnd());
     	    	}
     	    	out.println("</ul>");
+    	    	out.println("</body>");
     	    }
 
     	    /**

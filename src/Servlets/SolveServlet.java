@@ -115,9 +115,11 @@ public class SolveServlet extends HttpServlet {
 			out.println(HTMLHelper.printCSSLink());
 			out.println("</head>");
 			out.println(HTMLHelper.printHeader());
+			out.println(HTMLHelper.contentStart());
 			out.println("<form action=\"QuizResultsServlet\" method=\"post\">");
 			out.println("<br /><input type=\"submit\" value=\"Exam is Scored...Click to see results!\"/>");
 			out.println("</form>");
+			out.println(HTMLHelper.contentEnd());
 			
 			//RequestDispatcher rd = request.getRequestDispatcher("QuizResultsServlet");
 			//rd.forward(request, response);

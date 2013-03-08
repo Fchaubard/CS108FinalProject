@@ -84,12 +84,15 @@ public class SinglePageQuizServlet extends HttpServlet {
 				out.println("</head>");
 				out.println("<body>");
 				out.println(HTMLHelper.printHeader());
+				out.println(HTMLHelper.contentStart());
 				out.println("<h1>"+quiz.getQuizName()+"</h1>");
+				out.println(HTMLHelper.contentEnd());
 				out.println("<form action=\"SolveServlet\" method=\"post\">");
 				out.println("<br /><input name=\"startTime\" type=\"hidden\" value=\"" + System.currentTimeMillis()+"\"/>");
 				out.println("<br /><input name=\"quizID\" type=\"hidden\" value=\"" +quiz.getQuiz_id()+"\"/>");
 				Question q;
 				for (int j = 0; j < quiz.getQuestions().size(); j++) {
+					out.println(HTMLHelper.contentStart());
 					out.println("<h3>Question "+ (j+1) +"</h3>");
 					q = quiz.getNextQuestion();
 					out.println(q.toHTMLString()); // all the ids in the input fields must be unique
@@ -97,9 +100,11 @@ public class SinglePageQuizServlet extends HttpServlet {
 						String stringID = q.getType()+"_"+q.getqID();
 						out.println(Quiz.ajaxHTMLText(j,stringID));
 					}
-					
+					out.println(HTMLHelper.contentEnd());
 				}
+				out.println(HTMLHelper.contentStart());
 				out.println("<br /><input type=\"submit\" value=\"Score Exam\"/>");
+				out.println(HTMLHelper.contentEnd());
 				out.println("</form>");
 				out.println("</body>");
 				out.println("</html>");

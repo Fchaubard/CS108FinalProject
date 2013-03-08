@@ -46,7 +46,9 @@ public class QuizCatalogServlet extends HttpServlet {
 	    	out.println("<head>");
 	    	out.println(HTMLHelper.printCSSLink());
 	    	out.println("</head");
+	    	out.println("<body>");
 	    	out.println(HTMLHelper.printHeader());
+	    	out.println(HTMLHelper.contentStart());
 			out.println("<ul>");
 			while (rs.next()) {
 				String name = rs.getString("name");
@@ -54,6 +56,8 @@ public class QuizCatalogServlet extends HttpServlet {
 				out.println("<li><a href= \"QuizTitleServlet?id="+id+"\">"+name+"</a></li>");
 			}
 			out.println("</ul>");
+			out.println(HTMLHelper.contentEnd());
+			out.println("</body>");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("oops!");

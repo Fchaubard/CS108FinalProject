@@ -96,6 +96,7 @@ public class AddQuestion extends HttpServlet {
 			out.println("</head>");
 			out.println("<body>");
 			out.println(HTMLHelper.printHeader());
+			out.println(HTMLHelper.contentStart());
 			out.println("<h1>"+quiz.getQuizName()+"</h1>");
 			out.println("<h3>Input Question "+(quiz.getQuestions().size()+1)+"</h3>");
 			String type = request.getParameter("questionType");
@@ -151,7 +152,7 @@ public class AddQuestion extends HttpServlet {
 			
 			out.println("<br /><input type=\"submit\" value=\"Submit the question\"/>");
 			out.println("</form>");
-			
+			out.println(HTMLHelper.contentEnd());
 			out.println("</body>");
 			out.println("</html>");
 			

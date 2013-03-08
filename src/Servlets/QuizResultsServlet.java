@@ -79,10 +79,12 @@ public class QuizResultsServlet extends HttpServlet {
 			out.println("</head>");
 			out.println("<body>");
 			out.println(HTMLHelper.printHeader());
+			out.println(HTMLHelper.contentStart());
 			out.println("<h1>"+quiz.getQuizName()+"</h1><br />");
 			out.println("<h3>Score: "+ qa.score +"% </h3><br />");
 			out.println("<h3>Time: "+(qa.time/1000)+" s" +"</h3><br />");
-			
+			out.println(HTMLHelper.contentEnd());
+			out.println(HTMLHelper.contentStart());
 			out.println("<h3>Top Scorers</h3>");
 	    	out.println("<ol>");
 	    	//currently prints ALL the scores. Can switch to a for (0-4) but table needs to be sorted first.
@@ -90,17 +92,21 @@ public class QuizResultsServlet extends HttpServlet {
 	    		out.println("<li>" + attempt.printAttemt((AccountManager)request.getServletContext().getAttribute("accounts")) + "</li>");
 	    	}
 	    	out.println("</ol><br>");
+	    	out.println(HTMLHelper.contentEnd());
 			
+	    	out.println(HTMLHelper.contentStart());
 	    	out.println("<h3>Correct Answers</h3>");
 	    	out.println("<ol>");
 			for(Question q : quiz.getQuestions()) {
 				out.println("<li>" + q.getCorrectAnswers() + " (Your Answers: " + q.getUserAnswers() + ")");
 			}
 			out.println("</ol><br>");
-			
+			out.println(HTMLHelper.contentEnd());
+			out.println(HTMLHelper.contentStart());
 			out.println("<form action=\"LoginServlet\" method=\"post\">");
 			out.println("<br /><input type=\"submit\" value=\"Go Home\"/>");
 			out.println("</form>");
+			out.println(HTMLHelper.contentEnd());
 			
 			/*for (int j = 0; j < quiz.getQuestions().size(); j++) {
 				// output the questions and the answers

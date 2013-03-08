@@ -9,6 +9,7 @@
 </head>
 <body>
 <%=helpers.HTMLHelper.printHeader() %>
+<%= helpers.HTMLHelper.contentStart() %>
 <% out.println(((Accounts.Account)request.getSession().getAttribute("account")).getName()); %>
 <form action="AcctManagementServlet" method="post">
 	<input type="hidden" name ="Action" value="Logout">
@@ -17,5 +18,6 @@
 	<a href = "ProfileServlet?user=<%out.println(((Accounts.Account)request.getSession().getAttribute("account")).getName()); %>">Profile</a>
 	<a href = "QuizCatalogServlet">Take a Quiz!</a>
 	<a href = "BeginQuizCreationServlet">Create a Quiz!</a>
+<%= helpers.HTMLHelper.contentEnd() %>
 </body>
 </html>

@@ -59,19 +59,22 @@ public class FinishQuizServlet extends HttpServlet {
 		out.println("</head>");
 		out.println("<body>");
 		out.println(HTMLHelper.printHeader());
+		out.println(HTMLHelper.contentStart());
 		out.println("<h1>"+quiz.getQuizName()+"</h1>");
 		
 		out.println("<br />Quiz Name: "+quiz.getQuizName()+"");
 		out.println("<br />Quiz Description: " +quiz.getDescription()+"");
 		out.println("<br />Quiz Category: " +quiz.getCategory()+"<br />");
-		
+		out.println(HTMLHelper.contentEnd());
 		int counter =1;
 		for (Question q : quiz.getQuestions()) {
+			out.println(HTMLHelper.contentStart());
 			out.println("<br /><br />Question "+counter +": <br />");
 			out.println(q.toHTMLString());
 			out.println("<br />Answer "+counter +": <br />");
 			out.println(q.getCorrectAnswers());
 			counter++;
+			out.println(HTMLHelper.contentEnd());
 		}
 		
 		try {
@@ -82,12 +85,12 @@ public class FinishQuizServlet extends HttpServlet {
 		}
 		
 		request.getSession().removeAttribute("Quiz");
-		
+		out.println(HTMLHelper.contentStart());
 		out.println("<form action=\"QuizCatalogServlet\" method=\"get\">");
 		out.println("<br /><br />Click to Save Quiz");
 		out.println("<br /><input type=\"submit\" value=\"Save Quiz\"/>");
 		out.println("</form>");
-		
+		out.println(HTMLHelper.contentEnd());
 		out.println("</body>");
 		out.println("</html>");
 	}

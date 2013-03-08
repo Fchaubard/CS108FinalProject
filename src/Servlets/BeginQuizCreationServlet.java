@@ -54,6 +54,7 @@ public class BeginQuizCreationServlet extends HttpServlet {
 			out.println("</head>");
 			out.println("<body>");
 			out.println(HTMLHelper.printHeader());
+			out.println(HTMLHelper.contentStart());
 			out.println("<h1>Create a Quiz</h1>");
 			out.println("<form action=\"AddQuestion\" method=\"post\">");
 			out.println("<br />Quiz Name: <input name=\"quizName\" type=\"text\" />");
@@ -75,6 +76,7 @@ public class BeginQuizCreationServlet extends HttpServlet {
 			out.println("</select>");
 			out.println("<br /><input type=\"submit\" value=\"Add first question\"/>");
 			out.println("</form>");
+			out.println(HTMLHelper.contentEnd());
 			out.println("</body>");
 			out.println("</html>");
 			
