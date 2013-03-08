@@ -1,5 +1,7 @@
 package Servlets;
 
+import helpers.HTMLHelper;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -47,10 +49,11 @@ public class BeginQuizCreationServlet extends HttpServlet {
 					      + " \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">");
 			out.println("<html xmlns='http://www.w3.org/1999/xhtml'>");
 			out.println("<head>");
-			
+			out.println(HTMLHelper.printCSSLink());
 			out.println("<title>Create a Quiz</title>");
 			out.println("</head>");
 			out.println("<body>");
+			out.println(HTMLHelper.printHeader());
 			out.println("<h1>Create a Quiz</h1>");
 			out.println("<form action=\"AddQuestion\" method=\"post\">");
 			out.println("<br />Quiz Name: <input name=\"quizName\" type=\"text\" />");

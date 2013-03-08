@@ -1,5 +1,7 @@
 package Servlets;
 
+import helpers.HTMLHelper;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -37,6 +39,10 @@ public class MailManagementServlet extends HttpServlet {
     	String user = request.getParameter("user");
     	response.setContentType("text/html");
     	PrintWriter out = response.getWriter();
+    	out.println(HTMLHelper.printHeader());
+    	out.println("<head>");
+    	out.println(HTMLHelper.printCSSLink());
+    	out.println("</head>");
     	if (request.getParameter("index").equals("inbox")) {
     		HashMap<Integer, Message> inbox = mm.listInbox(user);
     		out.println("</ul>");

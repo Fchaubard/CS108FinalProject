@@ -1,5 +1,7 @@
 package Servlets;
 
+import helpers.HTMLHelper;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -47,6 +49,10 @@ public class QuizTitleServlet extends HttpServlet {
 	    	String author = a.getName();
 	    	response.setContentType("text/html");
 	    	PrintWriter out = response.getWriter();
+	    	out.println("<head>");
+	    	out.println(HTMLHelper.printCSSLink());
+	    	out.println("</head>");
+	    	out.println(HTMLHelper.printHeader());
 	    	out.println("<h1>"+qName+"</h1>");
 	    	out.println("In category: " + q.getCategory() + "<br>");
 	    	out.println("by <a href = \"ProfileServlet?user="+author+"\">"+author+"</a><br>");

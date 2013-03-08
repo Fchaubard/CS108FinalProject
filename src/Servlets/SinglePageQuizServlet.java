@@ -1,5 +1,7 @@
 package Servlets;
 
+import helpers.HTMLHelper;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -77,10 +79,11 @@ public class SinglePageQuizServlet extends HttpServlet {
 						+ " \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">");
 				out.println("<html xmlns='http://www.w3.org/1999/xhtml'>");
 				out.println("<head>");
-
+				out.println(HTMLHelper.printCSSLink());
 				out.println("<title>"+quiz.getQuizName()+"</title>");
 				out.println("</head>");
 				out.println("<body>");
+				out.println(HTMLHelper.printHeader());
 				out.println("<h1>"+quiz.getQuizName()+"</h1>");
 				out.println("<form action=\"SolveServlet\" method=\"post\">");
 				out.println("<br /><input name=\"startTime\" type=\"hidden\" value=\"" + System.currentTimeMillis()+"\"/>");

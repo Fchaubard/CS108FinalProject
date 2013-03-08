@@ -1,14 +1,16 @@
 package Servlets;
 
-    	import java.io.IOException;
+    	import helpers.HTMLHelper;
+
+import java.io.IOException;
 import java.io.PrintWriter;
 
     	import javax.servlet.ServletContext;
-    	import javax.servlet.ServletException;
-    	import javax.servlet.annotation.WebServlet;
-    	import javax.servlet.http.HttpServlet;
-    	import javax.servlet.http.HttpServletRequest;
-    	import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
     	import Accounts.Account;
 import Accounts.AccountManager;
@@ -38,6 +40,11 @@ import Accounts.AccountManager;
     	    	boolean selfViewer = (viewer != null) && (viewer.getId() == profile.getId());
     	    	response.setContentType("text/html");
     	    	PrintWriter out = response.getWriter();
+    	    	out.println("<head>");
+    	    	out.println(HTMLHelper.printCSSLink());
+    	    	out.println("</head>");
+    	    	
+    	    	out.println(HTMLHelper.printHeader());
     	    	out.println("<h3>" + profile.getName() + "</h3>");
     	    	out.println("<h4>Acheivements</h4>");
     	    	for(String s : profile.getAcheivementKeySet()) {

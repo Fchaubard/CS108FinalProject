@@ -3,6 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
     <head>
+    <link rel="stylesheet" type="text/css" href="mufasa.css">
         <title>SO question 4112686</title>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
        

@@ -1,5 +1,7 @@
 package Servlets;
 
+import helpers.HTMLHelper;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -109,7 +111,10 @@ public class SolveServlet extends HttpServlet {
 			session.setAttribute("qa", qa);
 			response.setContentType("text/html");
 			PrintWriter out = response.getWriter();
-			
+			out.println("<head>");
+			out.println(HTMLHelper.printCSSLink());
+			out.println("</head>");
+			out.println(HTMLHelper.printHeader());
 			out.println("<form action=\"QuizResultsServlet\" method=\"post\">");
 			out.println("<br /><input type=\"submit\" value=\"Exam is Scored...Click to see results!\"/>");
 			out.println("</form>");
