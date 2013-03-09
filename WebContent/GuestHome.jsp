@@ -1,3 +1,4 @@
+<%@page import="helpers.HTMLHelper"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
      <%@ page import="Accounts.*" %>
@@ -9,6 +10,7 @@
 <title>Moses-Foe Quiz Project</title>
 </head>
 <body>
+<%=HTMLHelper.printHeader() %>
 <div class=content>
 <div style= "font-size: large"><b>Account System Test</b></div>
 
