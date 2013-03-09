@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -78,14 +79,58 @@ public class SolveServlet extends HttpServlet {
 			Integer score = 0;
 			// Solve the exam
 			for (Question q : quiz.getQuestions()) {
-				if(q.getType()!=5 || q.getType()!=6){
-					ArrayList<String> answersArrayList = new ArrayList<String>();
+				ArrayList<String> answersArrayList = new ArrayList<String>();
+				if(q.getType()!=5 || q.getType()!=6 || q.getType()!=7){
+					
+					
 					String paramterString = Integer.toString(q.getType())+"_"+Integer.toString(q.getqID());
 					String string = (String) request.getParameter(paramterString);
 					answersArrayList.add(string);
+				}
+				if ( q.getType()==5) {
+					//do something special
+				}
+				if ( q.getType()==6) {
+					//do something special
+				}
+				if ( q.getType()==7) {
+					String paramterString = "thedata"+Integer.toString(q.getqID());
+					String string = (String) request.getParameter(paramterString);
+					System.out.println(string);
+					
+					// parse the results into format 2 3 1 5 4
+					string.replaceAll("&", "");
+					String splitString =q.getType()+ "_" + q.getqID()+"[]=";
+					String[] stringArray = string.split(Pattern.quote(splitString));
+
+					System.out.println("Printing answer integers for matching:");
+					answersArrayList= new ArrayList<String>();
+					for (String s : stringArray) {
+
+						try  
+						  {  
+							String temp = s.replaceAll("[^0-9]+","");
+							
+						    int i = Integer.parseInt(temp);  
+						    System.out.println(temp);
+							
+						    answersArrayList.add(Integer.toString(i));
+						    
+						  }  
+						  catch(NumberFormatException nfe)  
+						  {  
+
+						  }
+					}
+					
+					
+					
+				}
+					
 					score+=q.solve(answersArrayList);
 					q.setUserAnswers(answersArrayList);
-				}
+				
+				
 			}
 				score = (int)(((double)score/quiz.totalScore()) * 100);
 

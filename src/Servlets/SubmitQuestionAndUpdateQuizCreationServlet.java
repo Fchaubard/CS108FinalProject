@@ -155,6 +155,7 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 				Matching matching_question = (Matching)session.getAttribute("matching_question");
 				
 				quiz.addQuestion(matching_question);
+				session.removeAttribute("matching_question");
 				
 				
 				break;
@@ -173,7 +174,7 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 				out.println(HTMLHelper.contentStart());
 				out.println("<br /><br />Question "+counter +": <br />");
 				out.println(q.toHTMLString());
-				if (q.getType()!=7) {
+				if (q.getType()!=7) { // doesnt make sense to print out answers because its implicit
 					out.println("<br />Answer "+counter +": <br />");					
 				}
 				out.println(q.getCorrectAnswers());

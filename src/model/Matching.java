@@ -3,14 +3,8 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.StringTokenizer;
-import java.util.regex.Pattern;
 
 public class Matching implements Question {
 
@@ -77,7 +71,9 @@ public class Matching implements Question {
 
 			row1 = new ArrayList<String>();
 			row2 = new ArrayList<String>();
+			shuffleIntegersForRow2 = new ArrayList<Integer>();
 			// populate the hashmap and ordered arraylist
+			
 			int counter = 0;
 			while (resultSet.next()) {
 				row1.add( resultSet.getString("row1"));
@@ -100,6 +96,7 @@ public class Matching implements Question {
 		
         html.append(title);
         html.append("<br />");
+        
         Collections.shuffle(shuffleIntegersForRow2);
 
         html.append(" <script src=\"http://code.jquery.com/jquery-latest.min.js\"></script>\n");
@@ -119,7 +116,7 @@ public class Matching implements Question {
         html.append("		    <div style=\"float: left; width: 150px;\">\n");
         html.append("		        <ol>\n");
         for (int j = 0; j < row1.size(); j++) {
-        html.append("		            <li>"+row1.get(j)+" -> </li>\n");
+        html.append("		            <li>"+row1.get(j)+"  </li>\n");
         }
         html.append("		        </ol>\n");
         html.append("		    </div>\n");
@@ -152,7 +149,7 @@ public class Matching implements Question {
 
 	@Override
 	public String getCorrectAnswers() {
-		StringBuilder correctAnswers = new StringBuilder();
+		StringBuilder correctAnswers = new StringBuilder("<br />");
 		
 		for (int i = 0; i < row2.size(); i++) {
 			
@@ -161,7 +158,7 @@ public class Matching implements Question {
 			correctAnswers.append(row1.get(i));
 			correctAnswers.append(" ");
 			correctAnswers.append(row2.get(i));
-			correctAnswers.append("\n");
+			correctAnswers.append("<br />\n");
 		}
 		
 		return correctAnswers.toString();
@@ -193,10 +190,11 @@ public class Matching implements Question {
 			}
 			
 			for (int i = 0; i < row2.size(); i++) {
-				ps = con.prepareStatement("insert into matching_question_mapping values(null, ?, ?)");
+				ps = con.prepareStatement("insert into matching_question_mapping values(?, ?, ?)");
 				
-				ps.setString(1, row1.get(i));
-				ps.setString(2, row2.get(i));
+				ps.setInt(1, qID);
+				ps.setString(2, row1.get(i));
+				ps.setString(3, row2.get(i));
 				
 				System.out.println(ps.toString());
 				ps.executeUpdate();
