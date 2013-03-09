@@ -11,7 +11,7 @@
 </head>
 <body>
 <%=HTMLHelper.printHeader() %>
-<div class=content>
+<%=HTMLHelper.contentStart() %>
 <div style= "font-size: large"><b>Account System Test</b></div>
 
 <br>
@@ -23,6 +23,6 @@ Password: <input type="password" name="pass">
 <input type="submit" value="Login">
 </form>
 <a href = "newAccount.html">create new account</a>
-</div>
+<%=HTMLHelper.contentEnd() %>
 </body>
 </html>
