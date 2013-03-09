@@ -100,6 +100,8 @@ public class QuizResultsServlet extends HttpServlet {
 			for(Question q : quiz.getQuestions()) {
 				out.println("<li>" + q.getCorrectAnswers() + " (Your Answers: " + q.getUserAnswers() + ")");
 			}
+			
+			session.removeAttribute("quizID");
 			out.println("</ol><br>");
 			out.println(HTMLHelper.contentEnd());
 			out.println(HTMLHelper.contentStart());

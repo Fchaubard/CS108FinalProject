@@ -90,10 +90,7 @@ public class MultipleAnswer implements Question {
 	
 	@Override
 	public int solve(ArrayList<String> answer) {
-		if (answer.size()!=numAnswers) {
-			return 0; // input cleansing
-		}
-		int score =0;
+		int score = 0;
 		for (String string : answer) {
 			if (this.answers.contains(string)) { //TODO this might not be good
 				score++;

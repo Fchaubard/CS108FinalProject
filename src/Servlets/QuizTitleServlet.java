@@ -89,7 +89,6 @@ public class QuizTitleServlet extends HttpServlet {
 
 		    	out.println("<li><a href= \"MultiPageQuiz?id="+id+"\">Multi Page</a></li>");
 			}else{
-
 		    	out.println("<li><a href= \"SinglePageQuizServlet?id="+id+"\">Single Page</a></li>");
 			}
 	    	out.println(HTMLHelper.contentEnd());

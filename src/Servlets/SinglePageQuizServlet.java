@@ -44,31 +44,27 @@ public class SinglePageQuizServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
+		String quizID = request.getParameter("id");
+		System.out.println(quizID);
 
 		
-
 		try {
-
-			if (quiz ==null) {
-					
-				
-				String quizID = request.getParameter("id");
 				HttpSession session = request.getSession(true);
 				session.setAttribute("quizID", quizID);
 				
-				//means the cart hasnt been initialized
+				//means the cart hasn't been initialized
 				if(session.getAttribute("quiz_"+quizID) == null){
 					ServletContext sc = request.getServletContext();
 					AccountManager am = (AccountManager) sc.getAttribute("accounts");
 					quiz = new Quiz(Integer.parseInt(quizID), am.getCon());
 					session.setAttribute("quiz_"+quizID, quiz);
-	
 				}
 				else{
 					quiz = (Quiz) session.getAttribute("quiz_"+quizID);
 				}
-			}
+			
+			System.out.println(quiz.getQuizName());
+			
 			if( request.getParameter("ajax_id")==null){
 				quiz.randomizeQuestions();
 
