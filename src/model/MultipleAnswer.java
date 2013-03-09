@@ -133,7 +133,7 @@ public class MultipleAnswer implements Question {
 		
 		for(String s : answers) {
 			correctAnswers.append(s);
-			correctAnswers.append(", ");
+			correctAnswers.append(",  ");
 		}
 		correctAnswers.replace(correctAnswers.length()-2, correctAnswers.length(), "");
 		
