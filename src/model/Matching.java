@@ -48,6 +48,8 @@ public class Matching implements Question {
 
 	public Matching(int id, Connection con) { // pulls from database
 		generate(id, con);
+		Collections.shuffle(shuffleIntegersForRow2);
+
 	}
 	
 	
@@ -97,8 +99,7 @@ public class Matching implements Question {
         html.append(title);
         html.append("<br />");
         
-        Collections.shuffle(shuffleIntegersForRow2);
-
+        
         html.append(" <script src=\"http://code.jquery.com/jquery-latest.min.js\"></script>\n");
         html.append(" <script src=\"  http://code.jquery.com/ui/1.10.1/jquery-ui.js\"></script>\n");
        
