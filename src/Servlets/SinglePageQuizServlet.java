@@ -43,16 +43,21 @@ public class SinglePageQuizServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		String quizID = request.getParameter("id");
+		HttpSession session = request.getSession(true);
+		String quizID;
+		if (request.getParameter("id")==null) {
+			quizID = (String) session.getAttribute("quizID");
+		}else{
+			quizID = request.getParameter("id");
+		}
 		System.out.println(quizID);
 
 		
 		try {
-				HttpSession session = request.getSession(true);
+				
 				session.setAttribute("quizID", quizID);
 				
-				//means the cart hasn't been initialized
+				//means the quiz hasn't been initialized
 				if(session.getAttribute("quiz_"+quizID) == null){
 					ServletContext sc = request.getServletContext();
 					AccountManager am = (AccountManager) sc.getAttribute("accounts");
@@ -93,8 +98,12 @@ public class SinglePageQuizServlet extends HttpServlet {
 					q = quiz.getNextQuestion();
 					out.println(q.toHTMLString()); // all the ids in the input fields must be unique
 					if (quiz.isImmediateCorrection()) {
-						String stringID = q.getType()+"_"+q.getqID();
-						out.println(Quiz.ajaxHTMLText(j,stringID));
+						if (q.getType()!=7) {
+						
+							String stringID = q.getType()+"_"+q.getqID();
+							out.println(Quiz.ajaxHTMLText(j,stringID));
+							
+						}
 					}
 					out.println(HTMLHelper.contentEnd());
 				}

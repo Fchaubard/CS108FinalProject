@@ -98,7 +98,7 @@ public class QuizResultsServlet extends HttpServlet {
 	    	out.println("<h3>Correct Answers</h3>");
 	    	out.println("<ol>");
 			for(Question q : quiz.getQuestions()) {
-				out.println("<li>" + q.getCorrectAnswers() + " (Your Answers: " + q.getUserAnswers() + ")");
+				out.println("<li>" + q.getCorrectAnswers() + " (Your Answers: " + q.getUserAnswers() + ")</li>");
 			}
 			
 			session.removeAttribute("quizID");

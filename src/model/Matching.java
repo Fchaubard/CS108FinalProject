@@ -13,6 +13,8 @@ public class Matching implements Question {
 	private  ArrayList<String> userAns;
 	private ArrayList<String>  row1;
 	
+
+
 	private ArrayList<String>  row2;
 	private ArrayList<Integer>  shuffleIntegersForRow2; // these numbers start off ordered but then shuffle.
 
@@ -220,10 +222,11 @@ public class Matching implements Question {
 	public String getUserAnswers() {
 		StringBuilder userAnswers = new StringBuilder();
 		for (int i = 0; i < row2.size(); i++) {
-			
+			userAnswers.append("<br />");
 			userAnswers.append(row1.get(i));
-			userAnswers.append(row1.get(i));
+			userAnswers.append(" ");
 			userAnswers.append(row2.get(Integer.parseInt(this.userAns.get(i))-1));
+			userAnswers.append("<br />");
 			
 		}
 		return userAnswers.toString();
@@ -284,5 +287,13 @@ public class Matching implements Question {
 
 	public void setShuffleIntegersForRow2(ArrayList<Integer> shuffleIntegersForRow2) {
 		this.shuffleIntegersForRow2 = shuffleIntegersForRow2;
+	}
+	public ArrayList<String> getUserAns() {
+		return userAns;
+	}
+
+
+	public void setUserAns(ArrayList<String> userAns) {
+		this.userAns = userAns;
 	}
 }
