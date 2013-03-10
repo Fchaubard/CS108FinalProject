@@ -10,7 +10,7 @@
 <title><% out.println(name + " already in use"); %> </title>
 </head>
 <body>
-<%= helpers.HTMLHelper.printHeader() %>
+<%= helpers.HTMLHelper.printHeader((Accounts.Account)request.getSession().getAttribute("account")) %>
 <div style= "font-size: large"><b><%out.println(name + " in use.");%></b></div>
 <% out.println(name + " is taken; please enter a different name."); %> 
 

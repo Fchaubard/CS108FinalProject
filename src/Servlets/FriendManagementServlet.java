@@ -49,7 +49,7 @@ import Accounts.AccountManager;
     	    	out.println(HTMLHelper.printCSSLink());
     	    	out.println("/<head>");
     	    	out.println("<body>");
-    	    	out.println(HTMLHelper.printHeader());
+    	    	out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
     	    	out.println(HTMLHelper.contentStart());
     	    	out.println("<h3>Requests</h3>");  
     	    	out.println("<ul>");

@@ -73,7 +73,7 @@ public class QuizTitleServlet extends HttpServlet {
 	    	out.println(HTMLHelper.printCSSLink());
 	    	out.println("</head>");
 	    	out.println("<body>");
-	    	out.println(HTMLHelper.printHeader());
+	    	out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
 	    	out.println(HTMLHelper.contentStart());
 	    	out.println("<h1>"+qName+"</h1>");
 	    	out.println("In category: " + q.getCategory() + "<br>");

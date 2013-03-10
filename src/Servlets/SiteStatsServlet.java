@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
+import Accounts.Account;
 import Accounts.AccountManager;
 import Accounts.MailManager;
 import Accounts.Message;
@@ -50,7 +51,7 @@ public class SiteStatsServlet extends HttpServlet {
 	    	out.println(HTMLHelper.printCSSLink());
 	    	out.println("</head");
 	    	out.println("<body>");
-	    	out.println(HTMLHelper.printHeader());
+	    	out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
 	    	out.println(HTMLHelper.contentStart());
 	    	out.println("<h3>Site Statistics</h3>");
 	    	out.println("<a href = \"ProfileCatalogServlet\">Registered users</a>");

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import Accounts.Account;
 import Accounts.AccountManager;
 
 import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
@@ -78,7 +79,7 @@ public class MultiPageQuiz extends HttpServlet {
 			out.println("<title>"+quiz.getQuizName()+"</title>");
 			out.println("</head>");
 			out.println("<body>");
-			out.println(HTMLHelper.printHeader());
+			out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
 			out.println(HTMLHelper.contentStart());
 			out.println("<h1>"+quiz.getQuizName()+"</h1>");
 			out.println(HTMLHelper.contentEnd());

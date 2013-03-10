@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import Accounts.Account;
+
 import sun.font.TrueTypeFont;
 
 import model.FillInTheBlank;
@@ -77,7 +79,7 @@ public class DoneCreatingQuizServlet extends HttpServlet {
 			out.println("<title>"+quiz.getQuizName()+"</title>");
 			out.println("</head>");
 			out.println("<body>");
-			out.println(HTMLHelper.printHeader());
+			out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
 			out.println(HTMLHelper.contentStart());
 			out.println("<h1>"+quiz.getQuizName()+"</h1>");
 		

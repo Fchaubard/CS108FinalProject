@@ -178,7 +178,7 @@ public class SolveServlet extends HttpServlet {
 			out.println("<head>");
 			out.println(HTMLHelper.printCSSLink());
 			out.println("</head>");
-			out.println(HTMLHelper.printHeader());
+			out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
 			out.println(HTMLHelper.contentStart());
 			out.println("<form action=\"QuizResultsServlet\" method=\"post\">");
 			out.println("<br /><input type=\"submit\" value=\"Exam is Scored...Click to see results!\"/>");

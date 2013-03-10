@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%= helpers.HTMLHelper.printHeader() %>
+<%= helpers.HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")) %>
 <%=  helpers.HTMLHelper.contentStart() %>
 <% out.println(((Accounts.Account)request.getSession().getAttribute("account")).getName()); %>
 <form action="AcctManagementServlet" method="post">

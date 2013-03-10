@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Accounts.Account;
+
 import model.FillInTheBlank;
 import model.MultipleChoice;
 import model.PictureResponse;
@@ -58,7 +60,7 @@ public class FinishQuizServlet extends HttpServlet {
 		out.println("<title>"+quiz.getQuizName()+"</title>");
 		out.println("</head>");
 		out.println("<body>");
-		out.println(HTMLHelper.printHeader());
+		out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
 		out.println(HTMLHelper.contentStart());
 		out.println("<h1>"+quiz.getQuizName()+"</h1>");
 		

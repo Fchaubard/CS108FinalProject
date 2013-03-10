@@ -10,7 +10,7 @@
        
     </head>
     <body>
-    <%= helpers.HTMLHelper.printHeader() %>
+    <%= helpers.HTMLHelper.printHeader((Accounts.Account)request.getSession().getAttribute("account")) %>
         <button id="somebutton">press here</button>
         <div id="somediv"></div>
          <button id="somebutton1">press here1</button>

@@ -56,7 +56,7 @@ public class ProfileCatalogServlet extends HttpServlet {
 	    	out.println("<head>");
 	    	out.println(HTMLHelper.printCSSLink());
 	    	out.println("</head");
-	    	out.println(HTMLHelper.printHeader());
+	    	out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
 	    	out.println("<body>");
 	    	
     		out.println(HTMLHelper.contentStart());

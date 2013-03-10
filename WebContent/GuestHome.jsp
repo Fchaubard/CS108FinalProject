@@ -10,7 +10,7 @@
 <title>Moses-Foe Quiz Project</title>
 </head>
 <body>
-<%=HTMLHelper.printHeader() %>
+<%=HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")) %>
 <%=HTMLHelper.contentStart() %>
 <div style= "font-size: large"><b>Login</b></div>
 

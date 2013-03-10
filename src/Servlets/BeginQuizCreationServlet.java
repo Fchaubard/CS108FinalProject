@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import Accounts.Account;
+
 import model.Question;
 import model.Quiz;
 
@@ -53,7 +55,7 @@ public class BeginQuizCreationServlet extends HttpServlet {
 			out.println("<title>Create a Quiz</title>");
 			out.println("</head>");
 			out.println("<body>");
-			out.println(HTMLHelper.printHeader());
+			out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
 			out.println(HTMLHelper.contentStart());
 			out.println("<h1>Create a Quiz</h1>");
 			out.println("<form action=\"AddQuestion\" method=\"post\">");

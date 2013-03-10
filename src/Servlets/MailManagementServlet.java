@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Accounts.Account;
 import Accounts.AccountManager;
 import Accounts.MailManager;
 import Accounts.Message;
@@ -39,11 +40,10 @@ public class MailManagementServlet extends HttpServlet {
     	String user = request.getParameter("user");
     	response.setContentType("text/html");
     	PrintWriter out = response.getWriter();
-    	out.println(HTMLHelper.printHeader());
     	out.println("<head>");
     	out.println(HTMLHelper.printCSSLink());
     	out.println("</head>");
-    	out.println(HTMLHelper.printHeader());
+    	out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
     	out.println(HTMLHelper.contentStart() + "<body>");
     	
     	if (request.getParameter("index").equals("inbox")) {

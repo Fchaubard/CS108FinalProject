@@ -46,7 +46,7 @@ import Accounts.MailManager;
     	    	out.println(HTMLHelper.printCSSLink());
     	    	out.println("</head>");
     	    	
-    	    	out.println(HTMLHelper.printHeader());
+    	    	out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
     	    	out.println(HTMLHelper.contentStart());
     	    	out.println("<h3>" + profile.getName() + "</h3>");
     	    	out.println(HTMLHelper.contentEnd());
