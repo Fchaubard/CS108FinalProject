@@ -46,7 +46,7 @@ public class Quiz {
 
 	}
 
-	public static String ajaxHTMLText(int i, String input_id){
+	public static String ajaxHTMLText(int i, String input_id, boolean multipage){
 
 		StringBuilder html = new StringBuilder();
 		html.append("<button type=\"button\" id=\"questionSolveButton"+i+"\">Show Answer</button>\n");
@@ -56,6 +56,13 @@ public class Quiz {
 		html.append( "   $(document).ready(function() {   \n");
 		html.append( "        $('#questionSolveButton"+i+"').click(function() { \n   ");
 		html.append( "            $('#questionAnswerDiv"+i+"').removeClass().addClass('messagebox').text('Checking Answer....').fadeIn(400);\n   ");
+		if (multipage) {
+			html.append( "            $.get('MultiPageQuiz?ajax_id="+i+"', function(responseText) { \n ");// Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
+			
+		}else{
+			html.append( "            $.get('SinglePageQuizServlet?ajax_id="+i+"', function(responseText) { \n ");// Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
+			
+		}
 		html.append( "            $.get('SinglePageQuizServlet?ajax_id="+i+"', function(responseText) { \n ");// Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
 		html.append( "				var value = $(\"#"+input_id+"\").val(); \n ");  
 		html.append( "				var answers = responseText.split(\",  \"); ");  
