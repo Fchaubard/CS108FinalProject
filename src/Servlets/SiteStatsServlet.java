@@ -57,11 +57,11 @@ public class SiteStatsServlet extends HttpServlet {
 	    	rs = stmt.executeQuery("select count(*) from user");
 	    	rs.next();
 	    	out.println(": " + rs.getInt("count(*)") + "<br>");
-	    	out.println("<a href = \"ProfileCatalogServlet\">Banned users</a>");
+	    	out.println("<a href = \"ProfileCatalogServlet?special=banned\">Banned users</a>");
 	    	rs = stmt.executeQuery("select count(*) from user where banned = true");
 	    	rs.next();
 	    	out.println(": " + rs.getInt("count(*)") + "<br>");
-	    	out.println("<a href = \"ProfileCatalogServlet\">Administrators</a>");
+	    	out.println("<a href = \"ProfileCatalogServlet?special=admin\">Administrators</a>");
 	    	rs = stmt.executeQuery("select count(*) from user where admin = true");
 	    	rs.next();
 	    	out.println(": " + rs.getInt("count(*)") + "<br>");

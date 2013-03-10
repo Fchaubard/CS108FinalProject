@@ -43,6 +43,12 @@ public class ProfileCatalogServlet extends HttpServlet {
 			String searchUsers = "Select username from user";
 			if (request.getParameter("search") != null && request.getParameter("search").length() > 0) {
 				searchUsers += " where username like \"%"+request.getParameter("search")+"%\"";
+			} else if (request.getParameter("special") != null) {
+				if (request.getParameter("special").equals("banned")) {
+					searchUsers += " where banned = true";
+				} else if (request.getParameter("special").equals("admin")) {
+					searchUsers += " where admin = true";
+				}
 			}
 			rs = stmt.executeQuery(searchUsers);
 			response.setContentType("text/html");
