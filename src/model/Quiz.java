@@ -57,7 +57,6 @@ public class Quiz {
 		html.append( "        $('#questionSolveButton"+i+"').click(function() { \n   ");
 		html.append( "            $('#questionAnswerDiv"+i+"').removeClass().addClass('messagebox').text('Checking Answer....').fadeIn(400);\n   ");
 		html.append( "            $.get('SinglePageQuizServlet?ajax_id="+i+"', function(responseText) { \n ");// Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
-		
 		html.append( "				var value = $(\"#"+input_id+"\").val(); \n ");  
 		html.append( "				var answers = responseText.split(\",  \"); ");  
 		html.append( "				if($.inArray(value, answers) > -1)  { \n");  

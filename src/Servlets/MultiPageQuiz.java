@@ -52,9 +52,10 @@ public class MultiPageQuiz extends HttpServlet {
 		HttpSession session = request.getSession(true);
 		session.setAttribute("quizID", quizID);
 		int questionIndex;
+		
 		try {
 			
-			
+			if( request.getParameter("ajax_id")==null){
 			//means the cart hasnt been initialized
 			if(session.getAttribute("quiz_"+quizID) == null){
 				ServletContext sc = request.getServletContext();
@@ -131,6 +132,14 @@ public class MultiPageQuiz extends HttpServlet {
 			out.println(HTMLHelper.contentStart());
 			out.println("<h3>Question "+ (questionIndex+1) +"</h3>");
 			out.println(quiz.getQuestions().get(questionIndex).toHTMLString()); // all the ids in the input fields must be unique
+			if (quiz.isImmediateCorrection()) {
+				if (quiz.getQuestions().get(questionIndex).getType()!=7) {
+				
+					String stringID = quiz.getQuestions().get(questionIndex).getType()+"_"+quiz.getQuestions().get(questionIndex).getqID();
+					out.println(Quiz.ajaxHTMLText(questionIndex,stringID));
+					
+				}
+			}
 			if (questionIndex == quiz.getQuestions().size() -1){
 				out.println("<br /><input type=\"submit\" value=\"Score Exam\"/>");
 			}
@@ -141,6 +150,20 @@ public class MultiPageQuiz extends HttpServlet {
 			out.println(HTMLHelper.contentEnd());
 			out.println("</body>");
 			out.println("</html>");
+			
+			
+		}
+			else{
+				int i = Integer.parseInt(request.getParameter("ajax_id"));
+
+				String text = quiz.getQuestions().get(i).getCorrectAnswers();
+
+				text = text.trim();
+				response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
+				response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+				response.getWriter().write(text);       // Write response body.
+
+			}
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
