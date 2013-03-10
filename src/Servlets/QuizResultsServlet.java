@@ -98,7 +98,7 @@ public class QuizResultsServlet extends HttpServlet {
 	    	out.println(HTMLHelper.contentStart());
 	    	out.println("<h3>Correct Answers</h3>");
 	    	out.println("<ol>");
-	    	ArrayList<Boolean> answersCorrectBooleans = (ArrayList<Boolean>)session.getAttribute("answersCorrectBooleans");
+	    	ArrayList<Boolean> answersCorrectBooleans = (ArrayList<Boolean>)session.getAttribute("booleans");
 			int counter = 0;
 	    	for(Question q : quiz.getQuestions()) {
 				if (answersCorrectBooleans.get(counter)) {

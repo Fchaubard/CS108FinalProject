@@ -77,6 +77,8 @@ public class SolveServlet extends HttpServlet {
 			}
 
 			Integer score = 0;
+			Integer oldscore = 0;
+			ArrayList<Boolean> booleans = new ArrayList<Boolean>();
 			// Solve the exam
 			for (Question q : quiz.getQuestions()) {
 				ArrayList<String> answersArrayList = new ArrayList<String>();
@@ -133,6 +135,12 @@ public class SolveServlet extends HttpServlet {
 				}
 					
 				score+=q.solve(answersArrayList);
+				if (oldscore!=score) {
+					booleans.add(true);
+				}else{
+					booleans.add(false);
+				}
+				oldscore = score;
 				q.setUserAnswers(answersArrayList);	
 			}
 			score = (int)(((double)score/quiz.totalScore()) * 100);
@@ -165,7 +173,7 @@ public class SolveServlet extends HttpServlet {
 			}
 
 			session.setAttribute("qa", qa);
-
+			session.setAttribute("booleans", booleans);
 			response.setContentType("text/html");
 			PrintWriter out = response.getWriter();
 			out.println("<head>");
