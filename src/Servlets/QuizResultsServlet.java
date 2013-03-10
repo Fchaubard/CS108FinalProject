@@ -98,8 +98,16 @@ public class QuizResultsServlet extends HttpServlet {
 	    	out.println(HTMLHelper.contentStart());
 	    	out.println("<h3>Correct Answers</h3>");
 	    	out.println("<ol>");
-			for(Question q : quiz.getQuestions()) {
-				out.println("<li>" + q.getCorrectAnswers() + " (Your Answers: " + q.getUserAnswers() + ")</li>");
+	    	ArrayList<Boolean> answersCorrectBooleans = (ArrayList<Boolean>)session.getAttribute("answersCorrectBooleans");
+			int counter = 0;
+	    	for(Question q : quiz.getQuestions()) {
+				if (answersCorrectBooleans.get(counter)) {
+					out.println("<li class='messageboxok'>" + q.getCorrectAnswers() + " (Your Answers: " + q.getUserAnswers() + ")</li>");					
+				}else{
+					out.println("<li class='messageboxerror'>" + q.getCorrectAnswers() + " (Your Answers: " + q.getUserAnswers() + ")</li>");
+
+				}
+				counter++;
 			}
 			
 			session.removeAttribute("quizID");
