@@ -50,7 +50,13 @@ public class Matching implements Question {
 
 	public Matching(int id, Connection con) { // pulls from database
 		generate(id, con);
+
+		System.out.println("before shuffle");
+		System.out.println(shuffleIntegersForRow2);
 		Collections.shuffle(shuffleIntegersForRow2);
+
+		System.out.println("after shuffle");
+		System.out.println(shuffleIntegersForRow2);
 
 	}
 	
@@ -126,7 +132,7 @@ public class Matching implements Question {
         html.append("		    <div id=\"ballot\" style=\"float: left; width: 100px;\">\n");
         html.append("		        <ol id=\"sortable"+qID+"\" class=\"rankings\">\n");
         for (int j = 0; j < row1.size(); j++) {
-        html.append("		            <li style=\"background-color: #9999ff\" id='"+type+"_"+qID+"_"+(j+1)+"' class=\"ranking\"><b>"+row2.get(shuffleIntegersForRow2.get(j))+"</b></li>\n");	
+        html.append("		            <li style=\"background-color: #9999ff\" id='"+type+"_"+qID+"_"+(shuffleIntegersForRow2.get(j))+"' class=\"ranking\"><b>"+row2.get(shuffleIntegersForRow2.get(j))+"</b></li>\n");	
 		}
         html.append("		        </ol>\n");
         html.append("		    </div>\n");
@@ -225,7 +231,7 @@ public class Matching implements Question {
 			userAnswers.append("<br />");
 			userAnswers.append(row1.get(i));
 			userAnswers.append(" ");
-			userAnswers.append(row2.get(Integer.parseInt(this.userAns.get(i))-1));
+			userAnswers.append(row2.get(Integer.parseInt(this.userAns.get(i))));
 			userAnswers.append("<br />");
 			
 		}
@@ -245,7 +251,7 @@ public class Matching implements Question {
 		}
 		for (int i = 0; i < row2.size(); i++) {
 		
-			if (shuffleIntegersForRow2.get(i).equals(Integer.parseInt(ans.get(i))-1)) {
+			if (Integer.parseInt(ans.get(i)) == i) {
 				score++;
 			}
 		}

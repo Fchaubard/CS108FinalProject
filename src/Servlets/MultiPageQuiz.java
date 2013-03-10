@@ -113,8 +113,15 @@ public class MultiPageQuiz extends HttpServlet {
 				out.println("<input name = \"questionIndex\" type=\"hidden\" value=\"" +questionIndex+"\"/>");
 				for(int i = 0; i < questionIndex; i++){
 					model.Question quest = quiz.getQuestions().get(i);
-					String parameterString = Integer.toString(quest.getType())+"_"+Integer.toString(quest.getqID());
-					String answerString = request.getParameter(parameterString);
+					String answerString, parameterString;
+					if (quest.getType()==7) {
+						parameterString = "thedata"+Integer.toString(quest.getqID());
+						answerString = (String) request.getParameter(parameterString);
+						
+					}else{
+					parameterString = Integer.toString(quest.getType())+"_"+Integer.toString(quest.getqID());
+					answerString = request.getParameter(parameterString);
+					}
 					out.println("<input name = \""+parameterString+"\" type=\"hidden\" value=\"" +answerString+"\"/>");
 				}
 				

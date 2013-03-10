@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.Quiz;
 import model.QuizAttempts;
@@ -37,13 +38,33 @@ public class QuizTitleServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	String qid;
+    	HttpSession session = request.getSession(true);
+		if (request.getParameter("id") != null){
+			qid = request.getParameter("id");
+		}
+		else {
+			qid = (String) session.getAttribute("quizID");
+		}
+		
+		session.setAttribute("quizID", qid);
     	AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
     	Account user = (Account) request.getSession().getAttribute("account");
     	//Account user = am.getAccount("Sam I Am");
-    	int id = Integer.parseInt(request.getParameter("id"));
+    	int id = Integer.parseInt(qid);
     	Quiz q;
 		try {
-			q = new Quiz(id, am.getCon());
+			//means the cart hasnt been initialized
+			if(session.getAttribute("quiz_"+qid) == null){
+				q = new Quiz((id), am.getCon());
+				session.setAttribute("quiz_"+qid, q);
+				
+			}
+			else{
+				q = (Quiz) session.getAttribute("quiz_"+qid);
+			}
+			
+			
 			String qName = q.getQuizName();
 	    	Account a = q.getCreator();
 	    	String author = a.getName();
