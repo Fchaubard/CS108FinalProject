@@ -47,7 +47,6 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
-		//public Quiz(ArrayList<Question> q, boolean random, boolean onePage, boolean immediateCorrect, boolean practice, int userID, String quizName, String description, String category){
 		Quiz quiz;
 		if (session.getAttribute("Quiz")==null) {
 			//error
@@ -159,19 +158,24 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 				break;
 				
 			case 6:
-				statementString = (String)session.getAttribute("MultipleChoiceMultipleAnswerQuestion");
-				Set<String> wrongAnswers = (HashSet<String>)session.getAttribute("MultipleChoiceMultipleAnswerOptions");
+				statementString = (String)request.getParameter("question");
+				String wrongAns = (String)request.getParameter("wrongAnswers");
+				String answ = (String)request.getParameter("answers");
+				
+				Set<String> wAns = new HashSet<String>();
+				String[] wrong = wrongAns.split(Pattern.quote("\r\n"));
+				for (String s : wrong) {
+					wAns.add(s);
+				}
 				
 				Set<String> ans = new HashSet<String>();
-				//NEED TO POPULATE THIS WITH THE THINGS THAT WERE CHECKED!
+				String[] right = answ.split(Pattern.quote("\r\n"));
+				for(String s : right) {
+					ans.add(s);
+				}
 				
-				wrongAnswers.removeAll(ans);
-				
-				question = new MultipleChoiceMultipleAnswer(statementString, ans, wrongAnswers);
+				question = new MultipleChoiceMultipleAnswer(statementString, ans, wAns);
 				quiz.addQuestion(question);
-				
-				session.removeAttribute("MultipleChoiceMultipleAnswerOptions");
-				session.removeAttribute("MultipleChoiceMultipleAnswerQuestion");
 				break;
 				
 			case 7:

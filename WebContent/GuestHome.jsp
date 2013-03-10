@@ -12,7 +12,7 @@
 <body>
 <%=HTMLHelper.printHeader() %>
 <%=HTMLHelper.contentStart() %>
-<div style= "font-size: large"><b>Account System Test</b></div>
+<div style= "font-size: large"><b>Login</b></div>
 
 <br>
 <% String err = request.getParameter("err");

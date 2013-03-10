@@ -3,6 +3,7 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,8 +23,10 @@ public class MultipleChoiceMultipleAnswer implements Question {
 		
 		StringBuilder html = new StringBuilder();
 		html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\"question\" size=\"75\" />");
-		html.append("<br />Insert All Options, one on each line:");
-		html.append("<br /><textarea name=\"choices\" cols=\"20\" rows=\"10\" required></textarea>");
+		html.append("<br />Insert All Correct Answers, one on each line:");
+		html.append("<br /><textarea name=\"answers\" cols=\"20\" rows=\"10\" required></textarea>");
+		html.append("<br />Insert All Incorrect Options, one on each line:");
+		html.append("<br /><textarea name=\"wrongAnswers\" cols=\"20\" rows=\"10\" required></textarea>");
 		
 		return html.toString();
 	}
@@ -54,7 +57,7 @@ public class MultipleChoiceMultipleAnswer implements Question {
 			while (resultSet.next()) {
 				statement = resultSet.getString("statement");
 				ans = resultSet.getString("answer");
-				wrongAns = resultSet.getString("wrong_answer");
+				wrongAns = resultSet.getString("wrong_answers");
 				
 			}
 			
@@ -73,7 +76,6 @@ public class MultipleChoiceMultipleAnswer implements Question {
 		}catch(Exception e){
 			
 		}
-		
 	}
 	
 	public String getStatement() {
@@ -118,8 +120,34 @@ public class MultipleChoiceMultipleAnswer implements Question {
 
 	@Override
 	public String toHTMLString() {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder html = new StringBuilder();
+		
+        html.append(statement);
+        html.append("<br />");
+        
+        for(String s : wrongAnswers) {
+                html.append("<input type=\"checkbox\" name=\"");
+        		html.append(type);
+        		html.append("_");
+                html.append(qID);
+                html.append("\" value=\"");
+                html.append(s + "\">" + s);
+                html.append("<br />");       
+        }
+        
+        for(String string : answers) {
+        	html.append("<input type=\"checkbox\" name=\"");
+
+    		html.append(type);
+    		html.append("_");
+
+    		html.append(qID);
+    		html.append("\" value=\"");
+            html.append(string + "\">" + string);
+            html.append("<br />");
+        }
+        
+		return html.toString();
 	}
 
 	public int getqID() {
@@ -148,48 +176,38 @@ public class MultipleChoiceMultipleAnswer implements Question {
 	}
 
 	@Override
-	public void pushToDB(Connection con) {
-		Statement stmt;
+	public void pushToDB(Connection con) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("insert into multiple_choice_multiple_answer_question values(null, ?, ?, ?)");
 		
-		try {
-			stmt = con.createStatement();
-			StringBuilder sqlString = new StringBuilder("INSERT INTO multiple_choice_multiple_answer_question VALUES(null,");
-			sqlString.append(statement);
-			sqlString.append("\",\" ");
-			for (String string : answers) {
-				sqlString.append(string);
-				sqlString.append(" &&& ");
-			}
-			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
-			sqlString.append("\" ");
-			for (String string : wrongAnswers) {
-				sqlString.append(string);
-				sqlString.append(" &&& ");
-			}
-			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
-			sqlString.append("\" ");
-			System.out.print(sqlString.toString());
-			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
-			
-			stmt = con.createStatement();
-			sqlString = new StringBuilder("SELECT * FROM multiple_choice_multiple_answer_question WHERE statement=\"");
-			sqlString.append(statement);
-			sqlString.append("\" ");
-			
-			System.out.print(sqlString.toString());
-			resultSet = stmt.executeQuery(sqlString.toString());
-			
-			
-			while (resultSet.next()) {
-				this.setqID(resultSet.getInt("question_id")); // will always be the last one
-			}
-			
-			
-			
-			
-		}catch(Exception e){
-			
-		}		
+		ps.setString(1, statement);
+		
+		StringBuilder answersString = new StringBuilder();
+		for(String ans : answers) {
+			answersString.append(ans);
+			answersString.append(" &&& ");
+		}
+		answersString.replace(answersString.length()-5, answersString.length(), "");
+		ps.setString(2, answersString.toString());
+		
+		StringBuilder wrongAnswersString = new StringBuilder();
+		for(String wAns : wrongAnswers) {
+			wrongAnswersString.append(wAns);
+			wrongAnswersString.append(" &&& ");
+		}
+		wrongAnswersString.replace(wrongAnswersString.length()-5, wrongAnswersString.length(), "");
+		ps.setString(3, wrongAnswersString.toString());
+		
+		ps.executeUpdate();
+		
+		PreparedStatement stat = con.prepareStatement("select * from multiple_choice_multiple_answer_question where statement = ?");
+		
+		stat.setString(1, statement);
+		
+		ResultSet rs = stat.executeQuery();
+		
+		while(rs.next()) {
+			this.setqID(rs.getInt("question_id"));
+		}	
 	}
 
 	@Override

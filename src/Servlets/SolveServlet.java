@@ -91,8 +91,10 @@ public class SolveServlet extends HttpServlet {
 						answersArrayList.add((String)request.getParameter(param));
 					}
 				}
-				if ( q.getType()==6) {
-					//do something special
+				if (q.getType()==6) {
+					String p = "6_" + Integer.toString(q.getqID());
+					String random = (String)request.getParameter(p);
+					System.out.println(random);
 				}
 				if ( q.getType()==7) {
 					String paramterString = "thedata"+Integer.toString(q.getqID());
