@@ -55,20 +55,35 @@ public class Quiz {
 		html.append("<script>\n");
 		html.append( "   $(document).ready(function() {   \n");
 		html.append( "        $('#questionSolveButton"+i+"').click(function() { \n   ");
+		html.append( "            $('#questionAnswerDiv"+i+"').removeClass().addClass('messagebox').text('Checking Answer....').fadeIn(400);\n   ");
 		html.append( "            $.get('SinglePageQuizServlet?ajax_id="+i+"', function(responseText) { \n ");// Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
+		
 		html.append( "				var value = $(\"#"+input_id+"\").val(); \n ");  
-		html.append( "				var answers = responseText.split(\", \"); ");  
+		html.append( "				var answers = responseText.split(\",  \"); ");  
 		html.append( "				if($.inArray(value, answers) > -1)  { \n");  
-		html.append( "					  $('#questionAnswerDiv"+i+"').text(\"Correct!\");   \n ");  
+		html.append( " 					$('#questionAnswerDiv"+i+"').fadeTo(400,0.1,function()  //start fading the messagebox\n");
+		html.append( "					{ \n");
+		html.append( "					  $(this).html(\"Correct!\").addClass('messageboxok').fadeTo(900,1,\n");
+		html.append( "    			      function()\n");
+		html.append( "					  { \n");
+		html.append( "					  });\n");
+		html.append( "				   	});\n");
+		//html.append( "					  $('#questionAnswerDiv"+i+"').text(\"Correct!\");   \n ");  
 		html.append( "				} ");  
-		html.append( "				else{ \n");  
-		html.append( "				  $('#questionAnswerDiv"+i+"').text(\"Incorrect! Answers are: \"+responseText);   \n ");  
+		html.append( "				else{ \n"); 
+		html.append( " 					$('#questionAnswerDiv"+i+"').fadeTo(400,0.1,function()  //start fading the messagebox\n");
+		html.append( "					{ \n");
+		html.append( "					  $(this).html(\"Incorrect! Answers are: \"+responseText).addClass('messageboxerror').fadeTo(300,1);\n");
+		
+		html.append( "				   	});\n");
+		//html.append( "				  $('#questionAnswerDiv"+i+"').text(\"Incorrect! Answers are: \"+responseText);   \n ");  
 		html.append( "				} \n");  
 		html.append( "            }); \n");
 		html.append( "         });\n ");
 		html.append( "      });\n ");
 		html.append( "  </script> \n");
-
+		
+		
 		return html.toString();
 	}
 
