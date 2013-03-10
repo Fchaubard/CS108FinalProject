@@ -116,6 +116,10 @@ public class PictureResponse implements Question {
 		html.append(type);
 		html.append("_");
         html.append(qID);
+        html.append("\" id=\"");
+		html.append(type);
+		html.append("_");
+		html.append(qID);
         html.append("\" />");
 		
 		return html.toString();

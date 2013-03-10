@@ -46,7 +46,7 @@ public class Quiz {
 
 	}
 
-	public static String ajaxHTMLText(int i, String input_id, boolean multipage){
+	public static String ajaxHTMLText(int i, String input_id, boolean multipage, int questionType){
 
 		StringBuilder html = new StringBuilder();
 		html.append("<button type=\"button\" id=\"questionSolveButton"+i+"\">Show Answer</button>\n");
@@ -63,9 +63,12 @@ public class Quiz {
 			html.append( "            $.get('SinglePageQuizServlet?ajax_id="+i+"', function(responseText) { \n ");// Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
 			
 		}
-		html.append( "            $.get('SinglePageQuizServlet?ajax_id="+i+"', function(responseText) { \n ");// Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
-		html.append( "				var value = $(\"#"+input_id+"\").val(); \n ");  
-		html.append( "				var answers = responseText.split(\",  \"); ");  
+		if (questionType == 3) {
+			html.append( "			var value = jQuery(\"input:radio[name="+input_id+"]:checked\").val(); \n ");  
+		}else{
+			html.append( "				var value = $(\"#"+input_id+"\").val(); \n ");  
+		}
+		html.append( "				var answers = responseText.split(\",  \"); "); 
 		html.append( "				if($.inArray(value, answers) > -1)  { \n");  
 		html.append( " 					$('#questionAnswerDiv"+i+"').fadeTo(400,0.1,function()  //start fading the messagebox\n");
 		html.append( "					{ \n");

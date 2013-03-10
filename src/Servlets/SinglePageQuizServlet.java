@@ -101,7 +101,7 @@ public class SinglePageQuizServlet extends HttpServlet {
 					if (quiz.isImmediateCorrection()) {
 						if (q.getType()!=7) {
 							String stringID = q.getType()+"_"+q.getqID();
-							out.println(Quiz.ajaxHTMLText(j,stringID,quiz.isOnePageMultiPage()));
+							out.println(Quiz.ajaxHTMLText(j,stringID,quiz.isOnePageMultiPage(), q.getType()));
 							
 						}
 					}

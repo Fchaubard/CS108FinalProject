@@ -137,7 +137,7 @@ public class MultiPageQuiz extends HttpServlet {
 				if (quiz.getQuestions().get(questionIndex).getType()!=7) {
 				
 					String stringID = quiz.getQuestions().get(questionIndex).getType()+"_"+quiz.getQuestions().get(questionIndex).getqID();
-					out.println(Quiz.ajaxHTMLText(questionIndex,stringID,quiz.isOnePageMultiPage()));
+					out.println(Quiz.ajaxHTMLText(questionIndex,stringID,quiz.isOnePageMultiPage(),quiz.getQuestions().get(questionIndex).getType() ));
 					
 				}
 			}

@@ -145,6 +145,7 @@ public class MultipleChoice implements Question {
         		html.append(type);
         		html.append("_");
                 html.append(qID);
+
                 html.append("\" value=\"");
                 html.append(s + "\"> " + s);
                 html.append("<br />");       
@@ -155,6 +156,10 @@ public class MultipleChoice implements Question {
 		html.append(type);
 		html.append("_");
 
+		html.append(qID);
+        html.append("\" id=\"");
+		html.append(type);
+		html.append("_");
 		html.append(qID);
 		html.append("\" value=\"");
         html.append(answer + "\"> " + answer);
