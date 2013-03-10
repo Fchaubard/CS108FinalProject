@@ -81,7 +81,7 @@ public class QuizTitleServlet extends HttpServlet {
 	    	if (request.getSession().getAttribute("account") != null)out.println("<a href = \"newMessage.jsp?quiz="+q.getQuiz_id()+"\">Send to a friend</a><br>");
 	    	out.println(q.getDescription());
 	    	out.println("<br>");
-	    	if (user.isAdmin()) {
+	    	if (user != null && user.isAdmin()) {
 	    		out.println("<form id=\"admin\" action=\"QuizCatalogServlet\" method=\"post\">");
 	    		out.println("<input type=\"hidden\" name=\"id\" value=\""+q.getQuiz_id()+"\">");
 	    		out.println("<a href=\"#\" onclick=\"document.getElementById(\'admin\').submit();\">Remove Quiz</a>");
@@ -96,20 +96,23 @@ public class QuizTitleServlet extends HttpServlet {
 	    	out.println("<ol>");
 	    	//currently prints ALL the scores. Can switch to a for (0-4) but table needs to be sorted first.
 	    	for (QuizAttempts qa : am.getHistory(0, id)) {
-	    		out.println("<li>" +qa.getScore()+" "+qa.getTime()+"</li>");
+	    		Account acct = am.getAccount(9);
+	    		out.println("<li>"+acct.getName()+" " +qa.getScore()+" "+qa.getTime()+"</li>");
 	    	}
 	    	out.println("</ol><br>");
 	    	out.println(HTMLHelper.contentEnd());
-	    	out.println(HTMLHelper.contentStart());
+	    	
 	    	if (user != null) {
+	    		out.println(HTMLHelper.contentStart());	
 	    	out.println("<h3>My Scores</h3>");
 	    		out.println("<ol>");
 	    		for (QuizAttempts qa : am.getHistory(user.getId(), id)) {
 	    			out.println("<li>"+qa.getScore()+" "+qa.getTime()+"</li>");
 	    		}
 	    	out.println("</ol>");
-	    	}
 	    	out.println(HTMLHelper.contentEnd());
+	    	}
+	    	
 	    	out.println(HTMLHelper.contentStart());
 	    	if(q.isOnePageMultiPage()){
 

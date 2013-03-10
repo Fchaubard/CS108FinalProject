@@ -43,39 +43,47 @@ public class AcctManagementServlet extends HttpServlet {
     	
     	ServletContext sc = request.getServletContext();
 		AccountManager am = (AccountManager) sc.getAttribute("accounts");
-    	
+    	String destination = "HomePage";
+		
     	if (action.equals("Create")) {
     		Account acct = am.createAccount(name, pass);
     		if (acct == null) {
     			request.getSession().setAttribute("user", name);
-    			request.getRequestDispatcher("/NameTaken.jsp").forward(request, response);
+    			destination = "/NameTaken.jsp";
+    			//request.getRequestDispatcher("/NameTaken.jsp").forward(request, response);
     		} else {
     			request.getSession().setAttribute("user", name);
     			request.getSession().setAttribute("account", acct);
-    			request.getRequestDispatcher("/UserHome.jsp").forward(request, response);
+    			destination = "ProfileServlet?user=" + name;
+    			//request.getRequestDispatcher("/UserHome.jsp").forward(request, response);
     		}
     	} else if (action.equals("Delete")) {
     		am.deleteAccount(name);
-    		request.getRequestDispatcher("/GuestHome.jsp").forward(request, response);
+    		destination = "/GuestHome.jsp";
     	}  else if (action.equals("Logout")) {
     		am.logoutAccount((Account) request.getSession().getAttribute("account"));
     		request.getSession().setAttribute("account", null);
-    		request.getRequestDispatcher("/GuestHome.jsp").forward(request, response);
+    		destination = "GuestHome.jsp";
+    		//request.getRequestDispatcher("/GuestHome.jsp").forward(request, response);
     	} else if (action.equals("Promote")) {
     		Account acct = am.getAccount(request.getParameter("name"));
     		am.setRank(acct, true);
+    		destination = "ProfileServlet?user=" + acct.getName();
     	} else if (action.equals("Demote")) {
     		Account acct = am.getAccount(request.getParameter("name"));
     		am.setRank(acct, false);
+    		destination = "ProfileServlet?user=" + acct.getName();
     	} else if (action.equals("Ban")) {
     		Account acct = am.getAccount(request.getParameter("name"));
     		if (acct == null) System.out.println("no ban" + request.getParameter("name"));
     		am.banUser(acct, true);
+    		destination = "ProfileServlet?user=" + acct.getName();
     	} else if (action.equals("Pardon")) {
     		Account acct = am.getAccount(request.getParameter("name"));
     		am.banUser(acct, false);
+    		destination = "ProfileServlet?user=" + acct.getName();
     	}
-    	request.getRequestDispatcher("/UserHome.jsp").forward(request, response);
+    	request.getRequestDispatcher(destination).forward(request, response);
     	//request.getRequestDispatcher("/ProfileServlet?user="+request.getParameter("name")).forward(request, response);
     }
 }

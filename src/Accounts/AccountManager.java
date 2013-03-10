@@ -55,7 +55,7 @@ public class AccountManager {
 		Statement stmt;
 		try {
 			stmt = (Statement) con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM user WHERE user_id = "+ id +");");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM user WHERE user_id = "+ id +";");
 			if (rs.next()) {
 				Account acct =  new Account(rs);
 			//	stmt.executeUpdate("UPDATE user SET online = 1 WHERE username = \"" + name +"\"");
@@ -63,6 +63,7 @@ public class AccountManager {
 			}
 			else return null;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			return null;
 		}
 	}

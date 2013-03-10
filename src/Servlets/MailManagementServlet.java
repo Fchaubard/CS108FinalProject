@@ -43,28 +43,44 @@ public class MailManagementServlet extends HttpServlet {
     	out.println("<head>");
     	out.println(HTMLHelper.printCSSLink());
     	out.println("</head>");
+    	out.println(HTMLHelper.printHeader());
+    	out.println(HTMLHelper.contentStart() + "<body>");
+    	
     	if (request.getParameter("index").equals("inbox")) {
     		HashMap<Integer, Message> inbox = mm.listInbox(user);
-    		out.println("</ul>");
+    		out.println("<table border=\"0\">");
+    		out.println("<tr><td><b>Subject</b></td><td><b>Sender</b></td><td><b>Date</b></td></tr>");
     		for (int i : inbox.keySet()) {
-    			out.println("<li>");
-    			out.println("<a href = \"MailManagementServlet?&index="+i+"&user="+user+"\">");
-    			out.println(inbox.get(i).getSender() + " " + inbox.get(i).getSubject() + " " + new java.util.Date(inbox.get(i).getTimestamp())) ;
-    			out.println("</a>");
-    			out.println("</li>");
+    			out.println("<tr>");
+    			out.println("<td><a href = \"MailManagementServlet?&index="+i+"&user="+user+"\">");
+    			out.println(inbox.get(i).getSubject()) ;
+    			out.println("</a></td>");
+    			out.println("<td><a href = \"ProfileServlet?user="+inbox.get(i).getSender()+"\">");
+    			out.println(inbox.get(i).getSender()) ;
+    			out.println("</a></td>");
+    			out.println("<td>");
+    			out.println(new java.util.Date(inbox.get(i).getTimestamp())) ;
+    			out.println("</td>");
     		}
-    		out.println("</ul>");
+    		out.println("</table>");
     	} else if (request.getParameter("index").equals("outbox")) {
     		HashMap<Integer, Message> outbox = mm.listOutbox(user);
-    		out.println("<ul>");
+    		//out.println("<ul>");
+    		out.println("<table border=\"0\">");
+    		out.println("<tr><td><b>Subject</b></td><td><b>Recipient</b></td><td><b>Date</b></td></tr>");
     		for (int i : outbox.keySet()) {
-    			out.println("<li>");
-    			out.println("<a href = \"MailManagementServlet?&index="+i+"&user="+user+"\">");
-    			out.println(outbox.get(i).getSender() + " " + outbox.get(i).getSubject() + " " + new java.util.Date(outbox.get(i).getTimestamp())) ;
-    			out.println("</a>");
-    			out.println("</li>");
+    			out.println("<tr>");
+    			out.println("<td><a href = \"MailManagementServlet?&index="+i+"&user="+user+"\">");
+    			out.println(outbox.get(i).getSubject()) ;
+    			out.println("</a></td>");
+    			out.println("<td><a href = \"ProfileServlet?user="+outbox.get(i).getRecipient()+"\">");
+    			out.println(outbox.get(i).getRecipient()) ;
+    			out.println("</a></td>");
+    			out.println("<td>");
+    			out.println(new java.util.Date(outbox.get(i).getTimestamp())) ;
+    			out.println("</td>");
     		}
-    		out.println("</ul>");
+    		out.println("</table>");
     	} else {//print specific message
     		int x = 37;
     		try {
@@ -74,14 +90,15 @@ public class MailManagementServlet extends HttpServlet {
     		}
     		System.out.println(x);
     		Message m = mm.recieveMessage(x);
-    		out.println("Subject: " + m.getSubject() + "<br>");
+    		out.println("<b>Subject:</b> " + m.getSubject() + "<br>");
+    		out.println("<b>From:</b> " + m.getSender() + " @ " + new java.util.Date(m.getTimestamp())+ "<hr>");
     		if (m.getChallengeName() != null) {
-    			out.println("You have been challenged to the <a href = QuizTitleServlet?id="+m.getChallengeID()+">"+m.getChallengeName()+"</a><br>");
+    			out.println(m.getSender() + " has challenged you to take: <a href = QuizTitleServlet?id="+m.getChallengeID()+">"+m.getChallengeName()+"</a><br><br>");
     		}
-    		out.println("From: " + m.getSender() + " @ " + new java.util.Date(m.getTimestamp())+ "<br>");
     		out.println(m.getBody());
     		
     	}
+    	out.println(HTMLHelper.contentEnd() + "</body>");
     }
 
     /**
