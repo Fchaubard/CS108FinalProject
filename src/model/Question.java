@@ -26,4 +26,6 @@ public interface Question {
 	public String getUserAnswers();
 	
 	public int getTotalQScore();
+	
+	public int getNumAnswers();
 }

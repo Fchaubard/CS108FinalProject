@@ -223,4 +223,11 @@ public class MultipleChoiceMultipleAnswer implements Question {
 	public int getTotalQScore() {
 		return answers.size();
 	}
+
+
+
+	@Override
+	public int getNumAnswers() {
+		return answers.size();
+	}
 }

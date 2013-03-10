@@ -3,6 +3,7 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -19,14 +20,13 @@ public class MultipleAnswer implements Question {
 	private int numAnswers;
 	private ArrayList<String> userAnswers;
 	
-	// TODO THIS IS NOT RIGHT!
 	public static String getHTMLInputString(){
 		
 		StringBuilder html = new StringBuilder();
-		html.append("<br />Insert picture url: <br /><input type=\"text\" name=\"url\" size=\"75\" />");
-		html.append("<br />Insert Possible Answer 1:<br /> <input type=\"text\" name=\"answer1\" />");
-		html.append("<br />Insert Possible Answer 2 (optional):<br /> <input type=\"text\" name=\"answer2\" />");
-		html.append("<br />Insert Possible Answer 3 (optional):<br /> <input type=\"text\" name=\"answer3\" />");
+		html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\"question\" size=\"75\" />");
+		html.append("<br />Number of Expected Answers: <br /><input type=\"text\" name=\"numAnswers\" />");
+		html.append("<br />Insert All Possible Answers, one on each line:");
+		html.append("<br /><textarea name=\"answers\" cols=\"20\" rows=\"10\" required></textarea>");
 		
 		return html.toString();
 	}
@@ -54,7 +54,8 @@ public class MultipleAnswer implements Question {
 			String ans = new String();
 			while (resultSet.next()) {
 				statement = resultSet.getString("statement");
-				ans = resultSet.getString(2);
+				ans = resultSet.getString("answer");
+				numAnswers = resultSet.getInt("numAnswers");
 				
 			}
 			
@@ -63,7 +64,6 @@ public class MultipleAnswer implements Question {
 			for (String string : strings) {
 				answers.add(string);
 			}
-			this.numAnswers = answers.size();
 			
 			
 		}catch(Exception e){
@@ -142,40 +142,33 @@ public class MultipleAnswer implements Question {
 	}
 
 	@Override
-	public void pushToDB(Connection con) {
-		Statement stmt;
+	public void pushToDB(Connection con) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("insert into multiple_answer_question values(null, ?, ?, ?)");
 		
-		try {
-			stmt = con.createStatement();
-			StringBuilder sqlString = new StringBuilder("INSERT INTO multiple_answer_question VALUES(null,");
-			sqlString.append(statement);
-			sqlString.append("\",\" ");
-			for (String string : answers) {
-				sqlString.append(string);
-				sqlString.append(" &&& ");
-			}
-			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
-			sqlString.append("\" ");
-			
-			System.out.print(sqlString.toString());
-			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
-			
-			stmt = con.createStatement();
-			sqlString = new StringBuilder("SELECT * FROM multiple_answer_question WHERE statement=\"");
-			sqlString.append(statement);
-			sqlString.append("\" ");
-			
-			System.out.print(sqlString.toString());
-			resultSet = stmt.executeQuery(sqlString.toString());
-			
-			
-			while (resultSet.next()) {
-				this.setqID(resultSet.getInt("question_id")); // will always be the last one
-			}
-			
-		}catch(Exception e){
-			
-		}		
+		ps.setString(1, statement);
+		
+		StringBuilder a = new StringBuilder();
+		for(String s : answers) {
+			a.append(s);
+			a.append(" &&& ");
+		}
+		a.replace(a.length()-5, a.length(), "");
+		
+		ps.setString(2, a.toString());
+		
+		ps.setInt(3, numAnswers);
+		
+		System.out.println(ps.toString());
+		ps.executeUpdate();
+		
+		PreparedStatement ps2 = con.prepareStatement("select * from multiple_answer_question where statement = ?");
+		ps2.setString(1, statement);
+		
+		ResultSet rs = ps2.executeQuery();
+		
+		while(rs.next()) {
+			this.setqID(rs.getInt("question_id"));
+		}	
 	}
 
 	@Override
@@ -202,6 +195,11 @@ public class MultipleAnswer implements Question {
 
 	@Override
 	public int getTotalQScore() {
+		return numAnswers;
+	}
+
+	@Override
+	public int getNumAnswers() {
 		return numAnswers;
 	}
 }

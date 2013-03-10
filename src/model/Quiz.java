@@ -89,9 +89,7 @@ public class Quiz {
 		stat.setBoolean(3, onePageMultiPage);
 		stat.setBoolean(4, immediateCorrection);
 		stat.setBoolean(5, practiceMode);
-		//stat.setInt(6, creator.getId());
 		stat.setInt(6, creator.getId());
-		//stat.setString(7, "");
 		stat.setString(7, category);
 		stat.setString(8, description);
 

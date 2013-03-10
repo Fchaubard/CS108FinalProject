@@ -302,4 +302,10 @@ public class Matching implements Question {
 	public void setUserAns(ArrayList<String> userAns) {
 		this.userAns = userAns;
 	}
+
+
+	@Override
+	public int getNumAnswers() {
+		return row1.size();
+	}
 }

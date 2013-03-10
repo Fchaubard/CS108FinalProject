@@ -199,5 +199,10 @@ public class FillInTheBlank implements Question {
 	public int getTotalQScore() {
 		return 1;
 	}
+
+	@Override
+	public int getNumAnswers() {
+		return 1;
+	}
 	
 }

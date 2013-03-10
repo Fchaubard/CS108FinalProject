@@ -5,6 +5,7 @@ import helpers.HTMLHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashSet;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,13 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.FillInTheBlank;
-import model.Matching;
-import model.MultipleChoice;
-import model.PictureResponse;
-import model.Question;
-import model.QuestionResponse;
-import model.Quiz;
+import model.*;
 
 
 /**
@@ -144,7 +139,20 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 				break;
 				
 			case 5:
-				//question = MultipleAnswer.getHTMLInputString();
+				statementString = (String)request.getParameter("question");
+				
+				hashSet = new HashSet<String>();
+				String answers = (String)request.getParameter("answers");
+				
+				String[] strings = answers.split(Pattern.quote("\r\n"));
+				for (String string : strings) {
+					hashSet.add(string);
+				}
+				
+				int numAnswers = Integer.parseInt((String)request.getParameter("numAnswers"));
+				
+				question = new MultipleAnswer(statementString, hashSet, numAnswers);
+				quiz.addQuestion(question);
 				break;
 				
 			case 6:

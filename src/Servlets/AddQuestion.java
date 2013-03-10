@@ -140,11 +140,14 @@ public class AddQuestion extends HttpServlet {
 			if (type.equals("8")){
 				type = "3"; // map it back to multiple choice
 			}
+			
 			if (!type.equals("7")) {
 				out.println("<form action=\"SubmitQuestionAndUpdateQuizCreationServlet\" method=\"post\">");
-			}else{
+			}
+			else{
 				out.println("<form action=\"AddMatchingQuestionServlet\" method=\"post\">");
 			}
+			
 			out.println("<input name=\"questionType\" type=\"hidden\" value=\"" +type+"\"/>");
 			
 			out.println("<br />Quiz Name: "+quiz.getQuizName()+"");

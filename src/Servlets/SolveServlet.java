@@ -81,14 +81,15 @@ public class SolveServlet extends HttpServlet {
 			for (Question q : quiz.getQuestions()) {
 				ArrayList<String> answersArrayList = new ArrayList<String>();
 				if(q.getType()!=5 || q.getType()!=6 || q.getType()!=7){
-					
-					
 					String paramterString = Integer.toString(q.getType())+"_"+Integer.toString(q.getqID());
 					String string = (String) request.getParameter(paramterString);
 					answersArrayList.add(string);
 				}
 				if ( q.getType()==5) {
-					//do something special
+					for(int i = 0; i < q.getNumAnswers(); i++) {
+						String param = Integer.toString(q.getqID())+"_"+Integer.toString(i);
+						answersArrayList.add((String)request.getParameter(param));
+					}
 				}
 				if ( q.getType()==6) {
 					//do something special
