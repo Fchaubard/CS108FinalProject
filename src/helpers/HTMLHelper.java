@@ -18,7 +18,7 @@ public class HTMLHelper {
 	
 	public static String printHeader(Account loggedDude){
 		if (loggedDude != null){
-			return printFullHeader();
+			return printFullHeader(loggedDude.isAdmin());
 		}
 		else{
 			return printBasicHeader();
@@ -37,14 +37,14 @@ public class HTMLHelper {
 		return "</div>";
 	}
 	
-	public static String printFullHeader(){
+	public static String printFullHeader(boolean isAdmin){
 		StringBuilder fullHeader = new StringBuilder();
 		fullHeader.append("<div class=header><ul class=header>");
 		fullHeader.append(homeLink);
 		fullHeader.append(funFact);
 		fullHeader.append(takeQuizLink);
 		fullHeader.append(createLink);
-		fullHeader.append(statsLink);
+		if (isAdmin) fullHeader.append(statsLink);
 		fullHeader.append("</ul></div><div style=\"min-height:80px\"></div>");
 		return fullHeader.toString();
 	}
