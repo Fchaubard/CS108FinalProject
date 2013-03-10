@@ -131,10 +131,11 @@ public class QuestionResponse implements Question {
 		StringBuilder correctAnswers = new StringBuilder();
 		
 		for(String s : answers) {
+			s=s.trim();
 			correctAnswers.append(s);
 			correctAnswers.append(",  ");
 		}
-		correctAnswers.replace(correctAnswers.length()-2, correctAnswers.length(), "");
+		correctAnswers.replace(correctAnswers.length()-3, correctAnswers.length(), "");
 		
 		return correctAnswers.toString();
 	}

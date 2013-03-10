@@ -125,14 +125,19 @@ public class MultipleChoiceMultipleAnswer implements Question {
         html.append(statement);
         html.append("<br />");
         
+        int counter = 0;
+        
         for(String s : wrongAnswers) {
                 html.append("<input type=\"checkbox\" name=\"");
         		html.append(type);
         		html.append("_");
                 html.append(qID);
+                html.append("_");
+                html.append(counter);
                 html.append("\" value=\"");
                 html.append(s + "\">" + s);
-                html.append("<br />");       
+                html.append("<br />");
+                counter++;
         }
         
         for(String string : answers) {
@@ -142,9 +147,12 @@ public class MultipleChoiceMultipleAnswer implements Question {
     		html.append("_");
 
     		html.append(qID);
+    		html.append("_");
+            html.append(counter);
     		html.append("\" value=\"");
             html.append(string + "\">" + string);
             html.append("<br />");
+            counter++;
         }
         
 		return html.toString();
@@ -240,10 +248,8 @@ public class MultipleChoiceMultipleAnswer implements Question {
 		return answers.size();
 	}
 
-
-
 	@Override
 	public int getNumAnswers() {
-		return answers.size();
+		return (answers.size() + wrongAnswers.size());
 	}
 }

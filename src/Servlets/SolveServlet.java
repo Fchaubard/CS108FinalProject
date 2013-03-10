@@ -92,9 +92,16 @@ public class SolveServlet extends HttpServlet {
 					}
 				}
 				if (q.getType()==6) {
-					String p = "6_" + Integer.toString(q.getqID());
-					String random = (String)request.getParameter(p);
-					System.out.println(random);
+					for(int i = 0; i < q.getNumAnswers(); i++) {
+						String p = "6_" + Integer.toString(q.getqID()) + "_" + i;
+						if(request.getParameter(p) != null) {
+							answersArrayList.add((String)request.getParameter(p));
+						}
+					}
+					
+					for(String s : answersArrayList) {
+						System.out.println(s);
+					}
 				}
 				if ( q.getType()==7) {
 					String paramterString = "thedata"+Integer.toString(q.getqID());

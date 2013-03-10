@@ -165,7 +165,12 @@ public class MultipleChoice implements Question {
 	
 	@Override
 	public String getCorrectAnswers() {
-		return answer;
+		StringBuilder correctAnswers = new StringBuilder();
+		answer = answer.trim();
+		correctAnswers.append(answer);
+		
+		return correctAnswers.toString();
+	
 	}
 
 	@Override
