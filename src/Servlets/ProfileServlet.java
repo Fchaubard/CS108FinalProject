@@ -82,6 +82,31 @@ import Accounts.MailManager;
     	    		}
     	    		out.println("</form>");
     	    		out.println(HTMLHelper.contentEnd());
+    	    		if (viewer.isAdmin()) {
+    	    		out.println(HTMLHelper.contentStart());
+    	    		out.println("Administration");
+    	    		out.println("<li><form id=\"ban\" action=\"AcctManagementServlet\" method=\"post\">");
+    	    		out.println("<input type=\"hidden\" name=\"name\" value=\""+profile.getName()+"\">");
+    	    		if (!profile.isBanned()) {
+    	    			out.println("<input type=\"hidden\" name=\"Action\" value=\"Ban\">");
+    	    			out.println("<a href=\"#\" onclick=\"document.getElementById(\'ban\').submit();\"> Ban user</a>");
+    	    		} else {
+    	    			out.println("<input type=\"hidden\" name=\"Action\" value=\"Pardon\">");
+    	    			out.println("<a href=\"#\" onclick=\"document.getElementById(\'ban\').submit();\"> Pardon user</a>");
+    	    		}
+    	    		out.println("</form>");
+    	    		out.println("<li><form id=\"admin\" action=\"AcctManagementServlet\" method=\"post\">");
+    	    		out.println("<input type=\"hidden\" name=\"name\" value=\""+profile.getName()+"\">");
+    	    		if (!profile.isAdmin()) {
+    	    			out.println("<input type=\"hidden\" name=\"Action\" value=\"Promote\">");
+    	    			out.println("<a href=\"#\" onclick=\"document.getElementById(\'admin\').submit();\"> Promote user</a>");
+    	    		} else {
+    	    			out.println("<input type=\"hidden\" name=\"Action\" value=\"Demote\">");
+    	    			out.println("<a href=\"#\" onclick=\"document.getElementById(\'admin\').submit();\"> Demote user</a>");
+    	    		}
+    	    		out.println("</form>");
+    	    		out.println(HTMLHelper.contentEnd());
+    	    		}
     	    	}
     	    }
 

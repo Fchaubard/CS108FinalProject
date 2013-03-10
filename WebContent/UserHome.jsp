@@ -18,6 +18,7 @@
 	<a href = "ProfileServlet?user=<%out.println(((Accounts.Account)request.getSession().getAttribute("account")).getName()); %>">Profile</a>
 	<a href = "QuizCatalogServlet">Take a Quiz!</a>
 	<a href = "BeginQuizCreationServlet">Create a Quiz!</a>
+	<% if (((Accounts.Account)request.getSession().getAttribute("account")).isAdmin()) out.println("<a href = \"SiteStatsServlet\">Site Stats</a>"); %>
 <%=helpers.HTMLHelper.contentEnd() %>
 </body>
 </html>

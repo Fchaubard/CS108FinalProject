@@ -102,6 +102,7 @@ public class AccountManager {
 		}
 	}
 	
+	
 	public Account createAccount(String name, String pass) {
 		if (accountExists(name)) return null;
 		pass = hashString(pass);
@@ -120,6 +121,26 @@ public class AccountManager {
 		try {
 			stmt = (Statement) con.createStatement();
 			stmt.executeUpdate("DELETE from user WHERE username = \"" + name + "\";");
+		} catch (SQLException e) {
+		}
+	}
+	
+	public void setRank(Account acct, boolean rank) {
+		Statement stmt;
+		try {
+			stmt = (Statement) con.createStatement();
+			stmt.executeUpdate("update user set admin = "+rank+" WHERE username = \"" + acct.getName() + "\";");
+			acct.setAdmin(rank);
+		} catch (SQLException e) {
+		}
+	}
+	
+	public void banUser(Account acct, boolean banStatus) {
+		Statement stmt;
+		try {
+			stmt = (Statement) con.createStatement();
+			stmt.executeUpdate("update user set banned = "+banStatus+" WHERE username = \"" + acct.getName() + "\";");
+			acct.setBan(banStatus);
 		} catch (SQLException e) {
 		}
 	}
@@ -150,7 +171,7 @@ public class AccountManager {
 			stmt = (Statement) con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM pending_friends WHERE pending_user_id = " + friend +" AND accepted_user_id = "+ user +";");
 			if (rs.next()) return true;
-			rs = stmt.executeQuery("SELECT * FROM friend_mapping WHERE first_user_id = " + user +" AND second_user_id = "+ friend +"");
+			rs = stmt.executeQuery("SELECT * FROM friends_mapping WHERE first_user_id = " + user +" AND second_user_id = "+ friend +"");
 			if (rs.next()) return true;
 		} catch (SQLException e) {
 			e.printStackTrace();

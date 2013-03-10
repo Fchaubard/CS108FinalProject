@@ -49,12 +49,15 @@ public class LoginServlet extends HttpServlet {
 			if (am == null) System.out.println("Huh?");
 			Account acct = am.loginAccount(name, pass);
 			if (acct != null) {
-				sc.setAttribute("user", name);
-				request.getSession().setAttribute("account", acct);
-				System.out.println("This assignment is unpleasant.");
-				request.getRequestDispatcher("/UserHome.jsp").forward( request, response );
+				if (acct.isBanned()) {
+					request.getRequestDispatcher("/GuestHome.jsp?err=banned" ).forward( request, response );
+				} else {
+					sc.setAttribute("user", name);
+					request.getSession().setAttribute("account", acct);
+					request.getRequestDispatcher("/UserHome.jsp").forward( request, response );
+				}
 			} else {
-				request.getRequestDispatcher("/badPass.html" ).forward( request, response );
+				request.getRequestDispatcher("/GuestHome.jsp?err=badLogin" ).forward( request, response );
 			}
 		}else{
 			request.getRequestDispatcher("/UserHome.jsp").forward( request, response );

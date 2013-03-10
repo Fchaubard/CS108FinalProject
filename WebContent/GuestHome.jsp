@@ -15,8 +15,14 @@
 <div style= "font-size: large"><b>Account System Test</b></div>
 
 <br>
-
-You are currently visiting as a guest. Log in to save quiz results.
+<% String err = request.getParameter("err");
+	if (err == null) {
+		out.println("You are currently visiting as a guest. Log in to save quiz results.");
+	} else if (err.equals("badLogin")) {
+		out.println("Invalid username or password");
+	} else if (err.equals("banned")) {
+		out.println("Account has been banned from the server");
+	}%>
 <form action="LoginServlet" method="post">
 Username: <input type="text" name="user"><br>
 Password: <input type="password" name="pass">

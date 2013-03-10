@@ -10,6 +10,8 @@ public class Account {
 	private String name;
 	
 	private boolean practiceMode;
+	private boolean admin;
+	private boolean banned;
 	private boolean online;
 	
 	private HashMap<String, Boolean> acheivements;
@@ -28,6 +30,8 @@ public class Account {
 			
 			practiceMode = rs.getBoolean("practice");
 			online = rs.getBoolean("online");
+			admin = rs.getBoolean("admin");
+			banned = rs.getBoolean("banned");
 			
 			acheivements = new HashMap<String, Boolean>();
 			
@@ -46,8 +50,29 @@ public class Account {
 		return name;
 	}
 	
+	
+	public void setMode(boolean mode) {
+		this.practiceMode = mode;
+	}
+	
 	public boolean getMode() {
 		return practiceMode;
+	}
+	
+	public void setAdmin(boolean rank) {
+		this.admin = rank;
+	}
+	
+	public boolean isAdmin() {
+		return admin;
+	}
+	
+	public void setBan(boolean ban) {
+		this.banned = ban;
+	}
+	
+	public boolean isBanned() {
+		return banned;
 	}
 	
 	public boolean getAcheivement(String key) {
@@ -55,10 +80,9 @@ public class Account {
 		
 	}
 	
-		public Set<String> getAcheivementKeySet() {
-				return acheivements.keySet();
-		 		
-		 	}
+	public Set<String> getAcheivementKeySet() {
+			return acheivements.keySet(); 		
+	}
 
 	
 	public void giveAcheivement(String key) {

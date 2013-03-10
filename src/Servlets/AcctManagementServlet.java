@@ -61,6 +61,21 @@ public class AcctManagementServlet extends HttpServlet {
     		am.logoutAccount((Account) request.getSession().getAttribute("account"));
     		request.getSession().setAttribute("account", null);
     		request.getRequestDispatcher("/GuestHome.jsp").forward(request, response);
+    	} else if (action.equals("Promote")) {
+    		Account acct = am.getAccount(request.getParameter("name"));
+    		am.setRank(acct, true);
+    	} else if (action.equals("Demote")) {
+    		Account acct = am.getAccount(request.getParameter("name"));
+    		am.setRank(acct, false);
+    	} else if (action.equals("Ban")) {
+    		Account acct = am.getAccount(request.getParameter("name"));
+    		if (acct == null) System.out.println("no ban" + request.getParameter("name"));
+    		am.banUser(acct, true);
+    	} else if (action.equals("Pardon")) {
+    		Account acct = am.getAccount(request.getParameter("name"));
+    		am.banUser(acct, false);
     	}
+    	request.getRequestDispatcher("/UserHome.jsp").forward(request, response);
+    	//request.getRequestDispatcher("/ProfileServlet?user="+request.getParameter("name")).forward(request, response);
     }
 }
