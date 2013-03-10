@@ -21,10 +21,9 @@ public class MultipleChoiceMultipleAnswer implements Question {
 	public static String getHTMLInputString(){
 		
 		StringBuilder html = new StringBuilder();
-		html.append("<br />Insert picture url: <br /><input type=\"text\" name=\"url\" />");
-		html.append("<br />Insert Possible Answer 1:<br /> <input type=\"text\" name=\"answer1\" />");
-		html.append("<br />Insert Possible Answer 2 (optional):<br /> <input type=\"text\" name=\"answer2\" />");
-		html.append("<br />Insert Possible Answer 3 (optional):<br /> <input type=\"text\" name=\"answer3\" />");
+		html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\"question\" size=\"75\" />");
+		html.append("<br />Insert All Options, one on each line:");
+		html.append("<br /><textarea name=\"choices\" cols=\"20\" rows=\"10\" required></textarea>");
 		
 		return html.toString();
 	}

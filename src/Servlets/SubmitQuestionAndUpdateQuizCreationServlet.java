@@ -4,7 +4,10 @@ import helpers.HTMLHelper;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
@@ -156,7 +159,19 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 				break;
 				
 			case 6:
-				//question = MultipleChoiceMultipleAnswer.getHTMLInputString();
+				statementString = (String)session.getAttribute("MultipleChoiceMultipleAnswerQuestion");
+				Set<String> wrongAnswers = (HashSet<String>)session.getAttribute("MultipleChoiceMultipleAnswerOptions");
+				
+				Set<String> ans = new HashSet<String>();
+				//NEED TO POPULATE THIS WITH THE THINGS THAT WERE CHECKED!
+				
+				wrongAnswers.removeAll(ans);
+				
+				question = new MultipleChoiceMultipleAnswer(statementString, ans, wrongAnswers);
+				quiz.addQuestion(question);
+				
+				session.removeAttribute("MultipleChoiceMultipleAnswerOptions");
+				session.removeAttribute("MultipleChoiceMultipleAnswerQuestion");
 				break;
 				
 			case 7:
