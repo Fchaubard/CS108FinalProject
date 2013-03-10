@@ -98,10 +98,6 @@ public class SolveServlet extends HttpServlet {
 							answersArrayList.add((String)request.getParameter(p));
 						}
 					}
-					
-					for(String s : answersArrayList) {
-						System.out.println(s);
-					}
 				}
 				if ( q.getType()==7) {
 					String paramterString = "thedata"+Integer.toString(q.getqID());

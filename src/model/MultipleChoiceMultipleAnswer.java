@@ -95,16 +95,13 @@ public class MultipleChoiceMultipleAnswer implements Question {
 	}
 
 	public int solve(ArrayList<String> answer) {
-		//if (answer.size()!=numAnswers) {
-		//	return 0; // input cleansing
-		//}
-		// need to implement error checking TODO
 		int score =0;
 		for (String string : answer) {
-			if (this.answers.contains(string)) { //TODO this might not be good
-				return 1;
+			if (this.answers.contains(string)) {
+				score++;
 			}else{
-				return 0;
+				score--;
+				if(score < 0) score = 0;
 			}
 		}
 		return score;
