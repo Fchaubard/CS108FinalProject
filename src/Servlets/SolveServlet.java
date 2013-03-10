@@ -130,49 +130,44 @@ public class SolveServlet extends HttpServlet {
 
 						  }
 					}
-					
-					
-					
 				}
 					
-					score+=q.solve(answersArrayList);
-					q.setUserAnswers(answersArrayList);
-				
-				
+				score+=q.solve(answersArrayList);
+				q.setUserAnswers(answersArrayList);	
 			}
-				score = (int)(((double)score/quiz.totalScore()) * 100);
+			score = (int)(((double)score/quiz.totalScore()) * 100);
 
-				String timer = (String) request.getParameter("startTime");
-				int time = (int)(-Long.parseLong(timer) + (long)System.currentTimeMillis());
-				Account acct = (Account) request.getSession().getAttribute("account");
-				QuizAttempts qa;
-				if (acct != null) {
-					qa = new QuizAttempts(acct.getId(), (Integer) Integer.parseInt(quizID), score, (java.util.Date) new Date(), (int)time);
-					if(!quiz.isPracticeMode()) {
-						//store and update acheivements
-						AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
-						try {
-							qa.pushAttemptToDB((Connection)request.getServletContext().getAttribute("connect"));
-							quiz.addToHistory(qa);
-							int quizesDone = am.quizesTaken(acct);
-							am.updateAchievements(acct, quizesDone);
-							
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+			String timer = (String) request.getParameter("startTime");
+			int time = (int)(-Long.parseLong(timer) + (long)System.currentTimeMillis());
+			Account acct = (Account) request.getSession().getAttribute("account");
+			QuizAttempts qa;
+			if (acct != null) {
+				qa = new QuizAttempts(acct.getId(), (Integer) Integer.parseInt(quizID), score, (java.util.Date) new Date(), (int)time);
+				if(!quiz.isPracticeMode()) {
+					//store and update acheivements
+					AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
+					try {
+						qa.pushAttemptToDB((Connection)request.getServletContext().getAttribute("connect"));
+						quiz.addToHistory(qa);
+						int quizesDone = am.quizesTaken(acct);
+						am.updateAchievements(acct, quizesDone);
+						
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-				} else { //not logged in, don't save to quiz history
-					qa = new QuizAttempts(-1, (Integer) Integer.parseInt(quizID), score, (java.util.Date) new Date(), (int)time);
 				}
-				if (session.getAttribute("qa") != null) {
-					session.removeAttribute("qa");
-				}
+			} else { //not logged in, don't save to quiz history
+				qa = new QuizAttempts(-1, (Integer) Integer.parseInt(quizID), score, (java.util.Date) new Date(), (int)time);
+			}
+			if (session.getAttribute("qa") != null) {
+				session.removeAttribute("qa");
+			}
 
-				session.setAttribute("qa", qa);
+			session.setAttribute("qa", qa);
 
-				response.setContentType("text/html");
-				PrintWriter out = response.getWriter();
+			response.setContentType("text/html");
+			PrintWriter out = response.getWriter();
 			out.println("<head>");
 			out.println(HTMLHelper.printCSSLink());
 			out.println("</head>");

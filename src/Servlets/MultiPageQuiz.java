@@ -119,12 +119,29 @@ public class MultiPageQuiz extends HttpServlet {
 					if (quest.getType()==7) {
 						parameterString = "thedata"+Integer.toString(quest.getqID());
 						answerString = (String) request.getParameter(parameterString);
-						
-					}else{
-					parameterString = Integer.toString(quest.getType())+"_"+Integer.toString(quest.getqID());
-					answerString = request.getParameter(parameterString);
+						out.println("<input name = \""+parameterString+"\" type=\"hidden\" value=\"" +answerString+"\"/>");
 					}
-					out.println("<input name = \""+parameterString+"\" type=\"hidden\" value=\"" +answerString+"\"/>");
+					else if(quest.getType() == 5) {
+						for(int j = 0; j < quest.getNumAnswers(); j++) {
+							parameterString = Integer.toString(quest.getqID())+"_"+Integer.toString(j);
+							answerString = (String)request.getParameter(parameterString);
+							out.println("<input name = \""+parameterString+"\" type=\"hidden\" value=\"" +answerString+"\"/>");
+						} 
+					}
+					else if(quest.getType() == 6) {
+						for(int k = 0; k < quest.getNumAnswers(); k++) {
+							parameterString = "6_" + Integer.toString(quest.getqID()) + "_" + Integer.toString(k);
+							if(request.getParameter(parameterString) != null) {
+								answerString = (String)request.getParameter(parameterString);
+								out.println("<input name = \""+parameterString+"\" type=\"hidden\" value=\"" +answerString+"\"/>");
+							}
+						}
+					}
+					else {
+						parameterString = Integer.toString(quest.getType())+"_"+Integer.toString(quest.getqID());
+						answerString = request.getParameter(parameterString);
+						out.println("<input name = \""+parameterString+"\" type=\"hidden\" value=\"" +answerString+"\"/>");
+					}
 				}
 				
 			}

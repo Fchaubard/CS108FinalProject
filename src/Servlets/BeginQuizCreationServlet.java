@@ -60,7 +60,7 @@ public class BeginQuizCreationServlet extends HttpServlet {
 			out.println("<h1>Create a Quiz</h1>");
 			out.println("<form action=\"AddQuestion\" method=\"post\">");
 			out.println("<br />Quiz Name: <input name=\"quizName\" type=\"text\" />");
-			out.println("<br />Quiz Description: <textarea name = \"quizDescription\" rows=\"4\" cols=\"50\"> </textarea>");
+			out.println("<br />Quiz Description: <textarea name = \"quizDescription\" rows=\"4\" cols=\"50\"></textarea>");
 			out.println("<br />Quiz Category: <input name=\"quizCategory\" type=\"text\" />");
 			out.println("<br /><input type=\"checkbox\" name=\"random\" value=\"true1\"> Random Question Ordering?");
 			out.println("<br /><input type=\"checkbox\" name=\"multipage\" value=\"true2\"> MultiPage Question Display?");
