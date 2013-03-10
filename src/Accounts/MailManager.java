@@ -72,11 +72,27 @@ public class MailManager {
 					if (rs.next()) challengeName = rs.getString("name");
 				}
 				m = new Message(sender, recipient, subject, body, time.getTime(), challengeID, challengeName);
+				stmt.executeUpdate("update message set unread = false where message_id = "+id);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return m;
+	}
+	
+	public int getUnread(Account acct) {
+		int newMessages = 0;
+		Statement stmt;
+		ResultSet rs;
+		try {
+			stmt = (Statement) con.createStatement();
+			rs = stmt.executeQuery("select count(*) from message where recipient = \"" + acct.getName() + "\" and unread = true;");
+			if(rs.next()) newMessages = rs.getInt("count(*)");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return newMessages;
+		
 	}
 	
 	public HashMap<Integer, Message> listInbox(String recipient) {

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
     	import Accounts.Account;
 import Accounts.AccountManager;
+import Accounts.MailManager;
 
     	/**
     	 * Servlet implementation class AcctManagementServlet
@@ -34,6 +35,7 @@ import Accounts.AccountManager;
     	     */
     	    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	    	AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
+    	    	MailManager mm = (MailManager) request.getServletContext().getAttribute("mail");
     	    	Account profile = am.getAccount(request.getParameter("user"));
     	    	Account viewer = (Account) request.getSession().getAttribute("account");
     	    	boolean regViewer = (viewer != null);
@@ -57,7 +59,10 @@ import Accounts.AccountManager;
     	    	if (selfViewer) {
     	    		out.println(HTMLHelper.contentStart());
     	    		out.println("<a href = \"newMessage.jsp?user="+profile.getName()+"\">Compose Mail</a>");
-    	    		out.println("<a href = \"MailManagementServlet?&index=inbox&user="+profile.getName()+"\">inbox</a>");
+    	    		int unread = mm.getUnread(viewer);
+    	    		String unreadString = "";
+    	    		if (unread > 0) unreadString = " ("+unread+")";
+    	    		out.println("<a href = \"MailManagementServlet?&index=inbox&user="+profile.getName()+"\">inbox"+unreadString+"</a>");
     	    		out.println("<a href = \"MailManagementServlet?&index=outbox&user="+profile.getName()+"\">outbox</a>");
     	    		out.println("<br>");
     	    		out.println("<a href = \"FriendManagementServlet\">Friends</a>");

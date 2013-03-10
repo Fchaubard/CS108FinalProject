@@ -53,6 +53,7 @@ public class QuizCatalogServlet extends HttpServlet {
 	    	out.println("<body>");
 	    	out.println(HTMLHelper.printHeader());
 	    	out.println(HTMLHelper.contentStart());
+	  
 	    	out.println("<form action=\"QuizCatalogServlet\" method=\"get\">");
 	    	out.println("Search Quizes: <input type=\"text\" name=\"search\"/>");
 	    	out.println("<input type=\"submit\" value=\"Search\"/>");
