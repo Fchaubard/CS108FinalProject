@@ -99,7 +99,6 @@ public class SinglePageQuizServlet extends HttpServlet {
 					out.println(q.toHTMLString()); // all the ids in the input fields must be unique
 					if (quiz.isImmediateCorrection()) {
 						if (q.getType()!=7) {
-						
 							String stringID = q.getType()+"_"+q.getqID();
 							out.println(Quiz.ajaxHTMLText(j,stringID));
 							

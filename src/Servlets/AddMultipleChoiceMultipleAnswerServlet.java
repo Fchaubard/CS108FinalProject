@@ -86,7 +86,7 @@ public class AddMultipleChoiceMultipleAnswerServlet extends HttpServlet {
 			out.println("<br />Please select all the correct answers for the following question: ");
 			out.println("<br /><br />" + question);
 			for(String s : options) {
-				out.println("<input type=\"checkbox\" name=\"options\" value=\"" + s + "\">" + s + "<br>");
+				out.println("<input type=\"checkbox\" name=\""+ s +"\" value=\"" + s + "\">" + s + "<br>");
 			}
 			
 			out.println("<br /><input type=\"submit\" value=\"Save Multiple-Choice-Multiple-Answer Question\"/>");
