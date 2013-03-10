@@ -77,6 +77,16 @@ public class QuizCatalogServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		String id = request.getParameter("id");
+		//TODO:
+		//Delete quiz -> get questions from qqm-> delete questions->delete qqm entry
+		//Connection con = (Connection) request.getServletContext().getAttribute("connect");
+		//try {
+		//	Statement stmt = (Statement) con.createStatement();
+		//	stmt.executeUpdate("delete from quiz where quiz_id = "+id);
+		//} catch (SQLException e) {
+		//}
+		System.out.println("Quiz deletion not implemented");
+		doGet(request, response);
 	}
 }

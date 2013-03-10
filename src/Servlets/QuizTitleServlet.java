@@ -54,7 +54,6 @@ public class QuizTitleServlet extends HttpServlet {
     	int id = Integer.parseInt(qid);
     	Quiz q;
 		try {
-			//means the cart hasnt been initialized
 			if(session.getAttribute("quiz_"+qid) == null){
 				q = new Quiz((id), am.getCon());
 				session.setAttribute("quiz_"+qid, q);
@@ -82,6 +81,12 @@ public class QuizTitleServlet extends HttpServlet {
 	    	if (request.getSession().getAttribute("account") != null)out.println("<a href = \"newMessage.jsp?quiz="+q.getQuiz_id()+"\">Send to a friend</a><br>");
 	    	out.println(q.getDescription());
 	    	out.println("<br>");
+	    	if (user.isAdmin()) {
+	    		out.println("<form id=\"admin\" action=\"QuizCatalogServlet\" method=\"post\">");
+	    		out.println("<input type=\"hidden\" name=\"id\" value=\""+q.getQuiz_id()+"\">");
+	    		out.println("<a href=\"#\" onclick=\"document.getElementById(\'admin\').submit();\">Remove Quiz</a>");
+	    		out.println("</form>");
+	    	}
 	    	out.println(HTMLHelper.contentEnd());
 	    	out.println(HTMLHelper.contentStart());
 	    	if (user == null) {
