@@ -18,7 +18,6 @@ public class MultipleChoiceMultipleAnswer implements Question {
 	private int qID;
 	private ArrayList<String> userAnswers;
 	
-	// THIS IS NOT RIGHT TODO
 	public static String getHTMLInputString(){
 		
 		StringBuilder html = new StringBuilder();
