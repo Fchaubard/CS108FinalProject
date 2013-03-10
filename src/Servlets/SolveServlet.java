@@ -86,12 +86,14 @@ public class SolveServlet extends HttpServlet {
 					answersArrayList.add(string);
 				}
 				if ( q.getType()==5) {
+					answersArrayList = new ArrayList<String>();
 					for(int i = 0; i < q.getNumAnswers(); i++) {
 						String param = Integer.toString(q.getqID())+"_"+Integer.toString(i);
 						answersArrayList.add((String)request.getParameter(param));
 					}
 				}
 				if (q.getType()==6) {
+					answersArrayList = new ArrayList<String>();
 					for(int i = 0; i < q.getNumAnswers(); i++) {
 						String p = "6_" + Integer.toString(q.getqID()) + "_" + i;
 						if(request.getParameter(p) != null) {

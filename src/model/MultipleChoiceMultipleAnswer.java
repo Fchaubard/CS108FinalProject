@@ -101,9 +101,20 @@ public class MultipleChoiceMultipleAnswer implements Question {
 				score++;
 			}else{
 				score--;
-				if(score < 0) score = 0;
 			}
 		}
+		
+		int diff;
+		if(answers.size() > this.answers.size()) {
+			diff = answers.size()-this.answers.size();
+		}
+		else {
+			diff = this.answers.size() - answers.size();
+		}
+		
+		score -= diff;
+		if(score < 0) score = 0;
+		
 		return score;
 	}
 
