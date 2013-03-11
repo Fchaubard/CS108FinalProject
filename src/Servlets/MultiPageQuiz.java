@@ -44,11 +44,16 @@ public class MultiPageQuiz extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String quizID;
+		boolean practice = false;
 		if (request.getParameter("id") != null){
 			quizID = request.getParameter("id");
 		}
 		else {
 			quizID = request.getParameter("quizID");
+			if(quizID.startsWith("p")) {
+				quizID = quizID.substring(1);
+				practice = true;
+			}
 		}
 		HttpSession session = request.getSession(true);
 		session.setAttribute("quizID", quizID);
@@ -68,6 +73,9 @@ public class MultiPageQuiz extends HttpServlet {
 			else{
 				quiz = (Quiz) session.getAttribute("quiz_"+quizID);
 			}
+			
+			quiz.setPracticeMode(practice);
+			
 			response.setContentType("text/html");
 			PrintWriter out = response.getWriter();
 			out.println("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>");

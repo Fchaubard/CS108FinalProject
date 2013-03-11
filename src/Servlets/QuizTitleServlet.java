@@ -115,10 +115,11 @@ public class QuizTitleServlet extends HttpServlet {
 	    	
 	    	out.println(HTMLHelper.contentStart());
 	    	if(q.isOnePageMultiPage()){
-
 		    	out.println("<li><a href= \"MultiPageQuiz?id="+id+"\">Multi Page</a></li>");
+		    	out.println("<li><a href= \"MultiPageQuiz?id=p"+id+"\">Practice Mode</a></li>");
 			}else{
 		    	out.println("<li><a href= \"SinglePageQuizServlet?id="+id+"\">Single Page</a></li>");
+		    	out.println("<li><a href= \"SinglePageQuizServlet?id=p"+id+"\">Practice Mode</a></li>");
 			}
 	    	out.println(HTMLHelper.contentEnd());
 	    	out.println("</body>");
