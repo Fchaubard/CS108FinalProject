@@ -45,7 +45,7 @@ public class HTMLHelper {
 		fullHeader.append(takeQuizLink);
 		fullHeader.append(createLink);
 		if (isAdmin) fullHeader.append(statsLink);
-		fullHeader.append("</ul></div><div style=\"min-height:80px\"></div>");
+		fullHeader.append("</ul></div><div style=\"min-height:40px\"></div>");
 		return fullHeader.toString();
 	}
 	
@@ -63,6 +63,17 @@ public class HTMLHelper {
 		listing.append("<div class=quiz>");
 		listing.append("<h3>"+name);
 		listing.append("<a class=quiz href= \"QuizTitleServlet?id="+id+"\">Take Quiz</a>");
+		listing.append("</h3></div>");
+		
+		return listing.toString();
+	}
+	
+	
+	public static String printUserListing(String name){
+		StringBuilder listing = new StringBuilder();
+		listing.append("<div class=quiz>");
+		listing.append("<h3>"+name);
+		listing.append("<a class=quiz href= \"ProfileServlet?user="+name+"\">Profile</a>");
 		listing.append("</h3></div>");
 		
 		return listing.toString();

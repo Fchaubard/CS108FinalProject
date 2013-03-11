@@ -56,19 +56,18 @@ public class ProfileCatalogServlet extends HttpServlet {
 	    	out.println("<head>");
 	    	out.println(HTMLHelper.printCSSLink());
 	    	out.println("</head");
-	    	out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
 	    	out.println("<body>");
-	    	
+	    	out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
     		out.println(HTMLHelper.contentStart());
 	    	out.println("<form action=\"ProfileCatalogServlet\" method=\"get\">");
 	    	out.println("Search Users: <input type=\"text\" name=\"search\"/>");
 	    	out.println("<input type=\"submit\" value=\"Search\"/>");
 			out.println("</form>");
-			out.println("<ul>");
+			out.println("<ul class=boxlisting>");
 			out.println("</body>");
 			while (rs.next()) {
 				String name = rs.getString("username");
-				out.println("<li><a href= \"ProfileServlet?user="+name+"\">"+name+"</a></li>");
+				out.println(HTMLHelper.printUserListing(name));
 			}
 			out.println("</ul>");
 			out.println(HTMLHelper.contentEnd());
