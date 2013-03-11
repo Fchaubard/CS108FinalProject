@@ -16,6 +16,7 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
 import Accounts.Account;
+import Accounts.AccountManager;
 
 /**
  * Servlet implementation class QuizCatalogServlet
@@ -40,7 +41,7 @@ public class QuizCatalogServlet extends HttpServlet {
 		ResultSet rs;
 		try {
 			stmt = (Statement) con.createStatement();
-			String searchQuizes = "Select quiz_id, name from quiz";
+			String searchQuizes = "Select quiz_id, name, category, creator_id from quiz";
 			if (request.getParameter("search") != null && request.getParameter("search").length() > 0) {
 				searchQuizes += " where name like \"%"+request.getParameter("search")+"%\"";
 			}
@@ -60,9 +61,12 @@ public class QuizCatalogServlet extends HttpServlet {
 			out.println("</form>");
 			out.println("<ul class=boxlisting>");
 			while (rs.next()) {
+				AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
 				String name = rs.getString("name");
 				int id = rs.getInt("quiz_id");
-				out.println(HTMLHelper.printQuizListing(id, name));
+				String cat = rs.getString("category");
+				Account author = am.getAccount(rs.getInt("creator_id"));
+				out.println(HTMLHelper.printQuizListing(id, name, cat, author));
 			}
 			out.println("</ul>");
 			out.println(HTMLHelper.contentEnd());

@@ -62,15 +62,15 @@ public class HTMLHelper {
 		return fullHeader.toString();
 	}
 	
-	public static String printQuizListing(int id, String name){
+	public static String printQuizListing(int id, String name, String cat, Account author){
 		StringBuilder listing = new StringBuilder();
 		listing.append("<div class=quiz>");
 		listing.append(QUIZ_ICON);
 		listing.append("<ul class=boxlisting>");
 		listing.append("<li class=quiz><b>"+name+"</b></li>");
-		listing.append("<li class=quiz>Category: To be implemented...");
+		listing.append("<li class=quiz>Category: " + cat );
 		listing.append("<b><a class=quiz href= \"QuizTitleServlet?id="+id+"\">Take Quiz</a></b></li>");
-		listing.append("<li class=quiz>Creator: To be implemented...</li>");
+		listing.append("<li class=quiz>Creator:<a href =\"ProfileServlet?user="+author.getName()+"\">"+author.getName()+"</a></li>");
 		listing.append("</div>");
 		
 		return listing.toString();
