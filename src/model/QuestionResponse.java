@@ -79,11 +79,9 @@ public class QuestionResponse implements Question {
 			return 0; // input cleansing
 		}
 		for (String a : ans) {
-		
 			if (answers.contains(a)) {
 				return 1;
 			}
-		
 		}
 		return 0;
 		
