@@ -45,17 +45,19 @@ public class MultiPageQuiz extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String quizID;
 		boolean practice = false;
-		if (request.getParameter("id") != null){
+		
+		HttpSession session = request.getSession(true);
+		
+		if (request.getParameter("id")!=null) {
 			quizID = request.getParameter("id");
-		}
-		else {
-			quizID = request.getParameter("quizID");
 			if(quizID.startsWith("p")) {
 				quizID = quizID.substring(1);
 				practice = true;
 			}
+		}else{
+			quizID = (String) session.getAttribute("quizID");
 		}
-		HttpSession session = request.getSession(true);
+		
 		session.setAttribute("quizID", quizID);
 		int questionIndex;
 		
