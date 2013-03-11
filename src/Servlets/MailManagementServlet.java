@@ -5,6 +5,7 @@ import helpers.HTMLHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -47,7 +48,7 @@ public class MailManagementServlet extends HttpServlet {
     	out.println(HTMLHelper.contentStart() + "<body>");
     	
     	if (request.getParameter("index").equals("inbox")) {
-    		HashMap<Integer, Message> inbox = mm.listInbox(user);
+    		TreeMap<Integer, Message> inbox = mm.listInbox(user);
     		out.println("<table border=\"0\">");
     		out.println("<tr><td><b>Subject</b></td><td><b>Sender</b></td><td><b>Date</b></td></tr>");
     		for (int i : inbox.keySet()) {
@@ -64,7 +65,7 @@ public class MailManagementServlet extends HttpServlet {
     		}
     		out.println("</table>");
     	} else if (request.getParameter("index").equals("outbox")) {
-    		HashMap<Integer, Message> outbox = mm.listOutbox(user);
+    		TreeMap<Integer, Message> outbox = mm.listOutbox(user);
     		//out.println("<ul>");
     		out.println("<table border=\"0\">");
     		out.println("<tr><td><b>Subject</b></td><td><b>Recipient</b></td><td><b>Date</b></td></tr>");

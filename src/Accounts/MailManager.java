@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 import Servlets.MyDB;
 
@@ -95,14 +96,14 @@ public class MailManager {
 		
 	}
 	
-	public HashMap<Integer, Message> listInbox(String recipient) {
+	public TreeMap<Integer, Message> listInbox(String recipient) {
 		ResultSet rs;
 		Statement stmt;
-		HashMap<Integer,Message> inbox = null;
+		TreeMap<Integer,Message> inbox = null;
 		try {
-			inbox = new HashMap<Integer,Message>();
+			inbox = new TreeMap<Integer,Message>();
 			stmt = (Statement) con.createStatement();
-			rs = stmt.executeQuery("select message_id, sender, subject, date from message where recipient = \"" + recipient + "\"");
+			rs = stmt.executeQuery("select message_id, sender, subject, date from message where recipient = \"" + recipient + "\" order by date");
 			while (rs.next()) {
 				Integer key = rs.getInt("message_ID");
 				String sender = rs.getString("sender");
@@ -117,14 +118,14 @@ public class MailManager {
 		
 	}
 	
-	public HashMap<Integer, Message> listOutbox(String sender) {
+	public TreeMap<Integer, Message> listOutbox(String sender) {
 		ResultSet rs;
 		Statement stmt;
-		HashMap<Integer,Message> outbox = null;
+		TreeMap<Integer,Message> outbox = null;
 		try {
-			outbox = new HashMap<Integer,Message>();
+			outbox = new TreeMap<Integer,Message>();
 			stmt = (Statement) con.createStatement();
-			rs = stmt.executeQuery("select message_id, recipient, subject, date from message where sender = \"" + sender + "\"");
+			rs = stmt.executeQuery("select message_id, recipient, subject, date from message where sender = \"" + sender + "\" order by date");
 			while (rs.next()) {
 				Integer key = rs.getInt("message_ID");
 				String recipient = rs.getString("recipient");
