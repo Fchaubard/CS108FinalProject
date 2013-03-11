@@ -58,11 +58,11 @@ public class QuizCatalogServlet extends HttpServlet {
 	    	out.println("Search Quizes: <input type=\"text\" name=\"search\"/>");
 	    	out.println("<input type=\"submit\" value=\"Search\"/>");
 			out.println("</form>");
-			out.println("<ul>");
+			out.println("<ul class=boxlisting>");
 			while (rs.next()) {
 				String name = rs.getString("name");
 				int id = rs.getInt("quiz_id");
-				out.println("<li><a href= \"QuizTitleServlet?id="+id+"\">"+name+"</a></li>");
+				out.println(HTMLHelper.printQuizListing(id, name));
 			}
 			out.println("</ul>");
 			out.println(HTMLHelper.contentEnd());

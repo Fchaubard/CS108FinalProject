@@ -58,5 +58,13 @@ public class HTMLHelper {
 		return fullHeader.toString();
 	}
 	
-	
+	public static String printQuizListing(int id, String name){
+		StringBuilder listing = new StringBuilder();
+		listing.append("<div class=quiz>");
+		listing.append("<h3>"+name);
+		listing.append("<a class=quiz href= \"QuizTitleServlet?id="+id+"\">Take Quiz</a>");
+		listing.append("</h3></div>");
+		
+		return listing.toString();
+	}
 }
