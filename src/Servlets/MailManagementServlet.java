@@ -110,7 +110,8 @@ public class MailManagementServlet extends HttpServlet {
     	String recipient = request.getParameter("recipient");
     	AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
     	if (!am.accountExists(recipient)) {
-    		request.getRequestDispatcher("/newMessage.jsp?to=Invalid Name").forward(request, response);
+    		String errorURL = "/newMessage.jsp?&to="+request.getParameter("to")+"&subject="+request.getParameter("subject")+"&quiz=" + request.getParameter("quiz")+"&body="+request.getParameter("body");
+    		request.getRequestDispatcher(errorURL).forward(request, response);
     	} else {
     	String subject = request.getParameter("subject");
     	String body = request.getParameter("body");

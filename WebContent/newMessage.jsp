@@ -14,17 +14,23 @@
 <% String from = ((Accounts.Account) request.getSession().getAttribute("account")).getName(); 
 	String to = (String) request.getParameter("to");
 	String quiz = (String) request.getParameter("quiz");
-	String sub = "";
-	if (to == null) to = "";
+	String sub = (String) request.getParameter("subject");
+	String body = (String) request.getParameter("body");
+	if (to != null) out.println("<b>Recpient not found in system</b>");
 	if (quiz == null) quiz = "";
-	if (request.getParameter("sub") != null) sub = "RE:" + (String) request.getParameter("sub");
-out.println("Sender:" + from);%>
+	if (sub == null) sub = "";
+	if (body == null) body = "";%>
 <br>
 <input type="hidden" name="sender" value = "<% out.print(from); %>">
-Recipient: <input type="text" name="recipient" value = "<% out.println(to); %>"><br>
-subject: <input type="text" name="subject" value = "<% out.println(sub); %>"><br>
-(optional) challenge ID: <input type="text" name="challenge" value = "<% out.println(quiz); %>"><br>
-message: <textarea cols = "50" rows = "5" name = "body"></textarea>
+<input type="hidden" name="quiz" value = "<% out.print(quiz); %>">
+<table border = 0>
+<tr><td>Sender:</td><td><% out.println(from);%></td></tr>
+<%if (quiz.length() > 0) out.println("<tr><td>Challenge ID:</td><td>"+ quiz +"</td></tr>");%>
+<!-- <tr><td>challenge ID:</td><td><input type="text" name="challenge" value = "<% out.println(quiz); %>"></td></tr>-->
+<tr><td>Recipient:</td><td><input type="text" name="recipient"></td></tr>
+<tr><td>subject:</td><td><input type="text" name="subject" value = "<% out.println(sub); %>"></td></tr>
+<tr><td>message:</td><td><textarea cols = "50" rows = "5" name = "body"><% out.println(body); %></textarea></td></tr>
+</table>
 <input type="submit" value="Send">
 </form>
 </body>
