@@ -40,7 +40,7 @@ public class MailManager {
 		} else {
 			sb.append("default");
 		}
-		sb.append(");");
+		sb.append(", default);");
 		try {
 			System.out.println(sb.toString());
 			stmt = (Statement) con.createStatement();
