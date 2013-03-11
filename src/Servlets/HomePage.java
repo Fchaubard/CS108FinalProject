@@ -34,7 +34,7 @@ public class HomePage extends HttpServlet {
 		if (acct == null) {
 			request.getRequestDispatcher("/GuestHome.jsp").forward(request, response);
 		} else {
-			request.getRequestDispatcher("/UserHome.jsp").forward(request, response);
+			request.getRequestDispatcher("/ProfileServlet?user="+acct.getName()).forward(request, response);
 		}
 		
 	}

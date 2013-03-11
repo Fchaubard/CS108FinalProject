@@ -16,7 +16,13 @@ ul.header{
 }
 
 ul.boxlisting{
-	margin-left:-10%;
+	margin-left:-7%;
+	list-style-type:none;
+}
+
+li.quiz{
+	margin-left:25%;
+	margin-bottom:10px;
 }
 
 li.header{
@@ -95,8 +101,8 @@ div.content{
 	top: 40px;
 	background-color: white;
 	font-family: Tahoma;
-	margin-left: 35%;
-	margin-right:35%;
+	margin-left: 30%;
+	margin-right:30%;
 	min-width:364px;
 	margin-bottom:20px;
 }
@@ -172,4 +178,8 @@ font-family: Tahoma;
 	color:#CC0000;
 }
 
-
+img.quiz{
+	height:90px;
+	float:left;
+	border-radius:5px;
+}

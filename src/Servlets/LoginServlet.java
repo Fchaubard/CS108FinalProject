@@ -54,13 +54,14 @@ public class LoginServlet extends HttpServlet {
 				} else {
 					sc.setAttribute("user", name);
 					request.getSession().setAttribute("account", acct);
-					request.getRequestDispatcher("/UserHome.jsp").forward( request, response );
+					request.getRequestDispatcher("/ProfileServlet?user="+acct.getName()).forward( request, response );
 				}
 			} else {
 				request.getRequestDispatcher("/GuestHome.jsp?err=badLogin" ).forward( request, response );
 			}
 		}else{
-			request.getRequestDispatcher("/UserHome.jsp").forward( request, response );
+			Account acct = (Account) request.getSession().getAttribute("account");
+			request.getRequestDispatcher("/ProfileServlet?user="+acct.getName()).forward( request, response );
 		}
 		
 		
