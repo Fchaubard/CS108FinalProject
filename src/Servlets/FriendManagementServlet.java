@@ -1,22 +1,16 @@
 package Servlets;
 
-    	import helpers.HTMLHelper;
+import helpers.HTMLHelper;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-    	import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.Statement;
 
     	import Accounts.Account;
 import Accounts.AccountManager;

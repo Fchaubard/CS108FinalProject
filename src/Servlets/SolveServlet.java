@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.regex.Pattern;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,13 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import Accounts.Account;
-import Accounts.AccountManager;
+import Accounts.*;
 
-import model.Question;
-import model.Quiz;
+import model.*;
 
-import model.QuizAttempts;
 /**
  * Servlet implementation class SolveServlet
  */

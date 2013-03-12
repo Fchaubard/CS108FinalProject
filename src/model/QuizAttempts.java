@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Date;
 
-import Accounts.Account;
 import Accounts.AccountManager;
 
 public class QuizAttempts {

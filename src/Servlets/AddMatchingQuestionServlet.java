@@ -2,11 +2,8 @@ package Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Random;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,20 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import Accounts.Account;
-import Accounts.AccountManager;
-
-import sun.font.TrueTypeFont;
-
-import model.FillInTheBlank;
-import model.Matching;
-import model.MultipleAnswer;
-import model.MultipleChoice;
-import model.MultipleChoiceMultipleAnswer;
-import model.PictureResponse;
-import model.Question;
-import model.QuestionResponse;
-import model.Quiz;
+import model.*;
 
 
 /**

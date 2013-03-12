@@ -4,20 +4,15 @@ import helpers.HTMLHelper;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.TreeMap;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Accounts.Account;
-import Accounts.AccountManager;
-import Accounts.MailManager;
-import Accounts.Message;
+import Accounts.*;
 
 /**
  * Servlet implementation class AcctManagementServlet

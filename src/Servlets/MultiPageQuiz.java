@@ -5,8 +5,6 @@ import helpers.HTMLHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -18,8 +16,6 @@ import javax.servlet.http.HttpSession;
 
 import Accounts.Account;
 import Accounts.AccountManager;
-
-import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
 
 import model.Quiz;
 
