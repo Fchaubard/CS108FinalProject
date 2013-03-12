@@ -50,11 +50,6 @@ import Accounts.*;
     	    	//set and print profile title (name)
     	    	String title = profile.getName();
     	    	ArrayList<String> actions = new ArrayList<String>();
-    	    	String name = (selfViewer) ? "My" : profile.getName() + "'s";
-    	    	
-    	    	actions.add("<a class=actionlist href = \"QuizCatalogServlet?&search="+profile.getName()+"&type=creator_id\">"+name+" Quizes</a>");
-    	    	if (selfViewer) actions.add("<a class=actionlist href = \"HistoryServlet?user="+profile.getId()+"\">"+name+" History</a>");
-    	    	
     	    	out.println(HTMLHelper.printTitle("", title, actions));
     	    	//done with profile title
     	    	
@@ -63,6 +58,11 @@ import Accounts.*;
     	    	actions.clear();
     	    	actions.add("Quizes Created: " + am.quizesAuthored(profile));
     	    	actions.add("Quizes Taken: " + am.quizesTaken(profile));
+    	    	
+    	    	String name = (selfViewer) ? "My" : profile.getName() + "'s";
+    	    	actions.add("<a class=actionlist href = \"QuizCatalogServlet?&search="+profile.getName()+"&type=creator_id\">"+name+" Quizes</a>");
+    	    	if (selfViewer) actions.add("<a class=actionlist href = \"HistoryServlet?user="+profile.getId()+"\">"+name+" History</a>");
+    	    	
     	    	out.println(HTMLHelper.printActionList("", title, actions));
     	    	//done printing statistics
     	    	

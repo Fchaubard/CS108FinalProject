@@ -107,8 +107,8 @@ public class HTMLHelper {
 		StringBuilder actionBox = new StringBuilder();
 		actionBox.append("<div class=quiz>");
 		actionBox.append("<h2 class=title>");
-		actionBox.append("<img class=quiz style=\"height:30px\" style src=\""+img+"\">");
-		actionBox.append(title+"</h2>");
+		actionBox.append("<img class=quiz style=\"height:30px\" style src=\""+img+"\"><strong style=\"margin-left:15px\">");
+		actionBox.append(title+"</strong></h2>");
 		actionBox.append("<ul style=\"list-style-type:none\">");
 		for (String action : actions){
 			actionBox.append("<li class=quiz>");
