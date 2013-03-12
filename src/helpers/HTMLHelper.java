@@ -16,7 +16,7 @@ public class HTMLHelper {
 	private static final String DEFAULT_PROFILE_PIC = "http://www.iconsdb.com/icons/download/caribbean-blue/user-256.gif";
 	private static final String BLUE_STAR_ICON = "http://www.gettyicons.com/free-icons/136/stars/png/256/star_blue_256.png";
 	private static final String MAIL_ICON ="http://cdn1.iconfinder.com/data/icons/metro-uinvert-dock/256/Mail.png";
-	private static final String STATISTICS_ICON = "http://12starsmedia.com/wp-content/uploads/2012/02/VideoStatsIcon.gif";
+	public static final String STATISTICS_ICON = "http://12starsmedia.com/wp-content/uploads/2012/02/VideoStatsIcon.gif";
 	private static final String ACTION_ICON ="http://myyearwithoutclothesshopping.com/wp-content/uploads/2013/01/take-action-click-icon.jpg";
 	private static final String ADMIN_ICON = "http://cdn1.iconfinder.com/data/icons/meBaze-Freebies/512/setting.png";
 	

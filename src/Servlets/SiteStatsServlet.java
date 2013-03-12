@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -48,35 +49,58 @@ public class SiteStatsServlet extends HttpServlet {
 	    	out.println("<body>");
 	    	out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
 	    	out.println(HTMLHelper.contentStart());
-	    	out.println("<h3>Site Statistics</h3>");
-	    	out.println("<a href = \"ProfileCatalogServlet\">Registered users</a>");
+	    	String title = "Site Statistics";
+	    	ArrayList<String> actions = new ArrayList<String>();
+	    	
+	    	String dummyString = "";
+	    	dummyString = dummyString + ("<a href = \"ProfileCatalogServlet\">Registered users</a>");
 	    	rs = stmt.executeQuery("select count(*) from user");
 	    	rs.next();
-	    	out.println(": " + rs.getInt("count(*)") + "<br>");
-	    	out.println("<a href = \"ProfileCatalogServlet?special=banned\">Banned users</a>");
+	    	dummyString = dummyString + (": " + rs.getInt("count(*)") + "");
+	    	actions.add(dummyString);
+	    	
+	    	
+	    	dummyString = ("<a href = \"ProfileCatalogServlet?special=banned\">Banned users</a>");
 	    	rs = stmt.executeQuery("select count(*) from user where banned = true");
 	    	rs.next();
-	    	out.println(": " + rs.getInt("count(*)") + "<br>");
-	    	out.println("<a href = \"ProfileCatalogServlet?special=admin\">Administrators</a>");
+	    	dummyString = dummyString + (": " + rs.getInt("count(*)") + "");
+	    	actions.add(dummyString);
+	    	
+	    	dummyString = ("<a href = \"ProfileCatalogServlet?special=admin\">Administrators</a>");
 	    	rs = stmt.executeQuery("select count(*) from user where admin = true");
 	    	rs.next();
-	    	out.println(": " + rs.getInt("count(*)") + "<br>");
-	    	out.println("<a href = \"QuizCatalogServlet\">Quizes</a>");
+	    	dummyString = dummyString + (": " + rs.getInt("count(*)") + "");
+	    	actions.add(dummyString);
+	    	
+	    	
+	    	dummyString = ("<a href = \"QuizCatalogServlet\">Quizes</a>");
 	    	rs = stmt.executeQuery("select count(*) from quiz");
 	    	rs.next();
-	    	out.println(": " + rs.getInt("count(*)") + "<br>");
-	    	out.println("Quizes Taken");
+	    	dummyString = dummyString + (": " + rs.getInt("count(*)") + "");
+	    	actions.add(dummyString);
+	    	
+	    	
+	    	dummyString = ("Quizes Taken");
 	    	rs = stmt.executeQuery("select count(*) from history");
 	    	rs.next();
-	    	out.println(": " + rs.getInt("count(*)") + "<br>");
-	    	out.println("Messages Sent");
+	    	dummyString = dummyString + (": " + rs.getInt("count(*)") + "");
+	    	actions.add(dummyString);
+	    	
+	    	dummyString = ("Messages Sent");
 	    	rs = stmt.executeQuery("select count(*) from message");
 	    	rs.next();
-	    	out.println(": " + rs.getInt("count(*)") + "<br>");
-	    	out.println("Challenges Sent");
+	    	dummyString = dummyString + (": " + rs.getInt("count(*)") + "");
+	    	actions.add(dummyString);
+	    	
+	    	
+	    	dummyString = ("Challenges Sent");
 	    	rs = stmt.executeQuery("select count(*) from message where quiz_id > 0");
 	    	rs.next();
-	    	out.println(": " + rs.getInt("count(*)") + "<br>");
+	    	dummyString = dummyString + (": " + rs.getInt("count(*)") + "");
+	    	actions.add(dummyString);
+	    	
+	    	out.println(HTMLHelper.printActionList(HTMLHelper.STATISTICS_ICON, title, actions));
+	    	
 	    	out.println(HTMLHelper.contentEnd());
 	    	out.println("</body>");
 		} catch (SQLException e) {
