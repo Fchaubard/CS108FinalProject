@@ -259,13 +259,28 @@ public class AccountManager {
 			if (userid > 0)  sb.append("user_id = "+userid);
 			if (userid > 0 && quizid > 0) sb.append(" AND ");
 			if (quizid > 0) sb.append("quiz_id = "+quizid);
-			sb.append(";");
+			sb.append(" order by score DESC, time_took ASC;");
 					
 			rs = stmt.executeQuery(sb.toString());
 			while (rs.next()) {
 				model.QuizAttempts qa = new model.QuizAttempts(rs.getInt("user_id"), rs.getInt("quiz_id"), rs.getInt("score"), rs.getDate("date"), rs.getInt("time_took"));
 				history.add(qa);
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return history;
+	}
+	
+	public int quizesAuthored(Account acct) {
+		ResultSet rs;
+		Statement stmt;
+		int history = 0;
+		try {
+			stmt = (Statement) con.createStatement();
+			rs = stmt.executeQuery("select COUNT(*) from quiz where creator_id ="+acct.getId()+"");
+			rs.next();
+			history = rs.getInt("count(*)");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

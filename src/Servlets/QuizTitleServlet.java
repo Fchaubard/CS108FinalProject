@@ -5,6 +5,7 @@ import helpers.HTMLHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -95,21 +96,30 @@ public class QuizTitleServlet extends HttpServlet {
 	    	out.println("<h3>Top Scorers</h3>");
 	    	out.println("<ol>");
 	    	//currently prints ALL the scores. Can switch to a for (0-4) but table needs to be sorted first.
-	    	for (QuizAttempts qa : am.getHistory(0, id)) {
-	    		Account acct = am.getAccount(9);
-	    		out.println("<li>"+acct.getName()+" " +qa.getScore()+" "+qa.getTime()+"</li>");
+	    	//for (QuizAttempts qa : am.getHistory(0, id)) {
+	    	ArrayList<QuizAttempts> history = am.getHistory(0, id);
+	    	for (int i = 0; i < 5; i++) {
+	    		if (i >= history.size()) break;
+	    		QuizAttempts qa = history.get(i);
+	    		Account acct = am.getAccount(qa.getUserID());
+	    		out.println("<li><a href = \"ProfileServlet?user="+acct.getName()+"\">"+acct.getName()+"</a> " +qa.getScore()+" "+qa.getTime()+"</li>");
 	    	}
-	    	out.println("</ol><br>");
+	    	out.println("</ol>");
+	    	out.println("<a href = \"HistoryServlet?&quiz="+id+"\">More Results</a>");
 	    	out.println(HTMLHelper.contentEnd());
 	    	
 	    	if (user != null) {
 	    		out.println(HTMLHelper.contentStart());	
 	    	out.println("<h3>My Scores</h3>");
 	    		out.println("<ol>");
-	    		for (QuizAttempts qa : am.getHistory(user.getId(), id)) {
+	    		history = am.getHistory(user.getId(), id);
+		    	for (int i = 0; i < 5; i++) {
+		    		if (i >= history.size()) break;
+		    		QuizAttempts qa = history.get(i);
 	    			out.println("<li>"+qa.getScore()+" "+qa.getTime()+"</li>");
 	    		}
 	    	out.println("</ol>");
+	    	out.println("<a href = \"HistoryServlet?&user="+user.getId()+"&quiz="+id+"\">More Results</a>");
 	    	out.println(HTMLHelper.contentEnd());
 	    	}
 	    	

@@ -154,6 +154,7 @@ public class Quiz {
 			PreparedStatement query = con.prepareStatement("select * from user where user_id = ?");
 
 			query.setInt(1, id);
+			System.out.println(query.toString());
 			ResultSet rs = query.executeQuery();
 			rs.next();
 			System.out.println("user id is "+rs.getInt("user_id"));

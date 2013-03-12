@@ -47,25 +47,36 @@ import Accounts.MailManager;
     	    	out.println("</head>");
     	    	
     	    	out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
+    	    	
     	    	out.println(HTMLHelper.contentStart());
     	    	out.println("<h3>" + profile.getName() + "</h3>");
+    	    	String name = (selfViewer) ? "My" : profile.getName() + "'s";
+    	    	out.println("<a href = \"QuizCatalogServlet?&search="+profile.getName()+"&type=creator_id\">"+name+" Quizes</a>");
+    	    	if (selfViewer) out.println("<a href = \"HistoryServlet?user="+profile.getId()+"\">"+name+" History</a>");
     	    	out.println(HTMLHelper.contentEnd());
+    	    	
     	    	out.println(HTMLHelper.contentStart());
+    	    	out.println("<h4>Statistics</h4>");
+    	    	out.println("Quizes Created: " + am.quizesAuthored(profile));
+    	    	out.println("<br>Quizes Taken: " + am.quizesTaken(profile));
     	    	out.println("<h4>Acheivements</h4>");
     	    	for(String s : profile.getAcheivementKeySet()) {
     	    		if (profile.getAcheivement(s)) out.println(s + "<br>");
     	    	}
     	    	out.println(HTMLHelper.contentEnd());
+    	    	
     	    	if (selfViewer) {
     	    		out.println(HTMLHelper.contentStart());
-    	    		out.println("<a href = \"newMessage.jsp?user="+profile.getName()+"\">Compose Mail</a>");
+    	    		out.println("<h3>Mail</h3>");
     	    		int unread = mm.getUnread(viewer);
     	    		String unreadString = "";
     	    		if (unread > 0) unreadString = " ("+unread+")";
-    	    		out.println("<a href = \"MailManagementServlet?&index=inbox&user="+profile.getName()+"\">inbox"+unreadString+"</a>");
-    	    		out.println("<a href = \"MailManagementServlet?&index=outbox&user="+profile.getName()+"\">outbox</a>");
-    	    		out.println("<br>");
-    	    		out.println("<a href = \"FriendManagementServlet\">Friends</a>");
+    	    		out.println("<a href = \"MailManagementServlet?&index=inbox&user="+profile.getName()+"\">inbox"+unreadString+"</a><br>");
+    	    		out.println("<a href = \"MailManagementServlet?&index=outbox&user="+profile.getName()+"\">outbox</a><br>");
+    	    		out.println("<a href = \"newMessage.jsp?user="+profile.getName()+"\">Compose Mail</a>");
+    	    		out.println("<h3>Friends</h3>");
+    	    		out.println("<a href = \"FriendManagementServlet\">Friends</a><br>");
+    	    		out.println("<a href=\"ProfileCatalogServlet\"> Search Users </a>");
     	    		out.println(HTMLHelper.contentEnd());
     	    	} else if (regViewer) {
     	    		out.println(HTMLHelper.contentStart());
