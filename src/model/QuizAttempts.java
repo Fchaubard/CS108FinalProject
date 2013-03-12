@@ -80,12 +80,17 @@ public class QuizAttempts {
 	}
 	
 	public String printAttemt(AccountManager am) {
+		//out.println("<li><a href = \"ProfileServlet?user="+acct.getName()+"\">"+acct.getName()+"</a> " + qa.getScore()+" "+qa.getTime()/1000+"</li>");
 		StringBuilder attempt = new StringBuilder();
 		
+		attempt.append("<li><a href = \"ProfileServlet?user=");
 		attempt.append(am.getAccount(userID).getName());
+		attempt.append("\">");
+		attempt.append(am.getAccount(userID).getName());
+		attempt.append("</a> ");
 		attempt.append(" (score: ");
 		attempt.append(score);
-		attempt.append("; time: ");
+		attempt.append("%; time: ");
 		attempt.append(time/1000);
 		attempt.append(" s)");
 		

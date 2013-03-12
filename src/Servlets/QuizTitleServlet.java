@@ -98,8 +98,7 @@ public class QuizTitleServlet extends HttpServlet {
 	    	for (int i = 0; i < 5; i++) {
 	    		if (i >= history.size()) break;
 	    		QuizAttempts qa = history.get(i);
-	    		Account acct = am.getAccount(qa.getUserID());
-	    		out.println("<li><a href = \"ProfileServlet?user="+acct.getName()+"\">"+acct.getName()+"</a> " +qa.getScore()+" "+qa.getTime()+"</li>");
+	    		out.println(qa.printAttemt(am));
 	    	}
 	    	out.println("</ol>");
 	    	out.println("<a href = \"HistoryServlet?&quiz="+id+"\">More Results</a>");
@@ -113,7 +112,7 @@ public class QuizTitleServlet extends HttpServlet {
 		    	for (int i = 0; i < 5; i++) {
 		    		if (i >= history.size()) break;
 		    		QuizAttempts qa = history.get(i);
-	    			out.println("<li>"+qa.getScore()+" "+qa.getTime()+"</li>");
+	    			out.println("<li>score: "+qa.getScore()+"%; time: "+qa.getTime()/1000+" s</li>");
 	    		}
 	    	out.println("</ol>");
 	    	out.println("<a href = \"HistoryServlet?&user="+user.getId()+"&quiz="+id+"\">More Results</a>");

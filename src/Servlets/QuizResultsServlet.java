@@ -90,7 +90,8 @@ public class QuizResultsServlet extends HttpServlet {
 	    	out.println("<ol>");
 	    	//currently prints ALL the scores. Can switch to a for (0-4) but table needs to be sorted first.
 	    	for (QuizAttempts attempt : quiz.getHistory()) {
-	    		out.println("<li>" + attempt.printAttemt((AccountManager)request.getServletContext().getAttribute("accounts")) + "</li>");
+	    		out.println(attempt.printAttemt((AccountManager)request.getServletContext().getAttribute("accounts")));
+	    		//out.println("<li>" + attempt.printAttemt((AccountManager)request.getServletContext().getAttribute("accounts")) + "</li>");
 	    	}
 	    	out.println("</ol><br>");
 	    	out.println(HTMLHelper.contentEnd());
