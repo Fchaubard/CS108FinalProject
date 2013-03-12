@@ -45,7 +45,7 @@ public class MailManagementServlet extends HttpServlet {
     	if (request.getParameter("index").equals("inbox")) {
     		TreeMap<Integer, Message> inbox = mm.listInbox(user);
     		out.println("<table border=\"0\">");
-    		out.println("<tr><td><b>Subject</b></td><td><b>Sender</b></td><td><b>Date</b></td></tr>");
+    		out.println("<tr><th><b>Subject</b></th><th><b>Sender</b></th><th><b>Date</b></th></tr>");
     		for (int i : inbox.keySet()) {
     			out.println("<tr>");
     			out.println("<td><a href = \"MailManagementServlet?&index="+i+"&user="+user+"\">");
@@ -63,7 +63,7 @@ public class MailManagementServlet extends HttpServlet {
     		TreeMap<Integer, Message> outbox = mm.listOutbox(user);
     		//out.println("<ul>");
     		out.println("<table border=\"0\">");
-    		out.println("<tr><td><b>Subject</b></td><td><b>Recipient</b></td><td><b>Date</b></td></tr>");
+    		out.println("<tr><th><b>Subject</b></th><th><b>Recipient</b></th><th><b>Date</b></th></tr>");
     		for (int i : outbox.keySet()) {
     			out.println("<tr>");
     			out.println("<td><a href = \"MailManagementServlet?&index="+i+"&user="+user+"\">");
