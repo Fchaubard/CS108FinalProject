@@ -86,12 +86,33 @@ a.quiz {
 	font-size: 12px;
 }
 
+a.actionlist{
+	background-color: rgb(102, 205, 170);
+	padding-top: 5px;
+	border-width: 0px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	color: white;
+	border-radius: 5px;
+	text-decoration: none;
+	margin-right: 15%;
+	position: relative;
+	margin-right: 3%;
+	font-size: 12px;
+}
+
 html{
 	background-color:#ddd;
 }
 
 h1{
 	text-align:center;
+}
+
+h.title{
+	text-align:left;
+	margin-left:20%;
 }
 
 div.content{

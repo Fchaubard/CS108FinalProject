@@ -13,7 +13,9 @@ public class HTMLHelper {
 	private static final String FUN_FACT = "<li class=header><a class=header href=\"http://en.wikipedia.org/wiki/Special:Random\">Fun Fact</a></li>";
 	private static final String LOGOUT = "<li class=header><form action=\"AcctManagementServlet\" method=\"post\"><input type=\"hidden\" name =\"Action\" value=\"Logout\"><input style=\"float:right\" type=\"submit\" value=\"Logout\"></form></li>";
 	private static final String QUIZ_ICON = "<img class=quiz src=\"http://upload.wikimedia.org/wikipedia/commons/1/13/Blue_square_Q.PNG\">";
-	
+	private static final String DEFAULT_PROFILE_PIC = "http://www.iconsdb.com/icons/download/caribbean-blue/user-256.gif";
+	private static final String BLUE_STAR_ICON = "http://www.gettyicons.com/free-icons/136/stars/png/256/star_blue_256.png";
+
 	private HTMLHelper(){
 	
 	}
@@ -75,6 +77,36 @@ public class HTMLHelper {
 		
 		return listing.toString();
 	}
+	
+	public static String printTitle(String img, String name){
+		if (img.isEmpty()) img = DEFAULT_PROFILE_PIC;
+		StringBuilder titleBox = new StringBuilder();
+		titleBox.append("<div class=quiz>");
+		titleBox.append("<img class=quiz src=\""+img+"\">");
+		titleBox.append("<h1 class=title>"+name+"</h1>");
+		titleBox.append("</div>");
+		return titleBox.toString();
+	}
+	
+	public static String printActionList(String img, String title, ArrayList<String> actions){
+		if (img.isEmpty()) img = BLUE_STAR_ICON;
+		StringBuilder actionBox = new StringBuilder();
+		actionBox.append("<div class=quiz>");
+		actionBox.append("<h2 class=title>");
+		actionBox.append("<img class=quiz style=\"height:30px\" style src=\""+img+"\">");
+		actionBox.append(title+"</h2>");
+		actionBox.append("<ul style=\"list-style-type:none\">");
+		for (String action : actions){
+			actionBox.append("<li class=quiz>");
+			actionBox.append("<img class=quiz style=\"height:20px\" style src=\""+img+"\">");
+			actionBox.append(action);
+			actionBox.append("</li>");
+		}
+		actionBox.append("</ul></div>");
+		
+		return actionBox.toString();
+	}
+
 	
 	
 	public static String printUserListing(String name){
