@@ -4,6 +4,7 @@ package Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
     	import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -47,78 +48,114 @@ import Accounts.MailManager;
     	    	out.println("</head>");
     	    	
     	    	out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
-    	    	
     	    	out.println(HTMLHelper.contentStart());
-    	    	out.println("<h3>" + profile.getName() + "</h3>");
+    	    	
+    	    	//set and print profile title (name)
+    	    	String title = profile.getName();
+    	    	ArrayList<String> actions = new ArrayList<String>();
     	    	String name = (selfViewer) ? "My" : profile.getName() + "'s";
-    	    	out.println("<a href = \"QuizCatalogServlet?&search="+profile.getName()+"&type=creator_id\">"+name+" Quizes</a>");
-    	    	if (selfViewer) out.println("<a href = \"HistoryServlet?user="+profile.getId()+"\">"+name+" History</a>");
-    	    	out.println(HTMLHelper.contentEnd());
     	    	
-    	    	out.println(HTMLHelper.contentStart());
-    	    	out.println("<h4>Statistics</h4>");
-    	    	out.println("Quizes Created: " + am.quizesAuthored(profile));
-    	    	out.println("<br>Quizes Taken: " + am.quizesTaken(profile));
-    	    	out.println("<h4>Acheivements</h4>");
+    	    	actions.add("<a class=actionlist href = \"QuizCatalogServlet?&search="+profile.getName()+"&type=creator_id\">"+name+" Quizes</a>");
+    	    	if (selfViewer) actions.add("<a class=actionlist href = \"HistoryServlet?user="+profile.getId()+"\">"+name+" History</a>");
+    	    	
+    	    	out.println(HTMLHelper.printTitle("", title, actions));
+    	    	//done with profile title
+    	    	
+    	    	//set and print statistics
+    	    	title = "Statistics";
+    	    	actions.clear();
+    	    	actions.add("Quizes Created: " + am.quizesAuthored(profile));
+    	    	actions.add("Quizes Taken: " + am.quizesTaken(profile));
+    	    	out.println(HTMLHelper.printActionList("", title, actions));
+    	    	//done printing statistics
+    	    	
+    	    	//set up achievements and print
+    	    	title = "Achievements";
+    	    	actions.clear();
     	    	for(String s : profile.getAcheivementKeySet()) {
-    	    		if (profile.getAcheivement(s)) out.println(s + "<br>");
+    	    		if (profile.getAcheivement(s)) actions.add(s);
     	    	}
-    	    	out.println(HTMLHelper.contentEnd());
+    	    	out.println(HTMLHelper.printActionList("", title, actions));
+    	    	//done with achievements
+    	    	
+    	    	
     	    	
     	    	if (selfViewer) {
-    	    		out.println(HTMLHelper.contentStart());
-    	    		out.println("<h3>Mail</h3>");
+    	    		//let's do mail
+    	    		title = "Mail";
+    	    		actions.clear();
     	    		int unread = mm.getUnread(viewer);
     	    		String unreadString = "";
     	    		if (unread > 0) unreadString = " ("+unread+")";
-    	    		out.println("<a href = \"MailManagementServlet?&index=inbox&user="+profile.getName()+"\">inbox"+unreadString+"</a><br>");
-    	    		out.println("<a href = \"MailManagementServlet?&index=outbox&user="+profile.getName()+"\">outbox</a><br>");
-    	    		out.println("<a href = \"newMessage.jsp?user="+profile.getName()+"\">Compose Mail</a>");
-    	    		out.println("<h3>Friends</h3>");
-    	    		out.println("<a href = \"FriendManagementServlet\">Friends</a><br>");
-    	    		out.println("<a href=\"ProfileCatalogServlet\"> Search Users </a>");
-    	    		out.println(HTMLHelper.contentEnd());
+    	    		actions.add("<a class=actionlist href = \"MailManagementServlet?&index=inbox&user="+profile.getName()+"\">inbox"+unreadString+"</a>");
+    	    		actions.add("<a class=actionlist href = \"MailManagementServlet?&index=outbox&user="+profile.getName()+"\">outbox</a>");
+    	    		actions.add("<a class=actionlist href = \"newMessage.jsp?user="+profile.getName()+"\">Compose Mail</a>");
+    	    		out.println(HTMLHelper.printActionList("", title, actions));
+    	    		//mail done
+    	    		
+    	    		//set friends
+    	    		title = "Friends";
+    	    		actions.clear();
+    	    		actions.add("<a class=actionlist href = \"FriendManagementServlet\">Friends</a>");
+    	    		actions.add("<a class=actionlist href=\"ProfileCatalogServlet\"> Search Users </a>");
+    	    		out.println(HTMLHelper.printActionList("", title, actions));
+    	    		//done with friends
+    	    		
     	    	} else if (regViewer) {
-    	    		out.println(HTMLHelper.contentStart());
-    	    		out.println("<a href = \"newMessage.jsp?&user="+viewer.getName()+"&to="+profile.getName()+"\">Send Mail</a>");
-    	    		out.println("<br>");
-    	    		out.println("<li><form id=\"friend\" action=\"FriendManagementServlet\" method=\"post\">");
-    	    		out.println("<input type=\"hidden\" name=\"ID\" value=\""+profile.getId()+"\">");
+    	    		
+    	    		//Actions
+    	    		title = "Actions";
+    	    		actions.clear();
+    	    		actions.add("<a class=actionlist href = \"newMessage.jsp?&user="+viewer.getName()+"&to="+profile.getName()+"\">Send Mail</a>");
+    	    		String dummyString = "";
+    	    		dummyString = dummyString + ("<form id=\"friend\" action=\"FriendManagementServlet\" method=\"post\">");
+    	    		dummyString = dummyString + ("<input type=\"hidden\" name=\"ID\" value=\""+profile.getId()+"\">");
     	    		if (am.isFriend(viewer.getId(), profile.getId())) {
-    	    			out.println("<input type=\"hidden\" name=\"action\" value=\"delete\">");
-    	    			out.println("<a href=\"#\" onclick=\"document.getElementById(\'friend\').submit();\"> Remove as friend </a>");
+    	    			dummyString = dummyString + ("<input type=\"hidden\" name=\"action\" value=\"delete\">");
+    	    			dummyString = dummyString + ("<a class=actionlist href=\"#\" onclick=\"document.getElementById(\'friend\').submit();\"> Remove as friend </a>");
     	    		} else {
-    	    			out.println("<input type=\"hidden\" name=\"action\" value=\"add\">");
-    	    			out.println("<a href=\"#\" onclick=\"document.getElementById(\'friend\').submit();\"> Add as friend </a>");
+    	    			dummyString = dummyString + ("<input type=\"hidden\" name=\"action\" value=\"add\">");
+    	    			dummyString = dummyString + ("<a class=actionlist href=\"#\" onclick=\"document.getElementById(\'friend\').submit();\"> Add as friend </a>");
     	    		}
-    	    		out.println("</form>");
-    	    		out.println(HTMLHelper.contentEnd());
+    	    		dummyString = dummyString + ("</form>");
+    	    		actions.add(dummyString);
+    	    		out.println(HTMLHelper.printActionList("", title, actions));
+    	    		//actions done
+    	    		
+    	    		
     	    		if (viewer.isAdmin()) {
-    	    		out.println(HTMLHelper.contentStart());
-    	    		out.println("Administration");
-    	    		out.println("<li><form id=\"ban\" action=\"AcctManagementServlet\" method=\"post\">");
-    	    		out.println("<input type=\"hidden\" name=\"name\" value=\""+profile.getName()+"\">");
+    	    		
+    	    			//set admin stuff
+    	    			title = "Administration";
+    	    			actions.clear();
+    	    			dummyString = ("<form id=\"ban\" action=\"AcctManagementServlet\" method=\"post\">");
+    	    			dummyString = dummyString +("<input type=\"hidden\" name=\"name\" value=\""+profile.getName()+"\">");
     	    		if (!profile.isBanned()) {
-    	    			out.println("<input type=\"hidden\" name=\"Action\" value=\"Ban\">");
-    	    			out.println("<a href=\"#\" onclick=\"document.getElementById(\'ban\').submit();\"> Ban user</a>");
+    	    			dummyString = dummyString +("<input type=\"hidden\" name=\"Action\" value=\"Ban\">");
+    	    			dummyString = dummyString +("<a class=actionlist href=\"#\" onclick=\"document.getElementById(\'ban\').submit();\"> Ban user</a>");
     	    		} else {
-    	    			out.println("<input type=\"hidden\" name=\"Action\" value=\"Pardon\">");
-    	    			out.println("<a href=\"#\" onclick=\"document.getElementById(\'ban\').submit();\"> Pardon user</a>");
+    	    			dummyString = dummyString +("<input type=\"hidden\" name=\"Action\" value=\"Pardon\">");
+    	    			dummyString = dummyString +("<a class=actionlist href=\"#\" onclick=\"document.getElementById(\'ban\').submit();\"> Pardon user</a>");
     	    		}
-    	    		out.println("</form>");
-    	    		out.println("<li><form id=\"admin\" action=\"AcctManagementServlet\" method=\"post\">");
-    	    		out.println("<input type=\"hidden\" name=\"name\" value=\""+profile.getName()+"\">");
+    	    		dummyString = dummyString +("</form>");
+    	    		actions.add(dummyString);
+    	    		
+    	    		dummyString = ("<form id=\"admin\" action=\"AcctManagementServlet\" method=\"post\">");
+    	    		dummyString = dummyString +("<input type=\"hidden\" name=\"name\" value=\""+profile.getName()+"\">");
     	    		if (!profile.isAdmin()) {
-    	    			out.println("<input type=\"hidden\" name=\"Action\" value=\"Promote\">");
-    	    			out.println("<a href=\"#\" onclick=\"document.getElementById(\'admin\').submit();\"> Promote user</a>");
+    	    			dummyString = dummyString +("<input type=\"hidden\" name=\"Action\" value=\"Promote\">");
+    	    			dummyString = dummyString +("<a class=actionlist href=\"#\" onclick=\"document.getElementById(\'admin\').submit();\"> Promote user</a>");
     	    		} else {
-    	    			out.println("<input type=\"hidden\" name=\"Action\" value=\"Demote\">");
-    	    			out.println("<a href=\"#\" onclick=\"document.getElementById(\'admin\').submit();\"> Demote user</a>");
+    	    			dummyString = dummyString +("<input type=\"hidden\" name=\"Action\" value=\"Demote\">");
+    	    			dummyString = dummyString +("<a class=actionlist href=\"#\" onclick=\"document.getElementById(\'admin\').submit();\"> Demote user</a>");
     	    		}
-    	    		out.println("</form>");
-    	    		out.println(HTMLHelper.contentEnd());
+    	    		dummyString = dummyString +("</form>");
+    	    		actions.add(dummyString);
+    	    		out.println(HTMLHelper.printActionList("", title, actions));
+    	    		
     	    		}
     	    	}
+    	    	out.println(HTMLHelper.contentEnd());
     	    }
 
     	    /**

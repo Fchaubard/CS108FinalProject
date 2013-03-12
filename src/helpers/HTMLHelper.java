@@ -78,13 +78,20 @@ public class HTMLHelper {
 		return listing.toString();
 	}
 	
-	public static String printTitle(String img, String name){
+	public static String printTitle(String img, String name, ArrayList<String> actions){
 		if (img.isEmpty()) img = DEFAULT_PROFILE_PIC;
 		StringBuilder titleBox = new StringBuilder();
 		titleBox.append("<div class=quiz>");
 		titleBox.append("<img class=quiz src=\""+img+"\">");
 		titleBox.append("<h1 class=title>"+name+"</h1>");
-		titleBox.append("</div>");
+		titleBox.append("<ul style=\"list-style-type:none\">");
+		for (String action : actions){
+			titleBox.append("<li class=quiz style=\"display:inline\">");
+			titleBox.append(action);
+			titleBox.append("</li>");
+		}
+		
+		titleBox.append("</ul></div>");
 		return titleBox.toString();
 	}
 	
