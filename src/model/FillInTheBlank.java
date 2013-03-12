@@ -63,7 +63,9 @@ public class FillInTheBlank implements Question {
 	}
 	
 	public FillInTheBlank(String question, Set<String> ans) { 
-		this.statement = question; // this should have the ________ in it already
+		
+		this.statement = question.trim(); // this should have the ________ in it already
+		
 		this.answers = ans; // need to add the &&&
 	}
 

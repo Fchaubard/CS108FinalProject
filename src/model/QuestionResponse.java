@@ -77,6 +77,10 @@ public class QuestionResponse implements Question {
 			return 0; // input cleansing
 		}
 		for (String a : ans) {
+<<<<<<< HEAD
+=======
+			
+>>>>>>> added practice mode back in there
 			if (answers.contains(a)) {
 				return 1;
 			}

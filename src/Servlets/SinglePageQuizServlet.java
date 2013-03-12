@@ -41,14 +41,15 @@ public class SinglePageQuizServlet extends HttpServlet {
 		HttpSession session = request.getSession(true);
 		String quizID;
 		boolean practice = false;
+
 		if (request.getParameter("id")==null) {
 			quizID = (String) session.getAttribute("quizID");
 		}else{
 			quizID = request.getParameter("id");
 			if(quizID.startsWith("p")) {
-				quizID = quizID.substring(1);
-				practice = true;
-			}
+								quizID = quizID.substring(1);
+								practice = true;
+							}
 		}
 		System.out.println(quizID);
 
@@ -67,10 +68,8 @@ public class SinglePageQuizServlet extends HttpServlet {
 				else{
 					quiz = (Quiz) session.getAttribute("quiz_"+quizID);
 				}
-			
+				quiz.setPracticeMode(practice);
 			System.out.println(quiz.getQuizName());
-			
-			quiz.setPracticeMode(practice);
 			
 			if( request.getParameter("ajax_id")==null){
 				quiz.randomizeQuestions();
