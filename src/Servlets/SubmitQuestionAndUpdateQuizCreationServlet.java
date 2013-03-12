@@ -80,14 +80,12 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 			case 1: 
 				String statementString = (String)request.getParameter("statement");
 				HashSet<String> hashSet = new HashSet<String>();
-				hashSet.add((String)request.getParameter("answer1"));
-				if (!((String)request.getParameter("answer2")).equals("")) {
-					hashSet.add((String)request.getParameter("answer2"));
-					
-				}
-				if (!((String)request.getParameter("answer3")).equals("")) {
-					hashSet.add((String)request.getParameter("answer3"));
-					
+				
+				String a = (String)request.getParameter("answers");
+				
+				String[] s = a.split(Pattern.quote("\r\n"));
+				for (String string : s) {
+					hashSet.add(string);
 				}
 				
 				question = new QuestionResponse(statementString, hashSet);
@@ -166,14 +164,14 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 				
 				Set<String> wAns = new HashSet<String>();
 				String[] wrong = wrongAns.split(Pattern.quote("\r\n"));
-				for (String s : wrong) {
-					wAns.add(s);
+				for (String st : wrong) {
+					wAns.add(st);
 				}
 				
 				Set<String> ans = new HashSet<String>();
 				String[] right = answ.split(Pattern.quote("\r\n"));
-				for(String s : right) {
-					ans.add(s);
+				for(String str : right) {
+					ans.add(str);
 				}
 				
 				question = new MultipleChoiceMultipleAnswer(statementString, ans, wAns);

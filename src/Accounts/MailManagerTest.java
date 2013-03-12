@@ -3,6 +3,7 @@ package Accounts;
 import static org.junit.Assert.*;
 
 import java.util.HashMap;
+import java.util.TreeMap;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +21,7 @@ public class MailManagerTest {
 	@Before
 	public void setUp(){
 		mm = new MailManager(Servlets.MyDB.getConnection());	
-		HashMap<Integer, Message> ib = mm.listInbox("Sally");
+		TreeMap<Integer, Message> ib = mm.listInbox("Sally");
 		for (Integer i : ib.keySet()) {
 			System.out.println(i + " " + ib.get(i).toString());
 		}

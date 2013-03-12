@@ -23,9 +23,8 @@ public class QuestionResponse implements Question {
 		
 		StringBuilder html = new StringBuilder();
 		html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\"statement\" size=\"75\" />");
-		html.append("<br />Insert Possible Answer 1:<br /><input type=\"text\" name=\"answer1\" />");
-		html.append("<br />Insert Possible Answer 2 (optional):<br /><input type=\"text\" name=\"answer2\" />");
-		html.append("<br />Insert Possible Answer 3 (optional):<br /><input type=\"text\" name=\"answer3\" />");
+		html.append("<br />Insert All Possible Answers, one on each line:");
+		html.append("<br /><textarea name=\"answers\" cols=\"20\" rows=\"10\" required></textarea>");
 		
 		return html.toString();
 	}
