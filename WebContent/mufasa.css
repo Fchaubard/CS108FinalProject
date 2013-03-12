@@ -3,6 +3,10 @@ button{
 	border-width: 1px;
 }
 
+a {
+	text-decoration:none;
+}
+
 a.header{
 	text-decoration:none;
 	color:white;
@@ -203,4 +207,21 @@ img.quiz{
 	height:90px;
 	float:left;
 	border-radius:5px;
+}
+
+table{
+	padding:10px;
+	border-radius:5px;
+	background-color:#f7f7f7;
+	width:100%;
+	text-align:center;
+}
+
+th,td{
+	padding:2px;
+}
+
+th{
+	background-color: rgb(209, 219, 226);
+	
 }

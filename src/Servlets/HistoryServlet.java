@@ -58,7 +58,7 @@ public class HistoryServlet extends HttpServlet {
 		} catch (NumberFormatException e) {}
 		ArrayList<QuizAttempts> history = am.getHistory(userID, quizID);
 		out.println("<table border = \"0\">");
-		out.println("<tr><b><td>User</td><td>Quiz</td><td>Score</td><td>Time</td><td>Date</td></b></tr>");
+		out.println("<tr><b><th>User</th><th>Quiz</th><th>Score</th><th>Time</th><th>Date</th></b></tr>");
 		for (QuizAttempts qa : history) {
 			try {
 				Quiz q = new Quiz(qa.getQuizID(), am.getCon());
