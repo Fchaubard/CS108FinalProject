@@ -16,7 +16,7 @@
 	String quiz = (String) request.getParameter("quiz");
 	String sub = (String) request.getParameter("subject");
 	String body = (String) request.getParameter("body");
-	if (to != null) out.println("<b>Recpient not found in system</b>");
+	if (to.equals("error")) out.println("<b>Recpient not found in system</b>");
 	if (quiz == null) quiz = "";
 	if (sub == null) sub = "";
 	if (body == null) body = "";%>
