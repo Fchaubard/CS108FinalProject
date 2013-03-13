@@ -75,6 +75,7 @@ public class FinishQuizServlet extends HttpServlet {
 		
 		try {
 			quiz.finishAndStoreQuizInDatabase();
+			((AccountManager) request.getServletContext().getAttribute("accounts")).storeEvent(3, quiz.getCreator().getId(), quiz.getQuiz_id(), 0);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

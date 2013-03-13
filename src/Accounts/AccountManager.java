@@ -155,6 +155,8 @@ public class AccountManager {
 				stmt.executeUpdate("INSERT INTO friends_mapping VALUES("+sender+", "+friend+");");
 				stmt.executeUpdate("INSERT INTO friends_mapping VALUES("+friend+", "+sender+");");
 				stmt.executeUpdate("DELETE FROM pending_friends where pending_user_id = ("+sender+") AND accepted_user_id = "+ friend +";");
+				storeEvent(5, sender, 0, friend);
+	    		storeEvent(5, friend, 0, sender);
 			} else { //send request
 				System.out.println("boop");
 				rs = stmt.executeQuery("SELECT * FROM pending_friends WHERE accepted_user_id = " + sender +" AND pending_user_id = "+ friend +"");
@@ -331,34 +333,41 @@ public class AccountManager {
 		try {
 			String name = getAccount(user).getName();
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("select name from quiz where quiz_id = "+quiz);
-			rs.next();
-			String qname = rs.getString("name");
+			ResultSet rs;
+			String qname;
 			switch(type) {
 			case 2: //user <user> took quiz <quiz>
-				update = "<a href =\"ProfileServlet?user="+name+"\">"+name+"</a> took <a href =\"QuizTitleServlet?id="+quiz+"\">"+qname+"</a>.";
+				rs = stmt.executeQuery("select name from quiz where quiz_id = "+quiz);
+				rs.next();
+				qname = rs.getString("name");
+				//escape ALL the characters
+				update = "<a href =\\\"ProfileServlet?user="+name+"\\\">"+name+"</a> took <a href =\\\"QuizTitleServlet?id="+quiz+"\\\">"+qname+"</a>.";
 				break;
 			case 3: //user <user> created quiz <quiz>
-				update = "<a href =\"ProfileServlet?user="+name+"\">"+name+"</a> created <a href =\"QuizTitleServlet?id="+quiz+"\">"+qname+"</a>.";
+				rs = stmt.executeQuery("select name from quiz where quiz_id = "+quiz);
+				rs.next();
+				qname = rs.getString("name");
+				update = "<a href =\\\"ProfileServlet?user="+name+"\\\">"+name+"</a> created <a href =\\\"QuizTitleServlet?id="+quiz+"\\\">"+qname+"</a>.";
 				break;
 			case 4: //user <user> earned achievement <extra>
 				update = getAcheivementUpdate(name, extra);
 				break;
 			case 5: //user <user> is friends with user <extra>
-				update = "<a href =\"ProfileServlet?user="+name+"\">"+name+"</a> is friends with <a href =\"ProfileServlet?user="+getAccount(extra).getName()+"\">"+getAccount(extra).getName()+"</a>.";
+				update = "<a href =\\\"ProfileServlet?user="+name+"\\\">"+name+"</a> is friends with <a href =\\\"ProfileServlet?user="+getAccount(extra).getName()+"\\\">"+getAccount(extra).getName()+"</a>.";
 				break;
 			default:
 				update = "";
 				break;
 			}
-			stmt.executeUpdate("insert into event values (default, "+type+", "+update+", "+user+")");
+			System.out.println("insert into event values (default, "+type+", \""+update+"\", "+user+")");
+			stmt.executeUpdate("insert into event values (default, "+type+", \""+update+"\", "+user+")");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	private String getAcheivementUpdate(String name, int acheivement) {
-		String s= "<a href =\"ProfileServlet?user="+name+"\">"+name+"</a> ";
+		String s= "<a href =\\\"ProfileServlet?user="+name+"\\\">"+name+"</a> ";
 		switch(acheivement) {
 		case -1:
 			s += "is an amateur quiz taker.";
