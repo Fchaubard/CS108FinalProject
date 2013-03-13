@@ -56,19 +56,18 @@ public class PictureResponse implements Question {
 			
 			String ans = new String();
 			while (resultSet.next()) {
+				
 				url = resultSet.getString("url");
+				url = url.trim();
 				ans = resultSet.getString("answer");
 				
 			}
-			
 			String[] strings = ans.split(Pattern.quote(" &&& "));
 			answers = new HashSet<String>();
 			for (String string : strings) {
+				string = string.trim();
 				answers.add(string);
 			}
-				
-			
-			
 		}catch(Exception e){
 			
 		}
@@ -148,7 +147,7 @@ public class PictureResponse implements Question {
 			StringBuilder sqlString = new StringBuilder("INSERT INTO picture_response_question VALUES(null,\"");
 			url = url.trim();
 			sqlString.append(url);
-			sqlString.append("\",\" ");
+			sqlString.append("\",\"");
 			for (String string : answers) {
 				string = string.trim();
 				sqlString.append(string);

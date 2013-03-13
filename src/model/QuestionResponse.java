@@ -148,7 +148,7 @@ public class QuestionResponse implements Question {
 			StringBuilder sqlString = new StringBuilder("INSERT INTO question_response VALUES(null,\"");
 			statement = statement.trim();
 			sqlString.append(statement);
-			sqlString.append("\",\" ");
+			sqlString.append("\",\"");
 			for (String string : answers) {
 				string = string.trim();
 				sqlString.append(string);
