@@ -32,11 +32,12 @@ public class FillInTheBlank implements Question {
 	
 	public void pushToDB(Connection con) throws SQLException {
 		PreparedStatement ps = con.prepareStatement("insert into fill_in_the_blank_question values(null, ?, ?)");
-		
+		statement = statement.trim();
 		ps.setString(1, statement);
 		
 		StringBuilder ans = new StringBuilder();
 		for (String string : answers) {
+			string = string.trim();
 			ans.append(string);
 			ans.append(" &&& ");
 		}

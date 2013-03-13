@@ -182,7 +182,7 @@ public class Matching implements Question {
 		
 		try {
 			PreparedStatement ps = con.prepareStatement("insert into matching_question values(null, ?)");
-			
+			title = title.trim();
 			ps.setString(1, title);
 			
 			System.out.println(ps.toString());
@@ -202,7 +202,9 @@ public class Matching implements Question {
 				ps = con.prepareStatement("insert into matching_question_mapping values(?, ?, ?)");
 				
 				ps.setInt(1, qID);
+				row1.set(i, row1.get(i).trim());
 				ps.setString(2, row1.get(i));
+				row2.set(i, row2.get(i).trim());
 				ps.setString(3, row2.get(i));
 				
 				System.out.println(ps.toString());

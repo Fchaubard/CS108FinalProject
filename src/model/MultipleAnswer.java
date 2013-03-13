@@ -143,11 +143,12 @@ public class MultipleAnswer implements Question {
 	@Override
 	public void pushToDB(Connection con) throws SQLException {
 		PreparedStatement ps = con.prepareStatement("insert into multiple_answer_question values(null, ?, ?, ?)");
-		
+		statement = statement.trim();
 		ps.setString(1, statement);
 		
 		StringBuilder a = new StringBuilder();
 		for(String s : answers) {
+			s = s.trim();
 			a.append(s);
 			a.append(" &&& ");
 		}
