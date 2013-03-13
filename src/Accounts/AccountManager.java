@@ -339,8 +339,14 @@ public class AccountManager {
 		}
 	}
 	
-	synchronized public void storeAmmouncement(String announcement) {
-		
+	synchronized public void storeAnnouncement(String announcement) {
+		try {
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("insert into event values (default, 1, \""+announcement+"\", -1)");
+			} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 	
 	synchronized public void storeEvent(int type, int user, int quiz, int extra) {

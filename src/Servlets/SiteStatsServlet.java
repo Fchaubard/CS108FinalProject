@@ -100,7 +100,10 @@ public class SiteStatsServlet extends HttpServlet {
 	    	actions.add(dummyString);
 	    	
 	    	out.println(HTMLHelper.printActionList(HTMLHelper.STATISTICS_ICON, title, actions));
-	    	
+	    	out.println("<form action=\"SiteStatsServlet\" method=\"post\">");
+	    	out.println("<input type=\"text\" name=\"message\">");
+	    	out.println("<input type=\"submit\" value=\"Send Announcement\">");
+	    	out.println("</form>");
 	    	out.println(HTMLHelper.contentEnd());
 	    	out.println("</body>");
 		} catch (SQLException e) {
@@ -112,6 +115,9 @@ public class SiteStatsServlet extends HttpServlet {
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	
+    	String message = request.getParameter("message");
+    	AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
+   		am.storeAnnouncement(message);
+    	doGet(request, response);
     }
 }
