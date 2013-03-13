@@ -147,6 +147,20 @@ public class HTMLHelper {
 		return listing.toString();
 	}
 	
+	public static String printNewsFeed(ArrayList<String> adminNews){
+		StringBuilder newsBox = new StringBuilder();
+		newsBox.append("<div style=\"min-width:1060px;top:40px; position:fixed; width:100%;height:100%\">");
+		newsBox.append("<div class=newsfeed>");
+		for (String update : adminNews){
+			newsBox.append("<div class=news>");
+			newsBox.append(update);
+			newsBox.append("</div>");
+		}
+		newsBox.append("</div></div>");
+		return newsBox.toString();
+	}
+	
+	
 	private static String getImage(String name){
 		if (name.equals("Achievements")) return BLUE_STAR_ICON;
 		else if(name.equals("Friends")) return DEFAULT_PROFILE_PIC;
