@@ -72,7 +72,8 @@ public class MailManager {
 					rs = stmt.executeQuery("select name from quiz where quiz_id = " + challengeID + ";");
 					if (rs.next()) challengeName = rs.getString("name");
 				}
-				m = new Message(sender, recipient, subject, body, time.getTime(), challengeID, challengeName);
+				boolean unread = rs.getBoolean("unread");
+				m = new Message(sender, recipient, subject, body, time.getTime(), challengeID, challengeName, unread);
 				stmt.executeUpdate("update message set unread = false where message_id = "+id);
 			}
 		} catch (SQLException e) {
@@ -103,13 +104,14 @@ public class MailManager {
 		try {
 			inbox = new TreeMap<Integer,Message>();
 			stmt = (Statement) con.createStatement();
-			rs = stmt.executeQuery("select message_id, sender, subject, date from message where recipient = \"" + recipient + "\" order by date");
+			rs = stmt.executeQuery("select message_id, sender, subject, date, unread from message where recipient = \"" + recipient + "\" order by date");
 			while (rs.next()) {
 				Integer key = rs.getInt("message_ID");
 				String sender = rs.getString("sender");
 				String subject = rs.getString("subject");
 				Date time = rs.getTimestamp("date");
-				inbox.put(key, new Message(sender, recipient, subject, null, time.getTime(), 0, null));
+				boolean unread = rs.getBoolean("unread");
+				inbox.put(key, new Message(sender, recipient, subject, null, time.getTime(), 0, null, unread));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -131,7 +133,7 @@ public class MailManager {
 				String recipient = rs.getString("recipient");
 				String subject = rs.getString("subject");
 				Date time = rs.getTimestamp("date");
-				outbox.put(key, new Message(sender, recipient, subject, null, time.getTime(), 0, null));
+				outbox.put(key, new Message(sender, recipient, subject, null, time.getTime(), 0, null, false));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

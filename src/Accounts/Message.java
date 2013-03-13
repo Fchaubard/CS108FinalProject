@@ -9,8 +9,9 @@ public class Message {
 	private long timestamp;
 	private int challengeID;
 	private String challengeName;
+	public boolean unread;
 	
-	public Message(String sender, String recipient, String subject, String body, long timestamp, int challengeID, String challengeName) {
+	public Message(String sender, String recipient, String subject, String body, long timestamp, int challengeID, String challengeName, boolean unread) {
 		this.sender = sender;
 		this.recipient = recipient;
 		this.subject = subject;
@@ -18,6 +19,7 @@ public class Message {
 		this.timestamp = (timestamp > 0) ? timestamp : System.currentTimeMillis();
 		this.challengeID  =challengeID;
 		this.challengeName = challengeName;
+		this.unread = unread;
 	}
 		
 	public String getSender() {

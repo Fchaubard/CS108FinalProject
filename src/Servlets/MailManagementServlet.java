@@ -47,10 +47,16 @@ public class MailManagementServlet extends HttpServlet {
     		out.println("<table border=\"0\">");
     		out.println("<tr><th><b>Subject</b></th><th><b>Sender</b></th><th><b>Date</b></th></tr>");
     		for (int i : inbox.keySet()) {
+    			String boldin = "";
+    			String boldout = "";
+    			if (inbox.get(i).unread) {
+    				boldin = "<b>";
+    				boldout = "</b>";
+    			}
     			out.println("<tr>");
-    			out.println("<td><a href = \"MailManagementServlet?&index="+i+"&user="+user+"\">");
+    			out.println("<td>"+boldin+"<a href = \"MailManagementServlet?&index="+i+"&user="+user+"\">");
     			out.println(inbox.get(i).getSubject()) ;
-    			out.println("</a></td>");
+    			out.println("</a>"+boldout+"</td>");
     			out.println("<td><a href = \"ProfileServlet?user="+inbox.get(i).getSender()+"\">");
     			out.println(inbox.get(i).getSender()) ;
     			out.println("</a></td>");
@@ -116,7 +122,7 @@ public class MailManagementServlet extends HttpServlet {
     	} catch (NumberFormatException e) {
 	
     	}
-    	Message m = new Message(sender, recipient, subject, body, 0, challenge, null);
+    	Message m = new Message(sender, recipient, subject, body, 0, challenge, null, true);
     	MailManager mm = (MailManager) request.getServletContext().getAttribute("mail");
     	mm.sendMessage(m);
     	request.getRequestDispatcher("/UserHome.jsp").forward(request, response);
