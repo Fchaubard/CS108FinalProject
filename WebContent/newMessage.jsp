@@ -27,7 +27,7 @@
 <tr><td>Sender:</td><td><% out.println(from);%></td></tr>
 <%if (quiz.length() > 0) out.println("<tr><td>Challenge ID:</td><td>"+ quiz +"</td></tr>");%>
 <!-- <tr><td>challenge ID:</td><td><input type="text" name="challenge" value = "<% out.println(quiz); %>"></td></tr>-->
-<tr><td>Recipient:</td><td><input type="text" name="recipient"></td></tr>
+<tr><td>Recipient:</td><td><input type="text" name="recipient value = "<% out.println(to); %>"></td></tr>
 <tr><td>subject:</td><td><input type="text" name="subject" value = "<% out.println(sub); %>"></td></tr>
 <tr><td>message:</td><td><textarea cols = "50" rows = "5" name = "body"><% out.println(body); %></textarea></td></tr>
 </table>
