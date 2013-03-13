@@ -406,7 +406,7 @@ public class AccountManager {
 			s += "is one of the greatest!";
 			break;
 		}
-		return null;
+		return s;
 	}
 
 	synchronized public static String hexToString(byte[] bytes) {
