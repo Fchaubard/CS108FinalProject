@@ -21,9 +21,8 @@ public class PictureResponse implements Question {
 		
 		StringBuilder html = new StringBuilder();
 		html.append("<br />Insert picture url: <br /><input type=\"text\" name=\"url\" required />");
-		html.append("<br />Insert Possible Answer 1:<br /> <input type=\"text\" name=\"answer1\" />");
-		html.append("<br />Insert Possible Answer 2 (optional):<br /> <input type=\"text\" name=\"answer2\" />");
-		html.append("<br />Insert Possible Answer 3 (optional):<br /> <input type=\"text\" name=\"answer3\" />");
+		html.append("<br />Insert All Possible Answers, one on each line:");
+		html.append("<br /><textarea name=\"answers\" cols=\"20\" rows=\"10\" required></textarea>");
 		
 		return html.toString();
 	}
@@ -98,11 +97,9 @@ public class PictureResponse implements Question {
 		}
 		
 		for (String a : ans) {
-			
 			if (answers.contains(a)) {
 				return 1;
 			}
-		
 		}
 		return 0;
 	}

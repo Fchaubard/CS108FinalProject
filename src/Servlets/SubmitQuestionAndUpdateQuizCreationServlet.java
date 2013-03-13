@@ -124,14 +124,12 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 			case 4:
 				statementString = (String)request.getParameter("url");
 				hashSet = new HashSet<String>();
-				hashSet.add((String)request.getParameter("answer1"));
-				if (!((String)request.getParameter("answer2")).equals("")) {
-					hashSet.add((String)request.getParameter("answer2"));
-					
-				}
-				if (!((String)request.getParameter("answer3")).equals("")) {
-					hashSet.add((String)request.getParameter("answer3"));
-					
+				
+				String answerss = (String)request.getParameter("answers");
+				
+				String[] anss = answerss.split(Pattern.quote("\r\n"));
+				for (String string : anss) {
+					hashSet.add(string);
 				}
 				
 				question = new PictureResponse(statementString, hashSet);
