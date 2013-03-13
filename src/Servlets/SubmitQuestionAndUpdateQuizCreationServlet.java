@@ -109,9 +109,12 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 			case 3:
 				statementString = (String)request.getParameter("statement");
 				hashSet = new HashSet<String>();
-				hashSet.add((String)request.getParameter("wrongAnswer1"));
-				hashSet.add((String)request.getParameter("wrongAnswer2"));
-				hashSet.add((String)request.getParameter("wrongAnswer3"));
+				String wrongOptions = (String)request.getParameter("wrongOptions");
+				
+				String[] options = wrongOptions.split(Pattern.quote("\r\n"));
+				for (String string : options) {
+					hashSet.add(string);
+				}
 				
 				String answer = (String)request.getParameter("answer1");
 				question = new MultipleChoice(statementString, hashSet, answer);

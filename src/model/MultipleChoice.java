@@ -21,6 +21,7 @@ public class MultipleChoice implements Question {
 	public static final int type=3;
 	private String statement;
 	private Set<String> wrongAnswers;
+	private Set<String> options;
 	private String answer;
 	private int qID;
 	private String userAnswer;
@@ -29,11 +30,9 @@ public class MultipleChoice implements Question {
 		
 		StringBuilder html = new StringBuilder();
 		html.append("<br />Insert Question Statement: <br /><textarea name=\"statement\" rows=\"8\" cols=\"75\" required></textarea>");
-		//html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\"statement\" />");
 		html.append("<br />Insert Answer:<br /> <input type=\"text\" name=\"answer1\" required />");
-		html.append("<br />Insert Wrong Answer 1:<br /> <input type=\"text\" name=\"wrongAnswer1\" required />");
-		html.append("<br />Insert Wrong Answer 2:<br /> <input type=\"text\" name=\"wrongAnswer2\" required />");
-		html.append("<br />Insert Wrong Answer 3:<br /> <input type=\"text\" name=\"wrongAnswer3\" required />");
+		html.append("<br />Insert All Incorrect Options, one on each line:");
+		html.append("<br /><textarea name=\"wrongOptions\" cols=\"20\" rows=\"10\" required></textarea>");
 		
 		return html.toString();
 		
@@ -67,6 +66,12 @@ public class MultipleChoice implements Question {
 		this.statement = question;
 		this.wrongAnswers = wrongAns;
 		this.answer = ans;
+		
+		options = new HashSet<String>();
+		for(String s : wrongAnswers) {
+			options.add(s);
+		}
+		options.add(answer);
 	}
 	
 	public MultipleChoice(Integer id, Connection con) throws SQLException {
@@ -83,13 +88,15 @@ public class MultipleChoice implements Question {
 			wrong = rs.getString("wrong_answers");
 		}
 		
+		options = new HashSet<String>();
 		
 		String[] strings = wrong.split(Pattern.quote(" &&& "));
 		wrongAnswers = new HashSet<String>();
 		for (String string : strings) {
 			wrongAnswers.add(string);
+			options.add(string);
 		}
-			
+		options.add(answer);	
 		
 	}
 
@@ -140,7 +147,7 @@ public class MultipleChoice implements Question {
         html.append(statement);
         html.append("<br />");
         
-        for(String s : wrongAnswers) {
+        for(String s : options) {
                 html.append("<input type=\"radio\" name=\"");
         		html.append(type);
         		html.append("_");
@@ -150,7 +157,7 @@ public class MultipleChoice implements Question {
                 html.append(s + "\"> " + s);
                 html.append("<br />");       
         }
-        
+        /*
         html.append("<input type=\"radio\" name=\"");
 
 		html.append(type);
@@ -164,6 +171,7 @@ public class MultipleChoice implements Question {
 		html.append("\" value=\"");
         html.append(answer + "\"> " + answer);
         html.append("<br />");
+        */
         
 		return html.toString();
 	}
