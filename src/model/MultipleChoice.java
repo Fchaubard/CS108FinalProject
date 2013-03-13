@@ -157,21 +157,6 @@ public class MultipleChoice implements Question {
                 html.append(s + "\"> " + s);
                 html.append("<br />");       
         }
-        /*
-        html.append("<input type=\"radio\" name=\"");
-
-		html.append(type);
-		html.append("_");
-
-		html.append(qID);
-        html.append("\" id=\"");
-		html.append(type);
-		html.append("_");
-		html.append(qID);
-		html.append("\" value=\"");
-        html.append(answer + "\"> " + answer);
-        html.append("<br />");
-        */
         
 		return html.toString();
 	}
