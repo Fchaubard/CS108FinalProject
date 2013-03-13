@@ -149,9 +149,11 @@ public class PictureResponse implements Question {
 		try {
 			stmt = con.createStatement();
 			StringBuilder sqlString = new StringBuilder("INSERT INTO picture_response_question VALUES(null,\"");
+			url = url.trim();
 			sqlString.append(url);
 			sqlString.append("\",\" ");
 			for (String string : answers) {
+				string = string.trim();
 				sqlString.append(string);
 				sqlString.append(" &&& ");
 			}

@@ -146,9 +146,11 @@ public class QuestionResponse implements Question {
 		try {
 			stmt = con.createStatement();
 			StringBuilder sqlString = new StringBuilder("INSERT INTO question_response VALUES(null,\"");
+			statement = statement.trim();
 			sqlString.append(statement);
 			sqlString.append("\",\" ");
 			for (String string : answers) {
+				string = string.trim();
 				sqlString.append(string);
 				sqlString.append(" &&& ");
 			}

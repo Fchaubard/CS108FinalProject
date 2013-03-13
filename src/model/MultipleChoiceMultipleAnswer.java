@@ -191,10 +191,12 @@ public class MultipleChoiceMultipleAnswer implements Question {
 	public void pushToDB(Connection con) throws SQLException {
 		PreparedStatement ps = con.prepareStatement("insert into multiple_choice_multiple_answer_question values(null, ?, ?, ?)");
 		
+		statement = statement.trim();
 		ps.setString(1, statement);
 		
 		StringBuilder answersString = new StringBuilder();
 		for(String ans : answers) {
+			ans = ans.trim();
 			answersString.append(ans);
 			answersString.append(" &&& ");
 		}
@@ -203,6 +205,7 @@ public class MultipleChoiceMultipleAnswer implements Question {
 		
 		StringBuilder wrongAnswersString = new StringBuilder();
 		for(String wAns : wrongAnswers) {
+			wAns = wAns.trim();
 			wrongAnswersString.append(wAns);
 			wrongAnswersString.append(" &&& ");
 		}

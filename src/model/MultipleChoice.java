@@ -187,14 +187,21 @@ public class MultipleChoice implements Question {
 		try {
 			stmt = con.createStatement();
 			StringBuilder sqlString = new StringBuilder("INSERT INTO multiple_choice_question VALUES(null,\"");
+			
+			statement = statement.trim();
 			sqlString.append(statement);
 			sqlString.append("\",\"");
+			
+			answer = answer.trim();
 			sqlString.append(answer);
 			sqlString.append("\",\"");
+			
 			for (String string : wrongAnswers) {
+				string = string.trim();
 				sqlString.append(string);
 				sqlString.append(" &&& ");
 			}
+			
 			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
 			sqlString.append("\") ");
 			
