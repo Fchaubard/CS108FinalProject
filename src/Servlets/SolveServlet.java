@@ -131,7 +131,7 @@ public class SolveServlet extends HttpServlet {
 				}
 					
 				score+=q.solve(answersArrayList);
-				if (oldscore!=score) {
+				if ((score - oldscore)==q.getTotalQScore()) {
 					booleans.add(true);
 				}else{
 					booleans.add(false);
