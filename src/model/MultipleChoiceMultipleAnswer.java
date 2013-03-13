@@ -17,6 +17,7 @@ public class MultipleChoiceMultipleAnswer implements Question {
 	private Set<String> wrongAnswers;
 	private int qID;
 	private ArrayList<String> userAnswers;
+	private Set<String> options;
 	
 	public static String getHTMLInputString(){
 		
@@ -36,6 +37,15 @@ public class MultipleChoiceMultipleAnswer implements Question {
 		this.wrongAnswers = wrongAns;
 		this.statement = question;
 		this.answers = ans;
+		
+		options = new HashSet<String>();
+		for(String s : wrongAnswers) {
+			options.add(s);
+		}
+		
+		for(String str : answers) {
+			options.add(str);
+		}
 	}
 
 	public MultipleChoiceMultipleAnswer(int id, Connection con) { // pulls from database
@@ -60,18 +70,20 @@ public class MultipleChoiceMultipleAnswer implements Question {
 				
 			}
 			
+			options = new HashSet<String>();
+			
 			String[] strings = ans.split(Pattern.quote(" &&& "));
 			answers = new HashSet<String>();
 			for (String string : strings) {
 				answers.add(string);
+				options.add(string);
 			}
 			strings = wrongAns.split(Pattern.quote(" &&& "));
 			wrongAnswers = new HashSet<String>();
 			for (String string : strings) {
 				wrongAnswers.add(string);
+				options.add(string);
 			}
-			
-			
 		}catch(Exception e){
 			
 		}
@@ -134,7 +146,7 @@ public class MultipleChoiceMultipleAnswer implements Question {
         
         int counter = 0;
         
-        for(String s : wrongAnswers) {
+        for(String s : options) {
                 html.append("<input type=\"checkbox\" name=\"");
         		html.append(type);
         		html.append("_");
@@ -145,21 +157,6 @@ public class MultipleChoiceMultipleAnswer implements Question {
                 html.append(s + "\">" + s);
                 html.append("<br />");
                 counter++;
-        }
-        
-        for(String string : answers) {
-        	html.append("<input type=\"checkbox\" name=\"");
-
-    		html.append(type);
-    		html.append("_");
-
-    		html.append(qID);
-    		html.append("_");
-            html.append(counter);
-    		html.append("\" value=\"");
-            html.append(string + "\">" + string);
-            html.append("<br />");
-            counter++;
         }
         
 		return html.toString();
