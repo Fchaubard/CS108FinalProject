@@ -45,33 +45,47 @@ import Accounts.AccountManager;
     	    	out.println("<body>");
     	    	out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
     	    	out.println(HTMLHelper.contentStart());
+    	    	
     	    	out.println("<h3>Requests</h3>");  
-    	    	out.println("<ul>");
+    	    	out.println("<ul class=boxlisting>");
+    	    	ArrayList<String> actions = new ArrayList<String>();
+    	    	String dummyString = "";
     	    	for (Account a : requests) {
-    	    		out.println("<li><form action=\"FriendManagementServlet\" method=\"post\">");
-    	    		out.println("<a href = \"ProfileServlet?user="+a.getName()+"\">"+a.getName()+"</a>");
-    	    		out.println("<input type=\"hidden\" name=\"ID\" value=\""+a.getId()+"\">");
-    	    		out.println("<input type=\"submit\" name=\"action\" value=\"delete\">");
-    	    		out.println("<input type=\"submit\" name=\"action\" value=\"add\">");
-    	    		out.println("</form></li>");
+    	    		actions.clear();
+    	    		dummyString = ("<form action=\"FriendManagementServlet\" method=\"post\">");
+    	    		dummyString= dummyString +("<input type=\"hidden\" name=\"ID\" value=\""+a.getId()+"\">");
+    	    		dummyString = dummyString + ("<input type=\"submit\"  name=\"action\" value=\"add\">");
+    	    		actions.add(dummyString);
+    	    		dummyString = ("<input type=\"submit\" style=\"background-color:red\" name=\"action\" value=\"delete\">");
+    	    		dummyString = dummyString + ("</form>");
+    	    		actions.add(dummyString);
+    	    		out.println(HTMLHelper.printEnhancedUserListing(a.getName(), actions));
     	    	}
+    	    	
     	    	out.println("</ul>");
     	    	out.println(HTMLHelper.contentEnd());
+    	    	
     	    	out.println(HTMLHelper.contentStart());
     	    	out.println("<h3>Friends</h3>");
-    	    	out.println("<ul>");
+    	    	out.println("<ul class=boxlisting>");
+    	    	
     	    	for (Account a : friends) {
-       	    		out.println("<li><form id =\"friend\" action=\"FriendManagementServlet\" method=\"post\">");
-    	    		out.println("<a href = \"ProfileServlet?user="+a.getName()+"\">"+a.getName()+"</a>");
-    	    		out.println("<input type=\"hidden\" name=\"ID\" value=\""+a.getId()+"\">");
-    	    		out.println("<input type=\"hidden\" name=\"action\" value=\"delete\">");
-	    			out.println("<a href=\"#\" onclick=\"document.getElementById(\'friend\').submit();\"> Remove </a>");
-    	    		out.println("</form></li>");
+    	    		actions.clear();
+       	    		dummyString = ("<form id =\"friend\" action=\"FriendManagementServlet\" method=\"post\">");
+       	    		dummyString= dummyString +("<input type=\"hidden\" name=\"ID\" value=\""+a.getId()+"\">");
+       	    		dummyString= dummyString +("<input type=\"hidden\" name=\"action\" value=\"delete\">");
+       	    		dummyString= dummyString +("<a class=quiz style=\"float:left; background-color:red\" href=\"#\" onclick=\"document.getElementById(\'friend\').submit();\"> Remove </a>");
+       	    		dummyString= dummyString +("</form>");
+       	    		actions.add(dummyString);
+       	    		out.println(HTMLHelper.printEnhancedUserListing(a.getName(), actions));
     	    	}
     	    	out.println("</ul>");
-	    		out.println(HTMLHelper.contentEnd());
-	    		out.println(HTMLHelper.contentStart());
-	    		out.println("<a href=\"ProfileCatalogServlet\"> Search Users </a>");
+	    		
+	    		
+    	    	out.println("<form action=\"ProfileCatalogServlet\" method=\"get\">");
+    	    	out.println("Search Users: <input type=\"text\" name=\"search\"/>");
+    	    	out.println("<input type=\"submit\" value=\"Search\"/>");
+    			out.println("</form>");
 	    		out.println(HTMLHelper.contentEnd());
     	    	out.println("</body>");
     	    }

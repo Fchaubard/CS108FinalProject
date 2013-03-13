@@ -134,6 +134,19 @@ public class HTMLHelper {
 		return listing.toString();
 	}
 	
+	public static String printEnhancedUserListing(String name, ArrayList<String> actions){
+		StringBuilder listing = new StringBuilder();
+		listing.append("<div class=quiz>");
+		listing.append("<h3>"+name);
+		listing.append("<a class=quiz href= \"ProfileServlet?user="+name+"\">Profile</a>");
+		for (String action: actions){
+			listing.append(action);
+		}
+		listing.append("</h3></div>");
+		
+		return listing.toString();
+	}
+	
 	private static String getImage(String name){
 		if (name.equals("Achievements")) return BLUE_STAR_ICON;
 		else if(name.equals("Friends")) return DEFAULT_PROFILE_PIC;
