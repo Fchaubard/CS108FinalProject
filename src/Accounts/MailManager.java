@@ -22,7 +22,7 @@ public class MailManager {
 		this.con = con;//Servlets.MyDB.getConnection();
 	}
 	
-	public boolean sendMessage(Message mail) {
+	synchronized public boolean sendMessage(Message mail) {
 		Statement stmt;
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT INTO message VALUES (default, \"");
@@ -53,7 +53,7 @@ public class MailManager {
 		return true;
 	}
 	
-	public Message recieveMessage(int id) {
+	synchronized public Message recieveMessage(int id) {
 		ResultSet rs;
 		Statement stmt;
 		Message m = null;
@@ -81,7 +81,7 @@ public class MailManager {
 		return m;
 	}
 	
-	public int getUnread(Account acct) {
+	synchronized public int getUnread(Account acct) {
 		int newMessages = 0;
 		Statement stmt;
 		ResultSet rs;
@@ -96,7 +96,7 @@ public class MailManager {
 		
 	}
 	
-	public TreeMap<Integer, Message> listInbox(String recipient) {
+	synchronized public TreeMap<Integer, Message> listInbox(String recipient) {
 		ResultSet rs;
 		Statement stmt;
 		TreeMap<Integer,Message> inbox = null;
@@ -118,7 +118,7 @@ public class MailManager {
 		
 	}
 	
-	public TreeMap<Integer, Message> listOutbox(String sender) {
+	synchronized public TreeMap<Integer, Message> listOutbox(String sender) {
 		ResultSet rs;
 		Statement stmt;
 		TreeMap<Integer,Message> outbox = null;

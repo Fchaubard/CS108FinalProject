@@ -23,7 +23,7 @@ public class AccountManager {
 		this.con = con;
 	}
 	
-	public boolean accountExists(String name) {
+	synchronized public boolean accountExists(String name) {
 		Statement stmt;
 		try {
 			stmt = (Statement) con.createStatement();
@@ -35,7 +35,7 @@ public class AccountManager {
 		}
 	}
 	
-	public Account getAccount(String name) {
+	synchronized public Account getAccount(String name) {
 		Statement stmt;
 		try {
 			stmt = (Statement) con.createStatement();
@@ -51,7 +51,7 @@ public class AccountManager {
 		}
 	}
 	
-	public Account getAccount(int id) {
+	synchronized public Account getAccount(int id) {
 		Statement stmt;
 		try {
 			stmt = (Statement) con.createStatement();
@@ -68,7 +68,7 @@ public class AccountManager {
 		}
 	}
 	
-	public Account loginAccount(String name, String pass) {
+	synchronized public Account loginAccount(String name, String pass) {
 		pass = hashString(pass);
 		Statement stmt;
 		
@@ -88,7 +88,7 @@ public class AccountManager {
 		}
 	}
 	
-	public void logoutAccount(Account acct) {
+	synchronized public void logoutAccount(Account acct) {
 		Statement stmt;
 		try {
 			stmt = (Statement) con.createStatement();
@@ -104,7 +104,7 @@ public class AccountManager {
 	}
 	
 	
-	public Account createAccount(String name, String pass) {
+	synchronized public Account createAccount(String name, String pass) {
 		if (accountExists(name)) return null;
 		pass = hashString(pass);
 			Statement stmt;
@@ -117,7 +117,7 @@ public class AccountManager {
 			}
 	}
 
-	public void deleteAccount(String name) {
+	synchronized public void deleteAccount(String name) {
 		Statement stmt;
 		try {
 			stmt = (Statement) con.createStatement();
@@ -126,7 +126,7 @@ public class AccountManager {
 		}
 	}
 	
-	public void setRank(Account acct, boolean rank) {
+	synchronized public void setRank(Account acct, boolean rank) {
 		Statement stmt;
 		try {
 			stmt = (Statement) con.createStatement();
@@ -136,7 +136,7 @@ public class AccountManager {
 		}
 	}
 	
-	public void banUser(Account acct, boolean banStatus) {
+	synchronized public void banUser(Account acct, boolean banStatus) {
 		Statement stmt;
 		try {
 			stmt = (Statement) con.createStatement();
@@ -146,7 +146,7 @@ public class AccountManager {
 		}
 	}
 	
-	public void makeFriend(int sender, int friend) {
+	synchronized public void makeFriend(int sender, int friend) {
 		Statement stmt;
 		try {
 			stmt = (Statement) con.createStatement();
@@ -166,7 +166,7 @@ public class AccountManager {
 		}
 	}
 
-	public boolean isFriend(int user, int friend) {
+	synchronized public boolean isFriend(int user, int friend) {
 		Statement stmt;
 		try {
 			stmt = (Statement) con.createStatement();
@@ -180,7 +180,7 @@ public class AccountManager {
 		return false;
 	}
 	
-	public void deleteFriend(int lousyFriend, int foreverAlone) {
+	synchronized public void deleteFriend(int lousyFriend, int foreverAlone) {
 		Statement stmt;
 		try {
 			stmt = (Statement) con.createStatement();
@@ -195,7 +195,7 @@ public class AccountManager {
 		}
 	}
 	
-	public ArrayList<Account> getFriendRequests(int id) {
+	synchronized public ArrayList<Account> getFriendRequests(int id) {
 		ResultSet rs;
 		Statement stmt;
 		ArrayList<Account> friendsList = null;
@@ -216,7 +216,7 @@ public class AccountManager {
 		return friendsList;
 	}
 	
-	public ArrayList<Account> getFriends(int id) {
+	synchronized public ArrayList<Account> getFriends(int id) {
 		ResultSet rs;
 		Statement stmt;
 		ArrayList<Account> friendsList = null;
@@ -237,7 +237,7 @@ public class AccountManager {
 		return friendsList;
 	}
 	
-	public void addQuizResult(int userID, int quizID, int score, java.sql.Date date, int time) {
+	synchronized public void addQuizResult(int userID, int quizID, int score, java.sql.Date date, int time) {
 		Statement stmt;
 		try {
 			stmt = (Statement) con.createStatement();
@@ -247,7 +247,7 @@ public class AccountManager {
 	}
 	
 	//pass either arguement as zero or negative to ignore
-	public ArrayList<model.QuizAttempts> getHistory(int userid, int quizid) {
+	synchronized public ArrayList<model.QuizAttempts> getHistory(int userid, int quizid) {
 		ResultSet rs;
 		Statement stmt;
 		ArrayList<model.QuizAttempts> history = new ArrayList<model.QuizAttempts>();
@@ -272,7 +272,7 @@ public class AccountManager {
 		return history;
 	}
 	
-	public int quizesAuthored(Account acct) {
+	synchronized public int quizesAuthored(Account acct) {
 		ResultSet rs;
 		Statement stmt;
 		int history = 0;
@@ -287,7 +287,7 @@ public class AccountManager {
 		return history;
 	}
 	
-	public int quizesTaken(Account acct) {
+	synchronized public int quizesTaken(Account acct) {
 		ResultSet rs;
 		Statement stmt;
 		int history = 0;
@@ -302,7 +302,7 @@ public class AccountManager {
 		return history;
 	}
 	
-	public void updateAchievements (Account acct, int quizesDone) {
+	synchronized public void updateAchievements (Account acct, int quizesDone) {
 		/*System.out.println(quizesDone);
 		if (quizesDone > 0) acct.giveAcheivement("amateure");
 		if (quizesDone > 5) acct.giveAcheivement("prolific");
@@ -322,7 +322,64 @@ public class AccountManager {
 		}
 	}
 	
-	public static String hexToString(byte[] bytes) {
+	synchronized public void storeAmmouncement(String announcement) {
+		
+	}
+	
+	synchronized public void storeEvent(int type, int user, int quiz, int extra) {
+		String update = null;
+		try {
+			String name = getAccount(user).getName();
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select name from quiz where quiz_id = "+quiz);
+			rs.next();
+			String qname = rs.getString("name");
+			switch(type) {
+			case 2: //user <user> took quiz <quiz>
+				update = "<a href =\"ProfileServlet?user="+name+"\">"+name+"</a> took <a href =\"QuizTitleServlet?id="+quiz+"\">"+qname+"</a>.";
+				break;
+			case 3: //user <user> created quiz <quiz>
+				update = "<a href =\"ProfileServlet?user="+name+"\">"+name+"</a> created <a href =\"QuizTitleServlet?id="+quiz+"\">"+qname+"</a>.";
+				break;
+			case 4: //user <user> earned achievement <extra>
+				update = getAcheivementUpdate(name, extra);
+				break;
+			case 5: //user <user> is friends with user <extra>
+				update = "<a href =\"ProfileServlet?user="+name+"\">"+name+"</a> is friends with <a href =\"ProfileServlet?user="+getAccount(extra).getName()+"\">"+getAccount(extra).getName()+"</a>.";
+				break;
+			default:
+				update = "";
+				break;
+			}
+			stmt.executeUpdate("insert into event values (default, "+type+", "+update+", "+user+")");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private String getAcheivementUpdate(String name, int acheivement) {
+		String s= "<a href =\"ProfileServlet?user="+name+"\">"+name+"</a> ";
+		switch(acheivement) {
+		case -1:
+			s += "is an amateur quiz taker.";
+			break;
+		case -2:
+			s += "is a prolific quiz taker.";
+			break;
+		case -3:
+			s += "is a quiz-taking prodigy!";
+			break;
+		case -4:
+			s += "is a quiz machine!";
+			break;
+		case -5:
+			s += "is one of the greatest!";
+			break;
+		}
+		return null;
+	}
+
+	synchronized public static String hexToString(byte[] bytes) {
 		StringBuffer buff = new StringBuffer();
 		for (int i=0; i<bytes.length; i++) {
 			int val = bytes[i];
@@ -333,7 +390,7 @@ public class AccountManager {
 		return buff.toString();
 	}
 	
-	public static String hashString(String s) {
+	synchronized public static String hashString(String s) {
 		s += "1234"; //world's most secure salt
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA");
@@ -350,13 +407,5 @@ public class AccountManager {
 		}
 	}
 	
-	public void kill() {
-		try {
-			con.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	
 }
