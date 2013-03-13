@@ -21,7 +21,7 @@ public class QuestionResponse implements Question {
 	public static String getHTMLInputString(){
 		
 		StringBuilder html = new StringBuilder();
-		html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\"statement\" size=\"75\" />");
+		html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\"statement\" size=\"75\" required/>");
 		html.append("<br />Insert All Possible Answers, one on each line:");
 		html.append("<br /><textarea name=\"answers\" cols=\"20\" rows=\"10\" required></textarea>");
 		

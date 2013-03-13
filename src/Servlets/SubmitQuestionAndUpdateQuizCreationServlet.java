@@ -95,14 +95,11 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 				String statementStringAfter = (String)request.getParameter("statementAfter");
 				statementString = statementStringBefore+ "__________" +statementStringAfter ;
 				hashSet = new HashSet<String>();
-				hashSet.add((String)request.getParameter("answer1"));
-				if (!((String)request.getParameter("answer2")).equals("")) {
-					hashSet.add((String)request.getParameter("answer2"));
-					
-				}
-				if (!((String)request.getParameter("answer3")).equals("")) {
-					hashSet.add((String)request.getParameter("answer3"));
-					
+				String answe = (String)request.getParameter("answers");
+				
+				String[] stri = answe.split(Pattern.quote("\r\n"));
+				for (String string : stri) {
+					hashSet.add(string);
 				}
 				
 				question = new FillInTheBlank(statementString, hashSet);

@@ -28,12 +28,12 @@ public class MultipleChoice implements Question {
 	public static String getHTMLInputString(){
 		
 		StringBuilder html = new StringBuilder();
-		html.append("<br />Insert Question Statement: <br /><textarea name=\"statement\" rows=\"8\" cols=\"75\"> </textarea>");
+		html.append("<br />Insert Question Statement: <br /><textarea name=\"statement\" rows=\"8\" cols=\"75\" required></textarea>");
 		//html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\"statement\" />");
-		html.append("<br />Insert Answer:<br /> <input type=\"text\" name=\"answer1\" />");
-		html.append("<br />Insert Wrong Answer 1:<br /> <input type=\"text\" name=\"wrongAnswer1\" />");
-		html.append("<br />Insert Wrong Answer 2:<br /> <input type=\"text\" name=\"wrongAnswer2\" />");
-		html.append("<br />Insert Wrong Answer 3:<br /> <input type=\"text\" name=\"wrongAnswer3\" />");
+		html.append("<br />Insert Answer:<br /> <input type=\"text\" name=\"answer1\" required />");
+		html.append("<br />Insert Wrong Answer 1:<br /> <input type=\"text\" name=\"wrongAnswer1\" required />");
+		html.append("<br />Insert Wrong Answer 2:<br /> <input type=\"text\" name=\"wrongAnswer2\" required />");
+		html.append("<br />Insert Wrong Answer 3:<br /> <input type=\"text\" name=\"wrongAnswer3\" required />");
 		
 		return html.toString();
 		
