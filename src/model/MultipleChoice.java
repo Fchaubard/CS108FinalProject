@@ -29,7 +29,7 @@ public class MultipleChoice implements Question {
 	public static String getHTMLInputString(){
 		
 		StringBuilder html = new StringBuilder();
-		html.append("<br />Insert Question Statement: <br /><textarea name=\"statement\" rows=\"8\" cols=\"75\" required></textarea>");
+		html.append("<br />Insert Question Statement: <br /><textarea name=\"statement\" rows=\"8\" cols=\"48\" required></textarea>");
 		html.append("<br />Insert Answer:<br /> <input type=\"text\" name=\"answer1\" required />");
 		html.append("<br />Insert All Incorrect Options, one on each line:");
 		html.append("<br /><textarea name=\"wrongOptions\" cols=\"20\" rows=\"10\" required></textarea>");
