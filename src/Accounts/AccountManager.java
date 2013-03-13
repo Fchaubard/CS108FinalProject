@@ -314,11 +314,26 @@ public class AccountManager {
 		Statement stmt;
 		try {
 			stmt = (Statement) con.createStatement();
-			if (quizesDone >= 1) stmt.executeUpdate("update user set amateure = true where user_id = " + acct.getId());
-			if (quizesDone >= 5) stmt.executeUpdate("update user set prolific = true where user_id = " + acct.getId());
-			if (quizesDone >= 10) stmt.executeUpdate("update user set prodigious = true where user_id = " + acct.getId());
-			if (quizesDone >= 50) stmt.executeUpdate("update user set greatest = true where user_id = " + acct.getId());
-			if (quizesDone >= 100) stmt.executeUpdate("update user set quiz_machine = true where user_id = " + acct.getId());
+			if (quizesDone >= 1) {
+				storeEvent(4, acct.getId(), 0, -1);
+				stmt.executeUpdate("update user set amateure = true where user_id = " + acct.getId());
+			}
+			if (quizesDone >= 5) {
+				storeEvent(4, acct.getId(), 0, -2);
+				stmt.executeUpdate("update user set prolific = true where user_id = " + acct.getId());
+			}
+			if (quizesDone >= 10) {
+				storeEvent(4, acct.getId(), 0, -3);
+				stmt.executeUpdate("update user set prodigious = true where user_id = " + acct.getId());
+			}
+			if (quizesDone >= 50) {
+				storeEvent(4, acct.getId(), 0, -4);
+				stmt.executeUpdate("update user set greatest = true where user_id = " + acct.getId());
+			}
+			if (quizesDone >= 100) {
+				storeEvent(4, acct.getId(), 0, -5);
+				stmt.executeUpdate("update user set quiz_machine = true where user_id = " + acct.getId());
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

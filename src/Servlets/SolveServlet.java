@@ -151,6 +151,7 @@ public class SolveServlet extends HttpServlet {
 					//store and update acheivements
 					AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
 					try {
+						am.storeEvent(2, qa.getUserID(), qa.getQuizID(), 0);
 						qa.pushAttemptToDB((Connection)request.getServletContext().getAttribute("connect"));
 						quiz.addToHistory(qa);
 						int quizesDone = am.quizesTaken(acct);
