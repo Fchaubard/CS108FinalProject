@@ -49,8 +49,8 @@ public class MultiPageQuiz extends HttpServlet {
 		else {
 			quizID = request.getParameter("id");
 			if(quizID.startsWith("p")) {
-								quizID = quizID.substring(1);
-								practice = true;
+				quizID = quizID.substring(1);
+				practice = true;
 			}
 			
 		}
@@ -72,6 +72,7 @@ public class MultiPageQuiz extends HttpServlet {
 			else{
 				quiz = (Quiz) session.getAttribute("quiz_"+quizID);
 			}
+			
 			quiz.setPracticeMode(practice);
 			response.setContentType("text/html");
 			PrintWriter out = response.getWriter();
