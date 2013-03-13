@@ -52,7 +52,6 @@ public class MultiPageQuiz extends HttpServlet {
 				quizID = quizID.substring(1);
 				practice = true;
 			}
-			
 		}
 		
 		session.setAttribute("quizID", quizID);
@@ -72,8 +71,10 @@ public class MultiPageQuiz extends HttpServlet {
 			else{
 				quiz = (Quiz) session.getAttribute("quiz_"+quizID);
 			}
+			if (!quiz.isPracticeMode()) {
+				quiz.setPracticeMode(practice);
+			}
 			
-			quiz.setPracticeMode(practice);
 			response.setContentType("text/html");
 			PrintWriter out = response.getWriter();
 			out.println("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>");
