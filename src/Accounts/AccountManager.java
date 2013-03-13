@@ -314,24 +314,28 @@ public class AccountManager {
 		Statement stmt;
 		try {
 			stmt = (Statement) con.createStatement();
-			if (quizesDone >= 1) {
+			if (quizesDone >= 1 && !acct.getAcheivement("amateure")) {
 				storeEvent(4, acct.getId(), 0, -1);
+				acct.giveAcheivement("amateure");
 				stmt.executeUpdate("update user set amateure = true where user_id = " + acct.getId());
 			}
-			if (quizesDone >= 5) {
+			if (quizesDone >= 5 && !acct.getAcheivement("prolific")) {
 				storeEvent(4, acct.getId(), 0, -2);
+				acct.giveAcheivement("prolific");
 				stmt.executeUpdate("update user set prolific = true where user_id = " + acct.getId());
 			}
-			if (quizesDone >= 10) {
+			if (quizesDone >= 10 && !acct.getAcheivement("prodigious")) {
 				storeEvent(4, acct.getId(), 0, -3);
 				stmt.executeUpdate("update user set prodigious = true where user_id = " + acct.getId());
 			}
-			if (quizesDone >= 50) {
+			if (quizesDone >= 50  && !acct.getAcheivement("greatest")) {
 				storeEvent(4, acct.getId(), 0, -4);
+				acct.giveAcheivement("greatest");
 				stmt.executeUpdate("update user set greatest = true where user_id = " + acct.getId());
 			}
-			if (quizesDone >= 100) {
+			if (quizesDone >= 100  && !acct.getAcheivement("quiz_machine")) {
 				storeEvent(4, acct.getId(), 0, -5);
+				acct.giveAcheivement("quiz_machine");
 				stmt.executeUpdate("update user set quiz_machine = true where user_id = " + acct.getId());
 			}
 		} catch (SQLException e) {
@@ -399,16 +403,53 @@ public class AccountManager {
 		case -3:
 			s += "is a quiz-taking prodigy!";
 			break;
-		case -4:
+		case -5:
 			s += "is a quiz machine!";
 			break;
-		case -5:
+		case -4:
 			s += "is one of the greatest!";
+			break;
+		default:
+			s += "earned an acheivement. So, umm, yay?";
 			break;
 		}
 		return s;
 	}
 
+	public ArrayList<String> getAnnouncements() {
+		ArrayList<String> ann = new ArrayList<String>();
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from event where type = 1 order by event_id desc");
+			while (rs.next()) {
+				ann.add(rs.getString("event"));
+			}
+			for (String s : ann) {
+				System.out.println(s);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ann;
+	}
+	
+	public ArrayList<String> getNews(int user) {
+		ArrayList<String> news = new ArrayList<String>();
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from event where user_id in (select second_user_id from friends_mapping where first_user_id = "+user+") order by event_id desc");
+			while (rs.next()) {
+				news.add(rs.getString("event"));
+			}
+			for (String s : news) {
+				System.out.println(s);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return news;
+	}
+	
 	synchronized public static String hexToString(byte[] bytes) {
 		StringBuffer buff = new StringBuffer();
 		for (int i=0; i<bytes.length; i++) {

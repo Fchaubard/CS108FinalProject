@@ -26,6 +26,7 @@ public class AccountManagerTest {
 	
 	@Test
 	public void testBasic() {
+		am.getNews(9);
 		am.createAccount("Don","Emerejildo");
 		assertTrue(am.accountExists("Don"));
 		Account acct2 = am.loginAccount("Don", "Emerejildo");
