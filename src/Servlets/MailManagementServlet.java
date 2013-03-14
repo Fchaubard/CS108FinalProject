@@ -92,7 +92,7 @@ public class MailManagementServlet extends HttpServlet {
     		}
     		out.println("</table>");
     	} else {//print specific message
-    		int x = 37;
+    		int x = 0;
     		try {
     			x = Integer.parseInt(request.getParameter("index"));
     		} catch (NumberFormatException e) {

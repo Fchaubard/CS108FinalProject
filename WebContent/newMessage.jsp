@@ -19,7 +19,7 @@ if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.
 	String quiz = (String) request.getParameter("quiz");
 	String sub = (String) request.getParameter("subject");
 	String body = (String) request.getParameter("body");
-	if (to.equals("error")) out.println("<b>Recpient not found in system</b>");
+	if (to != null && to.equals("error")) out.println("<b>Recpient not found in system</b>");
 	if (quiz == null) quiz = "";
 	if (sub == null) sub = "";
 	if (body == null) body = "";%>
