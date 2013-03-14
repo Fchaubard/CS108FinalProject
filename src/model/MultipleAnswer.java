@@ -203,6 +203,10 @@ public class MultipleAnswer implements Question {
 		return numAnswers;
 	}
 	
+	public void setNumAnswers(int num) {
+		numAnswers = num;
+	}
+	
 	public String getEditAnswersString() {
 		StringBuilder str = new StringBuilder();
 		
