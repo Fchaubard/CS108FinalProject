@@ -278,7 +278,34 @@ public class Quiz {
 		return score;
 	}
 
-
+	public void updateDB(Connection con, ArrayList<Integer> action) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("UPDATE quiz SET name = ?, category = ?, random = ?, one_page = ?, immediate_correction = ?, description = ? WHERE quiz_id = ?");
+		
+		ps.setString(1, quizName);
+		ps.setString(2, category);
+		ps.setBoolean(3, random);
+		ps.setBoolean(4, onePageMultiPage);
+		ps.setBoolean(5, immediateCorrection);
+		ps.setString(6, description);
+		ps.setInt(7, quiz_id);
+		
+		ps.executeUpdate();
+		
+		for(int i = 0; i < action.size(); i++) {
+			int doThis = action.get(i);
+			Question q = questions.get(i);
+			if(doThis == 1) { //update
+				q.updateDB(con);
+			}
+			else if(doThis == 2) { //delete
+				q.deleteFromDB(con);
+				questions.remove(i);
+			}
+			else { //add
+				q.pushToDB(con);
+			}
+		}
+	}
 
 
 	public void generate(ArrayList<Question> q, boolean random, boolean onePage, 

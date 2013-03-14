@@ -283,4 +283,49 @@ public class MultipleChoiceMultipleAnswer implements Question {
 		
 		return html.toString();
 	}
+
+
+
+	@Override
+	public void updateDB(Connection con) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("UPDATE multiple_choice_multiple_answer_question SET statement = ?, answer = ?, wrong_answers = ? WHERE question_id = ?");
+		
+		ps.setString(1, statement);
+		
+		StringBuilder ans = new StringBuilder();
+		for(String a : answers) {
+			ans.append(a);
+			ans.append(" &&& ");
+		}
+		ans.replace(ans.length()-5, ans.length(), "");
+		
+		ps.setString(2, ans.toString());
+		
+		StringBuilder wAns = new StringBuilder();
+		for(String wa : wrongAnswers) {
+			wAns.append(wa);
+			wAns.append(" &&& ");
+		}
+		wAns.replace(wAns.length()-5, wAns.length(), "");
+		
+		ps.setString(3, wAns.toString());
+		
+		ps.setInt(4, qID);
+		
+		ps.executeUpdate();
+	}
+
+
+
+	@Override
+	public void deleteFromDB(Connection con) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("DELETE FROM multiple_choice_multiple_answer_question WHERE question_id = ?");
+		ps.setInt(1, qID);
+		ps.executeUpdate();
+		
+		PreparedStatement prep = con.prepareStatement("DELETE FROM quiz_question_mapping WHERE question_id = ? AND question_type = ?");
+		prep.setInt(1, qID);
+		prep.setInt(2, type);
+		prep.executeUpdate();
+	}
 }

@@ -3,6 +3,7 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -13,11 +14,8 @@ public class Matching implements Question {
 	private  ArrayList<String> userAns;
 	private ArrayList<String>  row1;
 	
-
-
 	private ArrayList<String>  row2;
 	private ArrayList<Integer>  shuffleIntegersForRow2; // these numbers start off ordered but then shuffle.
-
 
 	private int qID;
 
@@ -314,7 +312,20 @@ public class Matching implements Question {
 
 	@Override
 	public String getEditQuizString() {
+		return "YOU CANNOT EDIT A MATCHING QUESTION! SUCKS TO SUCK.";
+	}
+
+
+	@Override
+	public void updateDB(Connection con) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		
+	}
+
+
+	@Override
+	public void deleteFromDB(Connection con) throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -3,6 +3,7 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -232,5 +233,39 @@ public class PictureResponse implements Question {
 		html.append("<br /><textarea name=\""+type+"_"+qID+"_answers\" cols=\"20\" rows=\"10\" required>"+getEditAnswersString()+"</textarea>");
 		
 		return html.toString();
+	}
+
+
+	@Override
+	public void updateDB(Connection con) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("UPDATE picture_response_question SET url = ?, answer = ? WHERE question_id = ?");
+		
+		ps.setString(1, url);
+		
+		StringBuilder ans = new StringBuilder();
+		for(String a : answers) {
+			ans.append(a);
+			ans.append(" &&& ");
+		}
+		ans.replace(ans.length()-5, ans.length(), "");
+		
+		ps.setString(2, ans.toString());
+		
+		ps.setInt(3, qID);
+		
+		ps.executeUpdate();
+	}
+
+
+	@Override
+	public void deleteFromDB(Connection con) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("DELETE FROM picture_response_question WHERE question_id = ?");
+		ps.setInt(1, qID);
+		ps.executeUpdate();
+		
+		PreparedStatement prep = con.prepareStatement("DELETE FROM quiz_question_mapping WHERE question_id = ? AND question_type = ?");
+		prep.setInt(1, qID);
+		prep.setInt(2, type);
+		prep.executeUpdate();
 	}
 }

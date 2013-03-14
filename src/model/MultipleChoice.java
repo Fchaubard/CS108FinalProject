@@ -304,5 +304,35 @@ public class MultipleChoice implements Question {
 		
 		return html.toString();
 	}
+	@Override
+	public void updateDB(Connection con) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("UPDATE multiple_choice_question SET statement = ?, answer = ?, wrong_answers = ? WHERE question_id = ?");
+		
+		ps.setString(1, statement);
+		ps.setString(2, answer);
+		
+		StringBuilder wrong = new StringBuilder();
+		for(String s : wrongAnswers) {
+			wrong.append(s);
+			wrong.append(" &&& ");
+		}
+		wrong.replace(wrong.length()-5, wrong.length(), "");
+		
+		ps.setString(3, wrong.toString());
+		ps.setInt(4, qID);
+		
+		ps.executeUpdate();
+	}
+	@Override
+	public void deleteFromDB(Connection con) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("DELETE FROM multiple_choice_question WHERE question_id = ?");
+		ps.setInt(1, qID);
+		ps.executeUpdate();
+		
+		PreparedStatement prep = con.prepareStatement("DELETE FROM quiz_question_mapping WHERE question_id = ? AND question_type = ?");
+		prep.setInt(1, qID);
+		prep.setInt(2, type);
+		prep.executeUpdate();
+	}
 
 }

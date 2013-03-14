@@ -237,4 +237,36 @@ public class FillInTheBlank implements Question {
 		
 		return edit.toString();
 	}
+
+	@Override
+	public void updateDB(Connection con) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("update fill_in_the_blank_question set statement = ?, answer = ? where question_id = ?");
+		
+		ps.setString(1, statement);
+		
+		StringBuilder ans = new StringBuilder();
+		for (String string : answers) {
+			string = string.trim();
+			ans.append(string);
+			ans.append(" &&& ");
+		}
+		ans.replace(ans.length()-5, ans.length(), "");
+		
+		ps.setString(1, ans.toString());
+		ps.setInt(3, qID);
+		
+		ps.executeUpdate();
+	}
+
+	@Override
+	public void deleteFromDB(Connection con) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("DELETE FROM fill_in_the_blank_question WHERE question_id = ?");
+		ps.setInt(1, qID);
+		ps.executeUpdate();
+		
+		PreparedStatement prep = con.prepareStatement("DELETE FROM quiz_question_mapping WHERE question_id = ? AND question_type = ?");
+		prep.setInt(1, qID);
+		prep.setInt(2, type);
+		prep.executeUpdate();
+	}
 }

@@ -30,4 +30,8 @@ public interface Question {
 	public int getNumAnswers();
 	
 	public String getEditQuizString();
+	
+	public void updateDB(Connection con) throws SQLException;
+	
+	public void deleteFromDB(Connection con) throws SQLException;
 }

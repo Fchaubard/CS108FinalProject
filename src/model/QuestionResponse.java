@@ -232,6 +232,38 @@ public class QuestionResponse implements Question {
 		
 		return html.toString();
 	}
+
+	@Override
+	public void updateDB(Connection con) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("UPDATE question_response SET statement = ?, answer = ? WHERE question_id = ?");
+		
+		ps.setString(1, statement);
+		
+		StringBuilder ans = new StringBuilder();
+		for(String a : answers) {
+			ans.append(a);
+			ans.append(" &&& ");
+		}
+		ans.replace(ans.length()-5, ans.length(), "");
+		
+		ps.setString(2, ans.toString());
+		
+		ps.setInt(3, qID);
+		
+		ps.executeUpdate();
+	}
+
+	@Override
+	public void deleteFromDB(Connection con) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("DELETE FROM question_response WHERE question_id = ?");
+		ps.setInt(1, qID);
+		ps.executeUpdate();
+		
+		PreparedStatement prep = con.prepareStatement("DELETE FROM quiz_question_mapping WHERE question_id = ? AND question_type = ?");
+		prep.setInt(1, qID);
+		prep.setInt(2, type);
+		prep.executeUpdate();
+	}
 }
 
 

@@ -227,4 +227,38 @@ public class MultipleAnswer implements Question {
 		
 		return edit.toString();
 	}
+
+	@Override
+	public void updateDB(Connection con) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("UPDATE multiple_answer_question SET statement = ?, answer = ?, numAnswers = ? WHERE question_id = ?");
+		
+		ps.setString(1, statement);
+		
+		StringBuilder a = new StringBuilder();
+		for(String s : answers) {
+			s = s.trim();
+			a.append(s);
+			a.append(" &&& ");
+		}
+		a.replace(a.length()-5, a.length(), "");
+		
+		ps.setString(2, a.toString());
+		
+		ps.setInt(3, numAnswers);
+		ps.setInt(4, qID);
+		
+		ps.executeUpdate();
+	}
+
+	@Override
+	public void deleteFromDB(Connection con) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("DELETE FROM multiple_answer_question WHERE question_id = ?");
+		ps.setInt(1, qID);
+		ps.executeUpdate();
+		
+		PreparedStatement prep = con.prepareStatement("DELETE FROM quiz_question_mapping WHERE question_id = ? AND question_type = ?");
+		prep.setInt(1, qID);
+		prep.setInt(2, type);
+		prep.executeUpdate();
+	}
 }
