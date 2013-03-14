@@ -335,5 +335,4 @@ public class MultipleChoice implements Question {
 		prep.setInt(2, type);
 		prep.executeUpdate();
 	}
-
 }
