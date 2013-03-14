@@ -44,7 +44,12 @@ import Accounts.*;
     	    	out.println(HTMLHelper.printCSSLink());
     	    	out.println("</head>");
     	    	
+    	    	
+    	    	
     	    	out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
+    	    	
+    	    	if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
+    	    	
     	    	out.println(HTMLHelper.contentStart());
     	    	
     	    	//set and print profile title (name)
