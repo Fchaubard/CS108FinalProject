@@ -10,6 +10,12 @@
 </head>
 <body>
 <%= helpers.HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")) %>
+
+<%
+AccountManager am = (AccountManager) request.getSession().getAttribute("accounts");
+if(request.getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
+%>
+
 <%=  helpers.HTMLHelper.contentStart() %>
 <% out.println(((Accounts.Account)request.getSession().getAttribute("account")).getName()); %>
 <form action="AcctManagementServlet" method="post">

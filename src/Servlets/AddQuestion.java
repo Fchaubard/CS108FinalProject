@@ -92,6 +92,10 @@ public class AddQuestion extends HttpServlet {
 			out.println("</head>");
 			out.println("<body>");
 			out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
+			
+			AccountManager am = (AccountManager) request.getSession().getAttribute("accounts");
+			if(request.getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
+			
 			out.println(HTMLHelper.contentStart());
 			out.println("<h1>"+quiz.getQuizName()+"</h1>");
 			out.println("<h3>Input Question "+(quiz.getQuestions().size()+1)+"</h3>");

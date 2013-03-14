@@ -46,6 +46,9 @@ public class HistoryServlet extends HttpServlet {
     	
     	out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
     	
+    	
+		if(request.getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
+    	
     	out.println(HTMLHelper.contentStart());
 		AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
 		int userID = -1;

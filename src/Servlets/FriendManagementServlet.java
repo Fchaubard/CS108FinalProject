@@ -44,6 +44,9 @@ import Accounts.AccountManager;
     	    	out.println("/<head>");
     	    	out.println("<body>");
     	    	out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
+    	    	
+    			if(request.getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
+    	    	
     	    	out.println(HTMLHelper.contentStart());
     	    	
     	    	out.println("<h3>Requests</h3>");  

@@ -48,6 +48,10 @@ public class SiteStatsServlet extends HttpServlet {
 	    	out.println("</head");
 	    	out.println("<body>");
 	    	out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
+	    	
+	    	AccountManager am = (AccountManager) request.getSession().getAttribute("accounts");
+			if(request.getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
+	    	
 	    	out.println(HTMLHelper.contentStart());
 	    	String title = "Site Statistics";
 	    	ArrayList<String> actions = new ArrayList<String>();

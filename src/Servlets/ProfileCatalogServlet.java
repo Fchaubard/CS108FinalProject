@@ -16,6 +16,7 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
 import Accounts.Account;
+import Accounts.AccountManager;
 
 /**
  * Servlet implementation class QuizCatalogServlet
@@ -58,6 +59,10 @@ public class ProfileCatalogServlet extends HttpServlet {
 	    	out.println("</head");
 	    	out.println("<body>");
 	    	out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
+	    	
+	    	AccountManager am = (AccountManager) request.getSession().getAttribute("accounts");
+			if(request.getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
+	    	
     		out.println(HTMLHelper.contentStart());
 	    	out.println("<form action=\"ProfileCatalogServlet\" method=\"get\">");
 	    	out.println("Search Users: <input type=\"text\" name=\"search\"/>");

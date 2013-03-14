@@ -1,5 +1,7 @@
 package Servlets;
 
+import helpers.HTMLHelper;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -10,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import Accounts.AccountManager;
 
 import model.*;
 
@@ -74,6 +78,10 @@ public class AddMatchingQuestionServlet extends HttpServlet {
 			out.println("<title>"+quiz.getQuizName()+"</title>");
 			out.println("</head>");
 			out.println("<body>");
+			
+			AccountManager am = (AccountManager) request.getSession().getAttribute("accounts");
+			if(request.getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
+			
 			out.println("<h1>"+quiz.getQuizName()+"</h1>");
 			out.println("<h3>Input Question "+(quiz.getQuestions().size()+1)+"</h3>");
 			String type = request.getParameter("questionType");

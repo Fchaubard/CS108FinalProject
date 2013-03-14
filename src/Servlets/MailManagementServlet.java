@@ -42,6 +42,10 @@ public class MailManagementServlet extends HttpServlet {
     	out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
     	out.println(HTMLHelper.contentStart() + "<body>");
     	
+    	AccountManager am = (AccountManager) request.getSession().getAttribute("accounts");
+		if(request.getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
+    	
+    	
     	if (request.getParameter("index").equals("inbox")) {
     		TreeMap<Integer, Message> inbox = mm.listInbox(user);
     		out.println("<table border=\"0\">");
