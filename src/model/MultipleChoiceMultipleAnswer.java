@@ -20,8 +20,8 @@ public class MultipleChoiceMultipleAnswer implements Question {
 	private Set<String> options;
 	
 	public static String getHTMLInputString(){
-		
 		StringBuilder html = new StringBuilder();
+		
 		html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\"question\" size=\"75\" requied />");
 		html.append("<br />Insert All Correct Answers, one on each line:");
 		html.append("<br /><textarea name=\"answers\" cols=\"20\" rows=\"10\" required></textarea>");
@@ -248,8 +248,6 @@ public class MultipleChoiceMultipleAnswer implements Question {
 		return userAns.toString();
 	}
 
-
-
 	@Override
 	public int getTotalQScore() {
 		return answers.size();
@@ -258,5 +256,31 @@ public class MultipleChoiceMultipleAnswer implements Question {
 	@Override
 	public int getNumAnswers() {
 		return (answers.size() + wrongAnswers.size());
+	}
+
+	public String getEditAnswersString(Set<String> set) {
+		StringBuilder str = new StringBuilder();
+		
+		for(String s : set) {
+			str.append(s);
+			str.append("\n");
+		}
+		
+		str.replace(str.length()-2, str.length(), "");
+		
+		return str.toString();
+	}
+
+	@Override
+	public String getEditQuizString() {
+		StringBuilder html = new StringBuilder();
+		
+		html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\""+type+"_"+qID+"_question\" size=\"75\" value=\""+statement+"\"required />");
+		html.append("<br />Insert All Correct Answers, one on each line:");
+		html.append("<br /><textarea name=\""+type+"_"+qID+"_answers\" cols=\"20\" rows=\"10\" required>"+getEditAnswersString(answers)+"</textarea>");
+		html.append("<br />Insert All Incorrect Options, one on each line:");
+		html.append("<br /><textarea name=\""+type+"_"+qID+"_wrongAnswers\" cols=\"20\" rows=\"10\" >"+getEditAnswersString(wrongAnswers)+"</textarea>");
+		
+		return html.toString();
 	}
 }

@@ -19,8 +19,8 @@ public class QuestionResponse implements Question {
 	private ArrayList<String> userAnswers;
 	
 	public static String getHTMLInputString(){
-		
 		StringBuilder html = new StringBuilder();
+		
 		html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\"statement\" size=\"75\" required/>");
 		html.append("<br />Insert All Possible Answers, one on each line:");
 		html.append("<br /><textarea name=\"answers\" cols=\"20\" rows=\"10\" required></textarea>");
@@ -207,6 +207,30 @@ public class QuestionResponse implements Question {
 	@Override
 	public int getNumAnswers() {
 		return 1;
+	}
+	
+	public String getEditAnswersString() {
+		StringBuilder str = new StringBuilder();
+		
+		for(String s : answers) {
+			str.append(s);
+			str.append("\n");
+		}
+		
+		str.replace(str.length()-2, str.length(), "");
+		
+		return str.toString();
+	}
+
+	@Override
+	public String getEditQuizString() {
+		StringBuilder html = new StringBuilder();
+		
+		html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\""+type+"_"+qID+"_statement\" size=\"75\" value=\"" + statement + "\" required/>");
+		html.append("<br />Insert All Possible Answers, one on each line:");
+		html.append("<br /><textarea name=\""+type+"_"+qID+"_answers\" cols=\"20\" rows=\"10\" required>"+getEditAnswersString()+"</textarea>");
+		
+		return html.toString();
 	}
 }
 

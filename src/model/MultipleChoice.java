@@ -27,17 +27,14 @@ public class MultipleChoice implements Question {
 	private String userAnswer;
 	
 	public static String getHTMLInputString(){
-		
 		StringBuilder html = new StringBuilder();
+		
 		html.append("<br />Insert Question Statement: <br /><textarea name=\"statement\" rows=\"8\" cols=\"48\" required></textarea>");
 		html.append("<br />Insert Answer:<br /> <input type=\"text\" name=\"answer1\" required />");
 		html.append("<br />Insert All Incorrect Options, one on each line:");
 		html.append("<br /><textarea name=\"wrongOptions\" cols=\"20\" rows=\"10\" required></textarea>");
 		
 		return html.toString();
-		
-		
-		
 	}
 	public static String getRandomHTMLInputString(){
 		String[] strings = getOtherRandomHTML();
@@ -272,13 +269,40 @@ public class MultipleChoice implements Question {
 	public String getUserAnswers() {
 		return userAnswer;
 	}
+	
 	@Override
 	public int getTotalQScore() {
 		return 1;
 	}
+	
 	@Override
 	public int getNumAnswers() {
 		return 1;
+	}
+	
+	public String getEditWrongAnswersString() {
+		StringBuilder str = new StringBuilder();
+		
+		for(String s : wrongAnswers) {
+			str.append(s);
+			str.append("\n");
+		}
+		
+		str.replace(str.length()-2, str.length(), "");
+		
+		return str.toString();
+	}
+	
+	@Override
+	public String getEditQuizString() {
+		StringBuilder html = new StringBuilder();
+		
+		html.append("<br />Insert Question Statement: <br /><textarea name=\""+type+"_"+qID+"_statement\" rows=\"8\" cols=\"48\" required>"+statement+"</textarea>");
+		html.append("<br />Insert Answer:<br /> <input type=\"text\" name=\""+type+"_"+qID+"_answer\" required value=\""+answer+"\"/>");
+		html.append("<br />Insert All Incorrect Options, one on each line:");
+		html.append("<br /><textarea name=\""+type+"_"+qID+"_wrongOptions\" cols=\"20\" rows=\"10\" required>"+getEditQuizString()+"</textarea>");
+		
+		return html.toString();
 	}
 
 }

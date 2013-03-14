@@ -310,4 +310,11 @@ public class Matching implements Question {
 	public int getNumAnswers() {
 		return row1.size();
 	}
+
+
+	@Override
+	public String getEditQuizString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

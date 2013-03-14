@@ -210,4 +210,31 @@ public class FillInTheBlank implements Question {
 		return 1;
 	}
 	
+	public String getEditAnswersString() {
+		StringBuilder str = new StringBuilder();
+		
+		for(String s : answers) {
+			str.append(s);
+			str.append("\n");
+		}
+		
+		str.replace(str.length()-2, str.length(), "");
+		
+		return str.toString();
+	}
+
+	@Override
+	public String getEditQuizString() {
+		int indexOfBlank = statement.indexOf("__________");
+		
+		StringBuilder edit = new StringBuilder();
+		edit.append("<br /> Question:");
+		edit.append("<br /><input type=\"text\" name=\"" + type + "_" + qID + "_statementBefore\" size=\"50\" value=\"" + statement.substring(0, indexOfBlank) + "\" />");
+		edit.append(" __________ ");
+		edit.append("<input type=\"text\" name=\"" + type + "_" + qID + "_statementAfter\" size=\"50\" value=\"" + statement.substring(indexOfBlank+10) + "\" >");
+		edit.append("<br />Insert All Possible Answers, one on each line:");
+		edit.append("<br /><textarea name=\"" + type + "_" + qID + "_answers\" cols=\"20\" rows=\"10\" required>" + getEditAnswersString() + "</textarea>");
+		
+		return edit.toString();
+	}
 }

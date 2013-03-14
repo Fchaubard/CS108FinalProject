@@ -28,4 +28,6 @@ public interface Question {
 	public int getTotalQScore();
 	
 	public int getNumAnswers();
+	
+	public String getEditQuizString();
 }

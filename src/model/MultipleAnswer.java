@@ -20,8 +20,8 @@ public class MultipleAnswer implements Question {
 	private ArrayList<String> userAnswers;
 	
 	public static String getHTMLInputString(){
-		
 		StringBuilder html = new StringBuilder();
+		
 		html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\"question\" size=\"75\" required />");
 		html.append("<br />Number of Expected Answers: <br /><input type=\"text\" name=\"numAnswers\" required />");
 		html.append("<br />Insert All Possible Answers, one on each line:");
@@ -201,5 +201,30 @@ public class MultipleAnswer implements Question {
 	@Override
 	public int getNumAnswers() {
 		return numAnswers;
+	}
+	
+	public String getEditAnswersString() {
+		StringBuilder str = new StringBuilder();
+		
+		for(String s : answers) {
+			str.append(s);
+			str.append("\n");
+		}
+		
+		str.replace(str.length()-2, str.length(), "");
+		
+		return str.toString();
+	}
+
+	@Override
+	public String getEditQuizString() {
+		StringBuilder edit = new StringBuilder();
+		
+		edit.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\"" + type + "_" + qID + "_question\" size=\"75\" value=\"" + statement + "\"required />");
+		edit.append("<br />Number of Expected Answers: <br /><input type=\"text\" name=\"" + type + "_" + qID + "_numAnswers\" value=\"" + numAnswers + "\"required />");
+		edit.append("<br />Insert All Possible Answers, one on each line:");
+		edit.append("<br /><textarea name=\"" + type + "_" + qID + "_answers\" cols=\"20\" rows=\"10\" required>" + getEditAnswersString() + "</textarea>");
+		
+		return edit.toString();
 	}
 }
