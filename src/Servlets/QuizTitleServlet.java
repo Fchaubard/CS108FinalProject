@@ -109,7 +109,7 @@ public class QuizTitleServlet extends HttpServlet {
 	    	
 	    	if (user != null) {
 	    		out.println(HTMLHelper.contentStart());	
-	    	out.println("<h3>My Scores</h3>");
+	    		out.println("<h3>My Scores</h3>");
 	    		out.println("<ol>");
 	    		history = am.getHistory(user.getId(), id);
 		    	for (int i = 0; i < 5; i++) {
@@ -131,6 +131,12 @@ public class QuizTitleServlet extends HttpServlet {
 		    	out.println("<li><a href= \"SinglePageQuizServlet?id=p"+id+"\">Practice Mode</a></li>");
 			}
 	    	out.println(HTMLHelper.contentEnd());
+	    	
+	    	if(user.getId() == q.getCreator().getId()) {
+	    		out.println(HTMLHelper.contentStart());
+	    		out.println("<a href = \"QuizEditServlet?id="+q.getQuiz_id()+"\">Edit Quiz</a>");
+	    		out.println(HTMLHelper.contentEnd());
+	    	}
 	    	out.println("</body>");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
