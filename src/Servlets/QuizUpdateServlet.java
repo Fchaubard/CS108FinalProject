@@ -109,7 +109,7 @@ public class QuizUpdateServlet extends HttpServlet {
 			
 			if (clearHistory) {
 				
-				PreparedStatement historyQuery = con.prepareStatement("Delete * from history where quiz_id = ?");
+				PreparedStatement historyQuery = con.prepareStatement("Delete from history where quiz_id = ?");
 				historyQuery.setInt(1, quiz.getQuiz_id());
 				historyQuery.executeUpdate();
 				
@@ -183,7 +183,7 @@ public class QuizUpdateServlet extends HttpServlet {
 						String statementString = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"statement");
 						HashSet<String> hashSet = new HashSet<String>();
 						
-						String a = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"answers");
+						String a = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"answer");
 						String wrongOptions = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"wrongOptions");
 						
 						String[] s = wrongOptions.split(Pattern.quote("\r\n"));
@@ -231,7 +231,7 @@ public class QuizUpdateServlet extends HttpServlet {
 					}else{
 						updateDeleteAddArrayList.add(1);
 					
-						String statementString = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"statement");
+						String statementString = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"question");
 						HashSet<String> hashSet = new HashSet<String>();
 						
 						String a = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"answers");
