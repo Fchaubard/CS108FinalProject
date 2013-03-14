@@ -83,19 +83,39 @@ public class QuizEditServlet extends HttpServlet {
 				if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
 				
 				out.println(HTMLHelper.contentStart());
-				out.println("<h1>Editting Quiz: "+quiz.getQuizName()+"</h1>");
+				out.println("<h1>Editing Quiz: "+quiz.getQuizName()+"</h1>");
 				
 				out.println(HTMLHelper.contentEnd());
+				out.println(HTMLHelper.contentStart());
 				out.println("<form action=\"QuizUpdateServlet\" method=\"post\">");
 				out.println("<input name=\"quizID\" type=\"hidden\" value=\"" +quiz.getQuiz_id()+"\"/>");
 				out.println("<br />Quiz Name: <input name=\"quizName\" type=\"text\" value=\"" +quiz.getQuizName()+"\"/>");
 				out.println("<br />Quiz Description: <textarea name = \"quizDescription\" value=\"" +quiz.getDescription()+"\" rows=\"4\" cols=\"50\"></textarea>");
 				out.println("<br />Quiz Category: <input name=\"quizCategory\" type=\"text\" value=\"" +quiz.getCategory()+"\"/>");
-				out.println("<br /><input type=\"checkbox\" name=\"random\" value=\"randomTrue\"> Random Question Ordering?");
-				out.println("<br /><input type=\"checkbox\" name=\"multipage\" value=\"multipageTrue\"> MultiPage Question Display?");
-				out.println("<br /><input type=\"checkbox\" name=\"immediateCorrection\" value=\"immediateCorrectionTrue\"> Immediate Correction?");
-				out.println("<br /><input type=\"checkbox\" name=\"clearHistory\" value=\"clearHistoryTrue\"> Clear Quiz History after this edit?");
+				if (quiz.isRandom()) {
+					out.println("<br /><input type=\"checkbox\" name=\"random\" value=\"randomTrue\" checked> Random Question Ordering?");
+					
+				}else{
+					out.println("<br /><input type=\"checkbox\" name=\"random\" value=\"randomTrue\"> Random Question Ordering?");
+					
+				}
+				if (quiz.isOnePageMultiPage()) {
+					out.println("<br /><input type=\"checkbox\" name=\"multipage\" value=\"multipageTrue\" checked> MultiPage Question Display?");
+					
+				}else{
+					out.println("<br /><input type=\"checkbox\" name=\"multipage\" value=\"multipageTrue\"> MultiPage Question Display?");
+					
+				}
+				if (quiz.isImmediateCorrection()) {
+					out.println("<br /><input type=\"checkbox\" name=\"immediateCorrection\" value=\"immediateCorrectionTrue\" checked> Immediate Correction?");
+					
+				}else{
+					out.println("<br /><input type=\"checkbox\" name=\"immediateCorrection\" value=\"immediateCorrectionTrue\"> Immediate Correction?");
+					
+				}
 				
+				out.println("<br /><input type=\"checkbox\" name=\"clearHistory\" value=\"clearHistoryTrue\"> Clear Quiz History after this edit?");
+				out.println(HTMLHelper.contentEnd());
 				Question q;
 				for (int j = 0; j < quiz.getQuestions().size(); j++) {
 					out.println(HTMLHelper.contentStart());
@@ -106,7 +126,7 @@ public class QuizEditServlet extends HttpServlet {
 					out.println(HTMLHelper.contentEnd());
 				}
 				out.println(HTMLHelper.contentStart());
-				out.println("<br /><input type=\"submit\" value=\"Edit Exam\"/>");
+				out.println("<br /><input type=\"submit\" value=\"Finish Editing Exam\"/>");
 				out.println(HTMLHelper.contentEnd());
 				out.println("</form>");
 				out.println("</body>");

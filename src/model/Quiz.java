@@ -21,6 +21,7 @@ public class Quiz {
 	private int currentQuestionInteger;
 	private Account creator;
 	private String description;
+
 	private ArrayList<QuizAttempts> history;
 	private String category;
 	private int quiz_id;
@@ -426,4 +427,12 @@ public class Quiz {
 		
 		return total;
 	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
 }
