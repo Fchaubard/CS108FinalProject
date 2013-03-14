@@ -63,8 +63,7 @@ public class QuizEditServlet extends HttpServlet {
 				quiz.setPracticeMode(false);
 			System.out.println(quiz.getQuizName());
 			
-			if( request.getParameter("ajax_id")==null){
-				quiz.randomizeQuestions();
+			
 
 				response.setContentType("text/html");
 				PrintWriter out = response.getWriter();
@@ -90,7 +89,7 @@ public class QuizEditServlet extends HttpServlet {
 				out.println("<form action=\"QuizUpdateServlet\" method=\"post\">");
 				out.println("<input name=\"quizID\" type=\"hidden\" value=\"" +quiz.getQuiz_id()+"\"/>");
 				out.println("<br />Quiz Name: <input name=\"quizName\" type=\"text\" value=\"" +quiz.getQuizName()+"\"/>");
-				out.println("<br />Quiz Description: <textarea name = \"quizDescription\" value=\"" +quiz.getDescription()+"\" rows=\"4\" cols=\"50\"></textarea>");
+				out.println("<br />Quiz Description: <textarea name = \"quizDescription\" value=\"" +quiz.getDescription()+"\" rows=\"4\" cols=\"50\">" +quiz.getDescription()+"</textarea>");
 				out.println("<br />Quiz Category: <input name=\"quizCategory\" type=\"text\" value=\"" +quiz.getCategory()+"\"/>");
 				if (quiz.isRandom()) {
 					out.println("<br /><input type=\"checkbox\" name=\"random\" value=\"randomTrue\" checked> Random Question Ordering?");
@@ -132,7 +131,7 @@ public class QuizEditServlet extends HttpServlet {
 				out.println("</body>");
 				out.println("</html>");
 
-			}
+			
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -141,6 +140,7 @@ public class QuizEditServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

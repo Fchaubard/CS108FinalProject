@@ -253,7 +253,7 @@ public class FillInTheBlank implements Question {
 		}
 		ans.replace(ans.length()-5, ans.length(), "");
 		
-		ps.setString(1, ans.toString());
+		ps.setString(2, ans.toString());
 		ps.setInt(3, qID);
 		
 		ps.executeUpdate();

@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -60,7 +61,9 @@ public class QuizUpdateServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
 		Quiz quiz;
-		if (session.getAttribute("Quiz")==null) {
+		
+		
+		if (session.getAttribute("quizID")==null) {
 			response.setContentType("text/html");
 			PrintWriter out = response.getWriter();
 			out.println("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>");
@@ -75,7 +78,8 @@ public class QuizUpdateServlet extends HttpServlet {
 			return;
 		}
 		else{
-			quiz = (Quiz) session.getAttribute("Quiz");
+			
+			quiz = (Quiz) session.getAttribute("quiz_"+session.getAttribute("quizID"));
 		}
 		
 		Question question;
@@ -133,8 +137,8 @@ public class QuizUpdateServlet extends HttpServlet {
 							hashSet.add(string);
 						}
 						
-						((QuestionResponse)question).setStatement(statementString);
-						((QuestionResponse)question).setAnswers(hashSet);
+						((QuestionResponse)q).setStatement(statementString);
+						((QuestionResponse)q).setAnswers(hashSet);
 						
 					}
 					break;
@@ -160,8 +164,8 @@ public class QuizUpdateServlet extends HttpServlet {
 							hashSet.add(string);
 						}
 						
-						((FillInTheBlank)question).setStatement(statementString);
-						((FillInTheBlank)question).setAnswers(hashSet);
+						((FillInTheBlank)q).setStatement(statementString);
+						((FillInTheBlank)q).setAnswers(hashSet);
 						
 					}
 					
@@ -187,9 +191,9 @@ public class QuizUpdateServlet extends HttpServlet {
 							hashSet.add(string);
 						}
 						
-						((MultipleChoice)question).setStatement(statementString);
-						((MultipleChoice)question).setAnswer(a);
-						((MultipleChoice)question).setWrongAnswers(hashSet);
+						((MultipleChoice)q).setStatement(statementString);
+						((MultipleChoice)q).setAnswer(a);
+						((MultipleChoice)q).setWrongAnswers(hashSet);
 						
 					}
 					break;
@@ -213,8 +217,8 @@ public class QuizUpdateServlet extends HttpServlet {
 							hashSet.add(string);
 						}
 						
-						((PictureResponse)question).setURL(statementString);
-						((PictureResponse)question).setAnswers(hashSet);
+						((PictureResponse)q).setURL(statementString);
+						((PictureResponse)q).setAnswers(hashSet);
 					}
 					break;
 					
@@ -238,9 +242,10 @@ public class QuizUpdateServlet extends HttpServlet {
 						}
 
 						int numAnswers = Integer.parseInt((String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"numAnswers"));
-						((MultipleAnswer)question).setStatement(statementString);
-						((MultipleAnswer)question).setAnswers(hashSet);
-						((MultipleAnswer)question).setNumAnswers(numAnswers);
+						((MultipleAnswer)q).setStatement(statementString);
+						((MultipleAnswer)q).setAnswers(hashSet);
+						((MultipleAnswer)q).setNumAnswers(numAnswers);
+						
 					}
 					
 					break;
@@ -269,9 +274,9 @@ public class QuizUpdateServlet extends HttpServlet {
 						for(String str : right) {
 							ans.add(str);
 						}
-						((MultipleChoiceMultipleAnswer)question).setStatement(statementString);
-						((MultipleChoiceMultipleAnswer)question).setAnswers(ans);
-						((MultipleChoiceMultipleAnswer)question).setWrongAnswers(wAns);
+						((MultipleChoiceMultipleAnswer)q).setStatement(statementString);
+						((MultipleChoiceMultipleAnswer)q).setAnswers(ans);
+						((MultipleChoiceMultipleAnswer)q).setWrongAnswers(wAns);
 					}
 					
 					break;
@@ -291,6 +296,9 @@ public class QuizUpdateServlet extends HttpServlet {
 			}
 				
 			}
+			
+			quiz.updateDB(con, updateDeleteAddArrayList);
+			
 			response.setContentType("text/html");
 			PrintWriter out = response.getWriter();
 			out.println("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>");
@@ -349,14 +357,17 @@ public class QuizUpdateServlet extends HttpServlet {
 			*/
 			out.println(HTMLHelper.contentEnd());
 			out.println(HTMLHelper.contentStart());
-			out.println("<form action=\"FinishQuizServlet\" method=\"post\">");
-			out.println("<br /><br />Done Creating Quiz");
-			out.println("<br /><input type=\"submit\" value=\"Done Creating Quiz\"/>");
+			out.println("<form action=\"QuizCatalogServlet\" method=\"post\">");
+			out.println("<br /><br />Done Updating Quiz");
+			out.println("<br /><input type=\"submit\" value=\"Done Upating Quiz\"/>");
 			out.println("</form>");
 			out.println(HTMLHelper.contentEnd());
 			
 			out.println("</body>");
 			out.println("</html>");
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
 	}finally{
 		
 	}
