@@ -224,6 +224,7 @@ public class MultipleAnswer implements Question {
 	public String getEditQuizString() {
 		StringBuilder edit = new StringBuilder();
 		
+		edit.append("<br />Multiple Answer Question");
 		edit.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\"" + type + "_" + qID + "_question\" size=\"75\" value=\"" + statement + "\"required />");
 		edit.append("<br />Number of Expected Answers: <br /><input type=\"text\" name=\"" + type + "_" + qID + "_numAnswers\" value=\"" + numAnswers + "\"required />");
 		edit.append("<br />Insert All Possible Answers, one on each line:");

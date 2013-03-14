@@ -228,6 +228,7 @@ public class FillInTheBlank implements Question {
 		int indexOfBlank = statement.indexOf("__________");
 		
 		StringBuilder edit = new StringBuilder();
+		edit.append("<br />Fill-in-the-Blank Question");
 		edit.append("<br /> Question:");
 		edit.append("<br /><input type=\"text\" name=\"" + type + "_" + qID + "_statementBefore\" size=\"50\" value=\"" + statement.substring(0, indexOfBlank) + "\" />");
 		edit.append(" __________ ");

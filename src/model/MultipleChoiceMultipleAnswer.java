@@ -275,6 +275,7 @@ public class MultipleChoiceMultipleAnswer implements Question {
 	public String getEditQuizString() {
 		StringBuilder html = new StringBuilder();
 		
+		html.append("<br />Multiple-Choice-Multiple-Answer Question");
 		html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\""+type+"_"+qID+"_question\" size=\"75\" value=\""+statement+"\"required />");
 		html.append("<br />Insert All Correct Answers, one on each line:");
 		html.append("<br /><textarea name=\""+type+"_"+qID+"_answers\" cols=\"20\" rows=\"10\" required>"+getEditAnswersString(answers)+"</textarea>");

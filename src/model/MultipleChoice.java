@@ -297,6 +297,7 @@ public class MultipleChoice implements Question {
 	public String getEditQuizString() {
 		StringBuilder html = new StringBuilder();
 		
+		html.append("<br />Multiple Choice Question");
 		html.append("<br />Insert Question Statement: <br /><textarea name=\""+type+"_"+qID+"_statement\" rows=\"8\" cols=\"48\" required>"+statement+"</textarea>");
 		html.append("<br />Insert Answer:<br /> <input type=\"text\" name=\""+type+"_"+qID+"_answer\" required value=\""+answer+"\"/>");
 		html.append("<br />Insert All Incorrect Options, one on each line:");
