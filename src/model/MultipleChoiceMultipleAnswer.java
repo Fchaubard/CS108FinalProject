@@ -178,7 +178,7 @@ public class MultipleChoiceMultipleAnswer implements Question {
 			correctAnswers.append(s);
 			correctAnswers.append(",  ");
 		}
-		correctAnswers.replace(correctAnswers.length()-2, correctAnswers.length(), "");
+		correctAnswers.replace(correctAnswers.length()-3, correctAnswers.length(), "");
 		
 		return correctAnswers.toString();
 	}
@@ -266,7 +266,7 @@ public class MultipleChoiceMultipleAnswer implements Question {
 			str.append("\n");
 		}
 		
-		str.replace(str.length()-2, str.length(), "");
+		str.replace(str.length()-1, str.length(), "");
 		
 		return str.toString();
 	}

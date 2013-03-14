@@ -217,7 +217,7 @@ public class QuestionResponse implements Question {
 			str.append("\n");
 		}
 		
-		str.replace(str.length()-2, str.length(), "");
+		str.replace(str.length()-1, str.length(), "");
 		
 		return str.toString();
 	}
