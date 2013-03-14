@@ -12,6 +12,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.FillInTheBlank;
+import model.Matching;
+import model.MultipleAnswer;
+import model.MultipleChoice;
+import model.MultipleChoiceMultipleAnswer;
+import model.PictureResponse;
+import model.QuestionResponse;
+
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
@@ -103,15 +111,47 @@ public class QuizCatalogServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("id");
-		//TODO:
-		//Delete quiz -> get questions from qqm-> delete questions->delete qqm entry
-		//Connection con = (Connection) request.getServletContext().getAttribute("connect");
-		//try {
-		//	Statement stmt = (Statement) con.createStatement();
-		//	stmt.executeUpdate("delete from quiz where quiz_id = "+id);
-		//} catch (SQLException e) {
-		//}
+		Connection con = (Connection) request.getServletContext().getAttribute("connect");
+		ResultSet qMap;
+		try {
+			Statement stmt = (Statement) con.createStatement();
+			for (int i = 1; i < 7; i++) {
+				stmt.executeUpdate("delete from "+getTable(i)+" where question_id in (select question_id from quiz_question_mapping where question_type = "+i+");");
+			}
+			stmt.executeUpdate("delete from matching_question where question_id in (select question_id from quiz_question_mapping where question_type = 7);");
+			stmt.executeUpdate("delete from matching_question_mapping where matching_entry_id in (select question_id from quiz_question_mapping where question_type = 7);");
+			stmt.executeUpdate("delete from quiz_question_mapping where quiz_id = "+id+";");
+			stmt.executeUpdate("delete from quiz where quiz_id = "+id+";");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("Quiz deletion not implemented");
 		doGet(request, response);
+	}
+	
+	private String getTable(int index) {
+		String table = "";
+		switch(index) {
+		case 1: 
+			table = "question_response";
+			break;
+		case 2:
+			table = "fill_in_the_blank_question";
+			break;
+		case 3:
+			table = "multiple_choice_question";
+			break;
+		case 4:
+			table = "picture_response_question";
+			break;
+		case 5:
+			table = "multiple_answer_question";
+			break;
+		case 6:
+			table = "multiple_choice_multiple_answer_question";
+			break;
+		}
+		return table;
 	}
 }
