@@ -312,13 +312,55 @@ public class Matching implements Question {
 
 	@Override
 	public String getEditQuizString() {
-		return "YOU CANNOT EDIT A MATCHING QUESTION! SUCKS TO SUCK.";
+		StringBuilder edit = new StringBuilder();
+		
+		edit.append("<br />Matching Question");
+		edit.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\"" + type + "_" + qID + "_title\" size=\"75\" value=\"" + title + "\"required />");
+		for (int i = 0; i < row1.size(); i++) {
+			edit.append("<br /><input type=\"text\" name=\"" + type + "_" + qID + "_" + i + "_row1\" value=\"" + row1.get(i) + "\"required />");
+			edit.append("<input type=\"text\" name=\"" + type + "_" + qID + "_" + i + "_row2\" value=\"" + row2.get(i) + "\"required />");
+			
+		}
+		System.out.println(edit.toString());
+		return edit.toString();
 	}
 
 
 	@Override
 	public void updateDB(Connection con) throws SQLException {
 		// TODO Auto-generated method stub
+		
+		
+		PreparedStatement ps = con.prepareStatement("UPDATE matching_question SET title = ? WHERE question_id = ?");
+		
+		ps.setString(1, title);
+		
+		ps.setInt(2, qID);
+		
+		ps.executeUpdate();
+		
+		ps = con.prepareStatement("DELETE FROM matching_question_mapping WHERE matching_entry_id = ?");
+		
+		ps.setInt(1, qID);
+		
+		ps.executeUpdate();
+	
+		for (int i = 0; i < row1.size(); i++) {
+		
+				ps = con.prepareStatement("insert into matching_question_mapping values(?, ?, ?)");
+				
+				ps.setInt(1, qID);
+				row1.set(i, row1.get(i).trim());
+				ps.setString(2, row1.get(i));
+				row2.set(i, row2.get(i).trim());
+				ps.setString(3, row2.get(i));
+				
+				System.out.println(ps.toString());
+				ps.executeUpdate();
+			
+		
+		}
+		 
 		
 	}
 
@@ -327,5 +369,33 @@ public class Matching implements Question {
 	public void deleteFromDB(Connection con) throws SQLException {
 		// TODO Auto-generated method stub
 		
+		PreparedStatement ps = con.prepareStatement("DELETE FROM matching_question WHERE question_id = ?");
+		
+		ps.setInt(1, qID);
+		
+		ps.executeUpdate();
+		
+		
+		ps = con.prepareStatement("DELETE FROM matching_question_mapping WHERE matching_entry_id = ?");
+		
+		ps.setInt(1, qID);
+		
+		ps.executeUpdate();
+	
+		 
+		PreparedStatement prep = con.prepareStatement("DELETE FROM quiz_question_mapping WHERE question_id = ? AND question_type = ?");
+		prep.setInt(1, qID);
+		prep.setInt(2, type);
+		prep.executeUpdate();
+		/*
+		PreparedStatement ps = con.prepareStatement("DELETE FROM multiple_answer_question WHERE question_id = ?");
+		ps.setInt(1, qID);
+		ps.executeUpdate();
+		
+		PreparedStatement prep = con.prepareStatement("DELETE FROM quiz_question_mapping WHERE question_id = ? AND question_type = ?");
+		prep.setInt(1, qID);
+		prep.setInt(2, type);
+		prep.executeUpdate();
+		*/
 	}
 }

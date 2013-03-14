@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
 import model.FillInTheBlank;
 import model.Matching;
 import model.MultipleAnswer;
@@ -282,13 +283,29 @@ public class QuizUpdateServlet extends HttpServlet {
 					
 				case 7:
 					
+					deleteString = (String)request.getParameter("delete_"+ q.getType()+"_"+q.getqID())!=null ? (String)request.getParameter("delete_"+q.getType()+"_"+q.getqID()) : "blah";
+					delete = deleteString.equals("delete_"+q.getType()+"_"+q.getqID()+"_true") ? true : false ;
 					
-					/*
-					Matching matching_question = (Matching)session.getAttribute("matching_question");
+					if (delete) {
+						updateDeleteAddArrayList.add(2);
+					}else{
+						updateDeleteAddArrayList.add(1);
 					
-					quiz.addQuestion(matching_question);
-					session.removeAttribute("matching_question");
-					*/
+						String statementString = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"title");
+						ArrayList<String> row1  = new ArrayList<String>();
+						ArrayList<String> row2  = new ArrayList<String>();
+						
+						String row1Entry, row2Entry;
+						for (int i = 0; i < ((Matching)q).getRow1().size(); i++) {
+							row1Entry = (String)request.getParameter( q.getType() + "_" + q.getqID() + "_" + i + "_row1");
+							row2Entry = (String)request.getParameter( q.getType() + "_" + q.getqID() + "_" + i + "_row2");
+							row1.add(row1Entry);
+							row2.add(row2Entry);
+						}
+						((Matching)q).setTitle(statementString);
+						((Matching)q).setRow1(row1);
+						((Matching)q).setRow2(row2);
+					}
 					
 					break;
 				
