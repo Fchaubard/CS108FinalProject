@@ -419,6 +419,7 @@ public class AccountManager {
 	public ArrayList<String> getAnnouncements() {
 		ArrayList<String> ann = new ArrayList<String>();
 		try {
+			System.out.println("this happened, which is getAnn)");
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from event where type = 1 order by event_id desc");
 			while (rs.next()) {

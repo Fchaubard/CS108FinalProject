@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
      <%@ page import="Accounts.*" %>
+     <%@ page import="helpers.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,8 +12,8 @@
 </head>
 <body>
 <%=HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")) %>
-<%AccountManager am = (AccountManager) request.getSession().getAttribute("accounts");
-if(request.getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements())); %>
+<%AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
+if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));%>
 <%=HTMLHelper.contentStart() %>
 <div style= "font-size: large"><b>Login</b></div>
 

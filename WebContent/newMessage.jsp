@@ -11,8 +11,8 @@
 </head>
 <body>
 <%= helpers.HTMLHelper.printHeader((Accounts.Account)request.getSession().getAttribute("account")) %>
-<%AccountManager am = (AccountManager) request.getSession().getAttribute("accounts");
-if(request.getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements())); %>
+<%AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
+if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));%>
 <form action="MailManagementServlet" method="post">
 <% String from = ((Accounts.Account) request.getSession().getAttribute("account")).getName(); 
 	String to = (String) request.getParameter("to");

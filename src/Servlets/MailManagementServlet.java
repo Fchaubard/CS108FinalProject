@@ -40,10 +40,14 @@ public class MailManagementServlet extends HttpServlet {
     	out.println(HTMLHelper.printCSSLink());
     	out.println("</head>");
     	out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
-    	out.println(HTMLHelper.contentStart() + "<body>");
+    	out.println("<body>");
     	
-    	AccountManager am = (AccountManager) request.getSession().getAttribute("accounts");
-		if(request.getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
+    	AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
+		if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
+		
+    	out.println(HTMLHelper.contentStart());
+    	
+    	
     	
     	
     	if (request.getParameter("index").equals("inbox")) {

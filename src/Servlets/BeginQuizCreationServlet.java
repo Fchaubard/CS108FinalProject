@@ -53,8 +53,9 @@ public class BeginQuizCreationServlet extends HttpServlet {
 			out.println("<body>");
 			out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
 			
-			AccountManager am = (AccountManager) request.getSession().getAttribute("accounts");
-			if(request.getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
+			AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
+			System.out.println(am.getAnnouncements());
+			if(!(request.getSession().getAttribute("account") == null)) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
 			
 			out.println(HTMLHelper.contentStart());
 			out.println("<h1>Create a Quiz</h1>");

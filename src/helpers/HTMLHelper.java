@@ -149,7 +149,7 @@ public class HTMLHelper {
 	
 	public static String printNewsFeed(ArrayList<String> adminNews){
 		StringBuilder newsBox = new StringBuilder();
-		newsBox.append("<div style=\"min-width:1060px;top:40px; position:fixed; width:100%;height:100%\">");
+		newsBox.append("<div style=\"min-width:1060px;top:40px; position:fixed; width:100%;height:100%;z-index:-300;\">");
 		newsBox.append("<div class=newsfeed>");
 		for (String update : adminNews){
 			newsBox.append("<div class=news>");

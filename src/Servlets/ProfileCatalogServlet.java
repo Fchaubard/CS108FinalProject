@@ -60,8 +60,8 @@ public class ProfileCatalogServlet extends HttpServlet {
 	    	out.println("<body>");
 	    	out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
 	    	
-	    	AccountManager am = (AccountManager) request.getSession().getAttribute("accounts");
-			if(request.getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
+	    	AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
+			if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
 	    	
     		out.println(HTMLHelper.contentStart());
 	    	out.println("<form action=\"ProfileCatalogServlet\" method=\"get\">");
