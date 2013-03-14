@@ -292,20 +292,29 @@ public class Quiz {
 		
 		ps.executeUpdate();
 		
+		System.out.println("action: " + action.size());
+		System.out.println("quesions: " + this.questions.size());
+		
 		for(int i = 0; i < action.size(); i++) {
 			int doThis = action.get(i);
+			System.out.println("quesions: " + this.questions.size());
+			System.out.println("action: " + action.size());
+			System.out.println("i: " + i);
 			Question q = questions.get(i);
 			if(doThis == 1) { //update
 				q.updateDB(con);
 			}
 			else if(doThis == 2) { //delete
 				q.deleteFromDB(con);
+				action.remove(i);
 				questions.remove(i);
+				i-=1;
 			}
 			else { //add
 				q.pushToDB(con);
 			}
 		}
+		
 	}
 
 

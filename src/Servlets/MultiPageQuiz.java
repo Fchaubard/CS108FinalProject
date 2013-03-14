@@ -74,6 +74,7 @@ public class MultiPageQuiz extends HttpServlet {
 			if (!quiz.isPracticeMode()) {
 				quiz.setPracticeMode(practice);
 			}
+
 			
 			response.setContentType("text/html");
 			PrintWriter out = response.getWriter();
@@ -94,7 +95,13 @@ public class MultiPageQuiz extends HttpServlet {
 			out.println(HTMLHelper.contentStart());
 			out.println("<h1>"+quiz.getQuizName()+"</h1>");
 			out.println(HTMLHelper.contentEnd());
-			
+			if (quiz.getQuestions().size()==0) {
+				
+				out.println(HTMLHelper.contentStart());
+				out.println("<a href=\"QuizCatalogServlet\">Sorry no questions to take in this quiz! </a>");
+				out.println(HTMLHelper.contentEnd());
+				return;
+			}
 			if (request.getParameter("questionIndex") != null){
 				questionIndex = Integer.parseInt(request.getParameter("questionIndex"));
 				System.out.println("this question index is not null");

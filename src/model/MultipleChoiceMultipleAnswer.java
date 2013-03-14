@@ -243,8 +243,9 @@ public class MultipleChoiceMultipleAnswer implements Question {
 			userAns.append(s);
 			userAns.append(", ");
 		}
-		userAns.replace(userAns.length()-2, userAns.length(), "");
-		
+		if (userAns.length()>3) {
+			userAns.replace(userAns.length()-2, userAns.length(), "");
+		}
 		return userAns.toString();
 	}
 

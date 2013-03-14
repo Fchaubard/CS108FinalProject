@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import Accounts.Account;
 import Accounts.AccountManager;
 
 import model.*;
@@ -74,11 +75,15 @@ public class AddMatchingQuestionServlet extends HttpServlet {
 			out.println("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\""
 					      + " \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">");
 			out.println("<html xmlns='http://www.w3.org/1999/xhtml'>");
+			out.println(HTMLHelper.printCSSLink());
 			out.println("<head>");
+			
 			out.println("<title>"+quiz.getQuizName()+"</title>");
 			out.println("</head>");
 			out.println("<body>");
+			out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
 			
+	    	out.println(HTMLHelper.contentStart());
 			AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
 			if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
 			
@@ -126,6 +131,8 @@ public class AddMatchingQuestionServlet extends HttpServlet {
 				out.println("<br /><input type=\"submit\" value=\"Save Matching Question\"/>");
 				out.println("</form>");
 			}
+			out.println(HTMLHelper.contentEnd());
+	    	out.println(HTMLHelper.contentStart());
 			out.println("</body>");
 			out.println("</html>");
 			

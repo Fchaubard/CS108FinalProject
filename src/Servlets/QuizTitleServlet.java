@@ -52,14 +52,14 @@ public class QuizTitleServlet extends HttpServlet {
     	int id = Integer.parseInt(qid);
     	Quiz q;
 		try {
-			if(session.getAttribute("quiz_"+qid) == null){
+			//if(session.getAttribute("quiz_"+qid) == null){
 				q = new Quiz((id), am.getCon());
 				session.setAttribute("quiz_"+qid, q);
 				
-			}
-			else{
-				q = (Quiz) session.getAttribute("quiz_"+qid);
-			}
+			//}
+			//else{
+				//q = (Quiz) session.getAttribute("quiz_"+qid); this should never happen
+			//}
 			
 			
 			String qName = q.getQuizName();

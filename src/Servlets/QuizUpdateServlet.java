@@ -81,7 +81,27 @@ public class QuizUpdateServlet extends HttpServlet {
 			
 			quiz = (Quiz) session.getAttribute("quiz_"+session.getAttribute("quizID"));
 		}
-		
+		ArrayList<Integer> updateDeleteAddArrayList;
+		if (session.getAttribute("updateDeleteAddArrayList")==null) {
+			updateDeleteAddArrayList = new ArrayList<Integer>();
+			for (int i = 0; i < quiz.getQuestions().size(); i++) {
+				// if it is null then there was no adding
+				Question q = quiz.getQuestions().get(i);
+			
+				String deleteString = (String)request.getParameter("delete_"+ q.getType()+"_"+q.getqID())!=null ? (String)request.getParameter("delete_"+q.getType()+"_"+q.getqID()) : "blah";
+				boolean delete = deleteString.equals("delete_"+q.getType()+"_"+q.getqID()+"_true") ? true : false ;
+				
+				if (delete) {
+					updateDeleteAddArrayList.add(2);
+				}else{
+					updateDeleteAddArrayList.add(1);
+				}
+				
+			}
+		}else{
+			updateDeleteAddArrayList = (ArrayList<Integer>)session.getAttribute("updateDeleteAddArrayList");
+		}
+		System.out.println("updateDeleteAddArrayList"+updateDeleteAddArrayList);
 		Question question;
 		try {
 			// do the quiz settings first
@@ -114,18 +134,10 @@ public class QuizUpdateServlet extends HttpServlet {
 				historyQuery.executeUpdate();
 				
 			}
-			ArrayList<Integer> updateDeleteAddArrayList = new ArrayList<Integer>();
 			for (Question q : quiz.getQuestions()) {
 				
 				switch(q.getType()) {
 				case 1: 
-					String deleteString = (String)request.getParameter("delete_"+ q.getType()+"_"+q.getqID())!=null ? (String)request.getParameter("delete_"+q.getType()+"_"+q.getqID()) : "blah";
-					boolean delete = deleteString.equals("delete_"+q.getType()+"_"+q.getqID()+"_true") ? true : false ;
-					
-					if (delete) {
-						updateDeleteAddArrayList.add(2);
-					}else{
-						updateDeleteAddArrayList.add(1);
 					
 						String statementString = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"statement");
 						HashSet<String> hashSet = new HashSet<String>();
@@ -140,26 +152,21 @@ public class QuizUpdateServlet extends HttpServlet {
 						((QuestionResponse)q).setStatement(statementString);
 						((QuestionResponse)q).setAnswers(hashSet);
 						
-					}
+					
 					break;
 				
 				case 2:
-					deleteString = (String)request.getParameter("delete_"+ q.getType()+"_"+q.getqID())!=null ? (String)request.getParameter("delete_"+q.getType()+"_"+q.getqID()) : "blah";
-					delete = deleteString.equals("delete_"+q.getType()+"_"+q.getqID()+"_true") ? true : false ;
 					
-					if (delete) {
-						updateDeleteAddArrayList.add(2);
-					}else{
-						updateDeleteAddArrayList.add(1);
+						
 					
 						String statementBefore = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"statementBefore");
 						String statementAfter = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"statementAfter");
-						String statementString = statementBefore+ "__________" +statementAfter ;
-						HashSet<String> hashSet = new HashSet<String>();
+						 statementString = statementBefore+ "__________" +statementAfter ;
+						 hashSet = new HashSet<String>();
 						
-						String a = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"answers");
+						 a = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"answers");
 						
-						String[] s = a.split(Pattern.quote("\r\n"));
+						s = a.split(Pattern.quote("\r\n"));
 						for (String string : s) {
 							hashSet.add(string);
 						}
@@ -167,26 +174,21 @@ public class QuizUpdateServlet extends HttpServlet {
 						((FillInTheBlank)q).setStatement(statementString);
 						((FillInTheBlank)q).setAnswers(hashSet);
 						
-					}
+					
 					
 					break;
 					
 				case 3:
-					deleteString = (String)request.getParameter("delete_"+ q.getType()+"_"+q.getqID())!=null ? (String)request.getParameter("delete_"+q.getType()+"_"+q.getqID()) : "blah";
-					delete = deleteString.equals("delete_"+q.getType()+"_"+q.getqID()+"_true") ? true : false ;
 					
-					if (delete) {
-						updateDeleteAddArrayList.add(2);
-					}else{
-						updateDeleteAddArrayList.add(1);
-					
-						String statementString = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"statement");
-						HashSet<String> hashSet = new HashSet<String>();
 						
-						String a = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"answer");
+					
+						 statementString = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"statement");
+						 hashSet = new HashSet<String>();
+						
+						 a = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"answer");
 						String wrongOptions = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"wrongOptions");
 						
-						String[] s = wrongOptions.split(Pattern.quote("\r\n"));
+						 s = wrongOptions.split(Pattern.quote("\r\n"));
 						for (String string : s) {
 							hashSet.add(string);
 						}
@@ -195,48 +197,38 @@ public class QuizUpdateServlet extends HttpServlet {
 						((MultipleChoice)q).setAnswer(a);
 						((MultipleChoice)q).setWrongAnswers(hashSet);
 						
-					}
+					
 					break;
 					
 				case 4:
-					deleteString = (String)request.getParameter("delete_"+ q.getType()+"_"+q.getqID())!=null ? (String)request.getParameter("delete_"+q.getType()+"_"+q.getqID()) : "blah";
-					delete = deleteString.equals("delete_"+q.getType()+"_"+q.getqID()+"_true") ? true : false ;
-					
-					if (delete) {
-						updateDeleteAddArrayList.add(2);
-					}else{
-						updateDeleteAddArrayList.add(1);
-					
-						String statementString = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"url");
-						HashSet<String> hashSet = new HashSet<String>();
+				
 						
-						String a = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"answers");
+					
+						 statementString = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"url");
+						 hashSet = new HashSet<String>();
 						
-						String[] s = a.split(Pattern.quote("\r\n"));
+						 a = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"answers");
+						
+						 s = a.split(Pattern.quote("\r\n"));
 						for (String string : s) {
 							hashSet.add(string);
 						}
 						
 						((PictureResponse)q).setURL(statementString);
 						((PictureResponse)q).setAnswers(hashSet);
-					}
+					
 					break;
 					
 				case 5:
-					deleteString = (String)request.getParameter("delete_"+ q.getType()+"_"+q.getqID())!=null ? (String)request.getParameter("delete_"+q.getType()+"_"+q.getqID()) : "blah";
-					delete = deleteString.equals("delete_"+q.getType()+"_"+q.getqID()+"_true") ? true : false ;
 					
-					if (delete) {
-						updateDeleteAddArrayList.add(2);
-					}else{
-						updateDeleteAddArrayList.add(1);
+						
 					
-						String statementString = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"question");
-						HashSet<String> hashSet = new HashSet<String>();
+						 statementString = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"question");
+						 hashSet = new HashSet<String>();
 						
-						String a = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"answers");
+						a = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"answers");
 						
-						String[] s = a.split(Pattern.quote("\r\n"));
+						 s = a.split(Pattern.quote("\r\n"));
 						for (String string : s) {
 							hashSet.add(string);
 						}
@@ -246,21 +238,16 @@ public class QuizUpdateServlet extends HttpServlet {
 						((MultipleAnswer)q).setAnswers(hashSet);
 						((MultipleAnswer)q).setNumAnswers(numAnswers);
 						
-					}
+					
 					
 					break;
 					
 				case 6:
-					deleteString = (String)request.getParameter("delete_"+ q.getType()+"_"+q.getqID())!=null ? (String)request.getParameter("delete_"+q.getType()+"_"+q.getqID()) : "blah";
-					delete = deleteString.equals("delete_"+q.getType()+"_"+q.getqID()+"_true") ? true : false ;
 					
-					if (delete) {
-						updateDeleteAddArrayList.add(2);
-					}else{
-						updateDeleteAddArrayList.add(1);
+						
 					
-						String statementString = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"question");
-						String a = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"answers");
+						statementString = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"question");
+						a = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"answers");
 						String wrongAns = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"wrongAnswers");
 						
 						Set<String> wAns = new HashSet<String>();
@@ -277,21 +264,16 @@ public class QuizUpdateServlet extends HttpServlet {
 						((MultipleChoiceMultipleAnswer)q).setStatement(statementString);
 						((MultipleChoiceMultipleAnswer)q).setAnswers(ans);
 						((MultipleChoiceMultipleAnswer)q).setWrongAnswers(wAns);
-					}
+					
 					
 					break;
 					
 				case 7:
 					
-					deleteString = (String)request.getParameter("delete_"+ q.getType()+"_"+q.getqID())!=null ? (String)request.getParameter("delete_"+q.getType()+"_"+q.getqID()) : "blah";
-					delete = deleteString.equals("delete_"+q.getType()+"_"+q.getqID()+"_true") ? true : false ;
+				
+						
 					
-					if (delete) {
-						updateDeleteAddArrayList.add(2);
-					}else{
-						updateDeleteAddArrayList.add(1);
-					
-						String statementString = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"title");
+						statementString = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"title");
 						ArrayList<String> row1  = new ArrayList<String>();
 						ArrayList<String> row2  = new ArrayList<String>();
 						
@@ -305,7 +287,7 @@ public class QuizUpdateServlet extends HttpServlet {
 						((Matching)q).setTitle(statementString);
 						((Matching)q).setRow1(row1);
 						((Matching)q).setRow2(row2);
-					}
+					
 					
 					break;
 				
@@ -336,8 +318,7 @@ public class QuizUpdateServlet extends HttpServlet {
 			out.println(HTMLHelper.contentEnd());
 			
 			
-			session.removeAttribute("Quiz");
-			session.setAttribute("Quiz", quiz);
+			session.removeAttribute("quiz_"+session.getAttribute("quizID"));
 			out.println(HTMLHelper.contentStart());
 			out.println("<br />Quiz Name: "+quiz.getQuizName()+"");
 			out.println("<br />Quiz Description: " +quiz.getDescription()+"");
