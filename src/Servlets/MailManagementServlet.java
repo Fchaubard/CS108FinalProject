@@ -104,7 +104,7 @@ public class MailManagementServlet extends HttpServlet {
     		out.println("<b>Subject:</b> " + m.getSubject() + "<br>");
     		out.println("<b>From:</b> " + m.getSender() + " @ " + new java.util.Date(m.getTimestamp())+ "<hr>");
     		if (m.getChallengeName() != null) {
-    			out.println(m.getSender() + " has challenged you to take: <a href = QuizTitleServlet?id="+m.getChallengeID()+">"+m.getChallengeName()+"</a><br><br>");
+    			out.println(am.getChallenge(m.getSender(), m.getChallengeID(), m.getChallengeName()) + "<br><br>");
     		}
     		out.println(m.getBody());
     		
@@ -127,9 +127,9 @@ public class MailManagementServlet extends HttpServlet {
     	String body = request.getParameter("body");
     	int challenge = -1;
     	try {
-    		challenge = Integer.parseInt(request.getParameter("challenge"));
+    		challenge = Integer.parseInt(request.getParameter("quiz"));
     	} catch (NumberFormatException e) {
-	
+    		e.printStackTrace();
     	}
     	Message m = new Message(sender, recipient, subject, body, 0, challenge, null, true);
     	MailManager mm = (MailManager) request.getServletContext().getAttribute("mail");

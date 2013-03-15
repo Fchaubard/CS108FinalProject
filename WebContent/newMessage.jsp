@@ -20,12 +20,18 @@ if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.
 <% String from = ((Accounts.Account) request.getSession().getAttribute("account")).getName(); 
 	String to = (String) request.getParameter("to");
 	String quiz = (String) request.getParameter("quiz");
+	String lockSubject = "";
 	String sub = (String) request.getParameter("subject");
 	String body = (String) request.getParameter("body");
 	if (to != null && to.equals("error")) out.println("<b>Recpient not found in system</b>");
-	if (quiz == null) quiz = "";
 	if (sub == null) sub = "";
-	if (body == null) body = "";%>
+	if (body == null) body = "";
+	if (quiz == null)  {
+		quiz = "";
+	} else {
+		sub = "I challenge you!";
+		lockSubject = "readonly";
+	}%>
 <br>
 <input type="hidden" name="sender" value = "<% out.print(from); %>">
 <input type="hidden" name="quiz" value = "<% out.print(quiz); %>">
@@ -34,7 +40,7 @@ if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.
 <%if (quiz.length() > 0) out.println("<tr><td>Challenge ID:</td><td>"+ quiz +"</td></tr>");%>
 <!-- <tr><td>challenge ID:</td><td><input type="text" name="challenge" value = "<% out.println(quiz); %>"></td></tr>-->
 <tr><td>Recipient:</td><td><input style="width:100%" type="text" name="recipient" value = "<% out.println(to); %>"></td></tr>
-<tr><td>subject:</td><td><input style="width:100%" type="text" name="subject" value = "<% out.println(sub); %>"></td></tr>
+<tr><td>subject:</td><td><input style="width:100%" type="text" name="subject" value = "<% out.println(sub); %>" <% out.println(lockSubject); %>></td></tr>
 <tr><td>message:</td><td><textarea style="width:100%" cols = "50" rows = "5" name = "body"><% out.println(body); %></textarea></td></tr>
 </table>
 <input type="submit" value="Send">

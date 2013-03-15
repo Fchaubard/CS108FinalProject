@@ -437,18 +437,18 @@ public class AccountManager {
 		return s;
 	}
 
-	public ArrayList<String> getAnnouncements() {
+	synchronized public ArrayList<String> getAnnouncements() {
 		ArrayList<String> ann = new ArrayList<String>();
 		try {
-			System.out.println("this happened, which is getAnn)");
+			//System.out.println("this happened, which is getAnn)");
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from event where type = 1 order by event_id desc");
 			while (rs.next()) {
 				ann.add(rs.getString("event"));
 			}
-			for (String s : ann) {
-				System.out.println(s);
-			}
+			//for (String s : ann) {
+			//	System.out.println(s);
+			//}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -463,13 +463,31 @@ public class AccountManager {
 			while (rs.next()) {
 				news.add(rs.getString("event"));
 			}
-			for (String s : news) {
-				System.out.println(s);
-			}
+			//for (String s : news) {
+			//	System.out.println(s);
+			//}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return news;
+	}
+	
+	synchronized public String getChallenge(String sender, int qid, String qname) {
+		String body = body = "<a href = \"ProfileServlet?user="+sender+"\">"+sender+"</a> has challenged you to" +
+		": <a href = \"QuizTitleServlet?id="+qid+"\">"+qname+"</a>!\n";
+		try {
+			
+			Statement stmt = (Statement) con.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from history where user_id = "+getAccount(sender).getId()+" and quiz_id = "+qid+" order by score desc, time_took asc");
+			if (rs.next()) {
+				body += "Can you beat their top score of "+rs.getInt("score")+", completed in "+rs.getInt("time_took")/1000+" seconds?\n\n";
+			}
+			//Message m = new Message()
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("body" + "!!!");
+		return body;
 	}
 	
 	synchronized public static String hexToString(byte[] bytes) {
