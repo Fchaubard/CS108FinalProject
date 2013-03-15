@@ -18,12 +18,18 @@ if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.
 <%=HTMLHelper.contentStart() %>
 <form action="MailManagementServlet" method="post">
 <% String from = ((Accounts.Account) request.getSession().getAttribute("account")).getName(); 
+	boolean errSet = false;
 	String to = (String) request.getParameter("to");
 	String quiz = (String) request.getParameter("quiz");
 	String lockSubject = "";
 	String sub = (String) request.getParameter("subject");
 	String body = (String) request.getParameter("body");
-	if (to != null && to.equals("error")) out.println("<b>Recpient not found in system</b>");
+	if (to != null && to.equals("error")) {
+		out.println("<b>Recpient not found in system</b><br>");
+		errSet = true;
+	} else if (to == null)  {
+		to = "";
+	}
 	if (sub == null) sub = "";
 	if (body == null) body = "";
 	if (quiz == null)  {
@@ -31,7 +37,10 @@ if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.
 	} else {
 		sub = "I challenge you!";
 		lockSubject = "readonly";
-	}%>
+		if (!errSet) out.println("<b>Enter a user and optional message.</b><br>");
+		errSet = true;
+	}
+	//if (!errSet) out.println("<b>Enter a user and optional message.</b><br>");%>
 <br>
 <input type="hidden" name="sender" value = "<% out.print(from); %>">
 <input type="hidden" name="quiz" value = "<% out.print(quiz); %>">

@@ -53,22 +53,6 @@ public class MailManager {
 		return true;
 	}
 	
-	synchronized public boolean sendChallenge(Account sender, int qid, String qname) {
-		try {
-			String body = "<a href = \"ProfileServlet?user="+sender.getName()+"\">"+sender.getName()+"</a> has challenged you to" +
-			": <a href = \"QuizTitleServlet?id="+qid+"\">"+qname+"</a>!\n";
-			Statement stmt = (Statement) con.createStatement();
-			ResultSet rs = stmt.executeQuery("select * from history where user_id = "+sender.getId()+" and quiz_id = "+qid+" order by score desc, time_took asc");
-			if (rs.next()) {
-				body += "Can you beat their top score of "+rs.getInt("score")+", completed in "+rs.getInt("time_took")/1000+" seconds?";
-			}
-			//Message m = new Message()
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-	}
 	
 	synchronized public boolean sendFriend(Account sender, Account friend) {
 			String body = "<a href = \\\"ProfileServlet?user="+sender.getName()+"\\\">"+sender.getName()+"</a> wants to be your friend." +
@@ -127,14 +111,21 @@ public class MailManager {
 		try {
 			inbox = new TreeMap<Integer,Message>();
 			stmt = (Statement) con.createStatement();
-			rs = stmt.executeQuery("select message_id, sender, subject, date, unread from message where recipient = \"" + recipient + "\" order by date");
+			rs = stmt.executeQuery("select message_id, sender, subject, date, quiz_id, unread from message where recipient = \"" + recipient + "\" order by date");
 			while (rs.next()) {
 				Integer key = rs.getInt("message_ID");
 				String sender = rs.getString("sender");
 				String subject = rs.getString("subject");
 				Date time = rs.getTimestamp("date");
 				boolean unread = rs.getBoolean("unread");
-				inbox.put(key, new Message(sender, recipient, subject, null, time.getTime(), 0, null, unread));
+				int challenge = rs.getInt("quiz_id");
+				String cname = null;
+				if (challenge > 0) {
+					Statement stmt2 = (Statement) con.createStatement();
+					ResultSet rs2 = stmt2.executeQuery("select name from quiz where quiz_id = " + challenge);
+					if (rs2.next()) cname = rs2.getString("name");
+				}
+				inbox.put(key, new Message(sender, recipient, subject, null, time.getTime(), challenge, cname, unread));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -150,13 +141,20 @@ public class MailManager {
 		try {
 			outbox = new TreeMap<Integer,Message>();
 			stmt = (Statement) con.createStatement();
-			rs = stmt.executeQuery("select message_id, recipient, subject, date from message where sender = \"" + sender + "\" order by date");
+			rs = stmt.executeQuery("select message_id, recipient, subject, date, quiz_id from message where sender = \"" + sender + "\" order by date");
 			while (rs.next()) {
 				Integer key = rs.getInt("message_ID");
 				String recipient = rs.getString("recipient");
 				String subject = rs.getString("subject");
 				Date time = rs.getTimestamp("date");
-				outbox.put(key, new Message(sender, recipient, subject, null, time.getTime(), 0, null, false));
+				int challenge = rs.getInt("quiz_id");
+				String cname = null;
+				if (challenge > 0) {
+					Statement stmt2 = (Statement) con.createStatement();
+					ResultSet rs2 = stmt2.executeQuery("select name from quiz where quiz_id = " + challenge);
+					if (rs2.next()) cname = rs2.getString("name");
+				}
+				outbox.put(key, new Message(sender, recipient, subject, null, time.getTime(), challenge, cname, false));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

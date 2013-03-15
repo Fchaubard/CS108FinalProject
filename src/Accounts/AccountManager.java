@@ -105,6 +105,7 @@ public class AccountManager {
 	
 	
 	synchronized public Account createAccount(String name, String pass) {
+		if (name.equals("error")) return null; //reserved for system
 		if (accountExists(name)) return null;
 		pass = hashString(pass);
 			Statement stmt;

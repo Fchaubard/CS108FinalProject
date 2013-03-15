@@ -72,13 +72,22 @@ public class MailManagementServlet extends HttpServlet {
     			out.println("<td>");
     			out.println(new java.util.Date(inbox.get(i).getTimestamp())) ;
     			out.println("</td>");
+    			out.println("</td>");
+    			if (inbox.get(i).getChallengeName() != null) {
+    				out.println("<td><a href = \"QuizTitleServlet?id="+inbox.get(i).getChallengeID()+"\">"+inbox.get(i).getChallengeName()+"</a>");
+    			} else if (inbox.get(i).getSubject().equals("Friends?")) {
+    				out.println("<td><a href = \"FriendManagementServlet\">Friend Request</a>");
+    			} else {
+    				out.println("");
+    			}
+    			out.println("</td></tr>");
     		}
     		out.println("</table>");
     	} else if (request.getParameter("index").equals("outbox")) {
     		TreeMap<Integer, Message> outbox = mm.listOutbox(user);
     		//out.println("<ul>");
     		out.println("<table border=\"0\">");
-    		out.println("<tr><th><b>Subject</b></th><th><b>Recipient</b></th><th><b>Date</b></th></tr>");
+    		out.println("<tr><th><b>Subject</b></th><th><b>Sender</b></th><th><b>Date</b></th><th><b>Attatchment</b></th></tr>");
     		for (int i : outbox.keySet()) {
     			out.println("<tr>");
     			out.println("<td><a href = \"MailManagementServlet?&index="+i+"&user="+user+"\">");
@@ -90,6 +99,14 @@ public class MailManagementServlet extends HttpServlet {
     			out.println("<td>");
     			out.println(new java.util.Date(outbox.get(i).getTimestamp())) ;
     			out.println("</td>");
+    			if (outbox.get(i).getChallengeName() != null) {
+    				out.println("<td><a href = \"QuizTitleServlet?id="+outbox.get(i).getChallengeID()+"\">"+outbox.get(i).getChallengeName()+"</a>");
+    			} else if (outbox.get(i).getSubject().equals("Friends?")) {
+    				out.println("<td><a href = \"FriendManagementServlet\">Friend Request</a>");
+    			} else {
+    				out.println("");
+    			}
+    			out.println("</td></tr>");
     		}
     		out.println("</table>");
     	} else {//print specific message
