@@ -67,12 +67,12 @@ public class MailManager {
 				String body = rs.getString("message");
 				Date time = rs.getTimestamp("date");
 				int challengeID = rs.getInt("quiz_id");
+				boolean unread = rs.getBoolean("unread");
 				String challengeName = null;
 				if (challengeID > 0) {
 					rs = stmt.executeQuery("select name from quiz where quiz_id = " + challengeID + ";");
 					if (rs.next()) challengeName = rs.getString("name");
 				}
-				boolean unread = rs.getBoolean("unread");
 				m = new Message(sender, recipient, subject, body, time.getTime(), challengeID, challengeName, unread);
 				stmt.executeUpdate("update message set unread = false where message_id = "+id);
 			}
