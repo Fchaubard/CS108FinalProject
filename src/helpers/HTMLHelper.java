@@ -147,11 +147,18 @@ public class HTMLHelper {
 		return listing.toString();
 	}
 	
-	public static String printNewsFeed(ArrayList<String> adminNews){
+	public static String printNewsFeed(ArrayList<String> adminNews, ArrayList<String> friendActivity){
 		StringBuilder newsBox = new StringBuilder();
-		newsBox.append("<div style=\"min-width:1060px;top:40px; position:fixed; width:100%;height:100%;z-index:-300;\">");
-		newsBox.append("<div class=newsfeed>");
+		newsBox.append("<div style=\"min-width:1160px;top:40px; position:fixed; width:100%;height:96%;min-height:600px;z-index:-1;\">");
+		newsBox.append("<div class=newsfeed style=\"top:0;\">");
 		for (String update : adminNews){
+			newsBox.append("<div class=news>");
+			newsBox.append(update);
+			newsBox.append("</div>");
+		}
+		newsBox.append("</div>");
+		newsBox.append("<div class=newsfeed style=\"bottom:0\">");
+		for (String update : friendActivity){
 			newsBox.append("<div class=news>");
 			newsBox.append(update);
 			newsBox.append("</div>");

@@ -43,9 +43,10 @@ public class MailManagementServlet extends HttpServlet {
     	out.println("<body>");
     	
     	AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
-		if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
-		
-    	out.println(HTMLHelper.contentStart());
+		Account acct = (Account) request.getSession().getAttribute("account");
+		if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements(),am.getNews(acct.getId())));
+    	
+		out.println(HTMLHelper.contentStart());
     	
     	
     	
