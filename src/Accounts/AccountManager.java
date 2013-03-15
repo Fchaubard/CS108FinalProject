@@ -346,10 +346,31 @@ public class AccountManager {
 	synchronized public void storeAnnouncement(String announcement) {
 		try {
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("insert into event values (default, 1, \""+announcement+"\", -1)");
+			stmt.executeUpdate("insert into event values (default, 1, \"<b>Announcement</b>: "+announcement+"\", -1)");
 			} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
+	}
+	
+	synchronized public ArrayList<String> getPopular() {
+		ArrayList<String> popQuiz = new ArrayList<String>();
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select distinct quiz_id, count(quiz_id) from history group by quiz_id order by count(quiz_id) desc;");
+			while (rs.next()) {
+				int quizid = rs.getInt("quiz_id");
+				int count = rs.getInt("count(quiz_id)");
+				Statement stmt2 = con.createStatement();
+				ResultSet rs2 = stmt2.executeQuery("select name from quiz where quiz_id = " + quizid);
+				rs2.next();
+				String qname = rs2.getString("name");
+				popQuiz.add("<a href = \"QuizTitleServlet?id="+quizid+"\">"+qname+"</a>: "+count);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return popQuiz;
 
 	}
 	
