@@ -112,7 +112,8 @@ public class QuizCatalogServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("id");
 		Connection con = (Connection) request.getServletContext().getAttribute("connect");
-		ResultSet qMap;
+		// this deleted the our entire quiz database
+		/*ResultSet qMap;
 		try {
 			Statement stmt = (Statement) con.createStatement();
 			for (int i = 1; i < 7; i++) {
@@ -126,6 +127,7 @@ public class QuizCatalogServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 		System.out.println("Quiz deletion not implemented");
 		doGet(request, response);
 	}
