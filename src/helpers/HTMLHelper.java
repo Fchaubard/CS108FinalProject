@@ -1,6 +1,10 @@
 package helpers;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
+
+import com.mysql.jdbc.Statement;
 
 import Accounts.Account;
 
@@ -49,7 +53,7 @@ public class HTMLHelper {
 	public static String contentEnd(){
 		return "</div>";
 	}
-		
+			
 	public static String printFullHeader(boolean isAdmin){
 		StringBuilder fullHeader = new StringBuilder();
 		fullHeader.append("<div class=header><ul class=header>");
