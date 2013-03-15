@@ -53,6 +53,29 @@ public class MailManager {
 		return true;
 	}
 	
+	synchronized public boolean sendChallenge(Account sender, int qid, String qname) {
+		try {
+			String body = "<a href = \"ProfileServlet?user="+sender.getName()+"\">"+sender.getName()+"</a> has challenged you to" +
+			": <a href = \"QuizTitleServlet?id="+qid+"\">"+qname+"</a>!\n";
+			Statement stmt = (Statement) con.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from history where user_id = "+sender.getId()+" and quiz_id = "+qid+" order by score desc, time_took asc");
+			if (rs.next()) {
+				body += "Can you beat their top score of "+rs.getInt("score")+", completed in "+rs.getInt("time_took")/1000+" seconds?";
+			}
+			//Message m = new Message()
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	synchronized public boolean sendFriend(Account sender, Account friend) {
+			String body = "<a href = \\\"ProfileServlet?user="+sender.getName()+"\\\">"+sender.getName()+"</a> wants to be your friend." +
+			" click <a href = \\\"FriendManagementServlet\\\">here</a> to view their request.";
+		return sendMessage(new Message(sender.getName(), friend.getName(), "Friends?", body, 0, 0, null, true));
+	}
+	
 	synchronized public Message recieveMessage(int id) {
 		ResultSet rs;
 		Statement stmt;

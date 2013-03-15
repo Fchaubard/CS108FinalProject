@@ -54,7 +54,7 @@ public class MailManagementServlet extends HttpServlet {
     	if (request.getParameter("index").equals("inbox")) {
     		TreeMap<Integer, Message> inbox = mm.listInbox(user);
     		out.println("<table border=\"0\">");
-    		out.println("<tr><th><b>Subject</b></th><th><b>Sender</b></th><th><b>Date</b></th></tr>");
+    		out.println("<tr><th><b>Subject</b></th><th><b>Sender</b></th><th><b>Date</b></th><th><b>Attatchment</b></th></tr>");
     		for (int i : inbox.keySet()) {
     			String boldin = "";
     			String boldout = "";

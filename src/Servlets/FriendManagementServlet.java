@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
     	import Accounts.Account;
 import Accounts.AccountManager;
+import Accounts.MailManager;
 
     	/**
     	 * Servlet implementation class AcctManagementServlet
@@ -108,6 +109,10 @@ import Accounts.AccountManager;
     	    		am.deleteFriend(myID, friendID);
     	    	} else if (action.equals("add")) {
     	    		System.out.println(friendID + " " + myID);
+    	    		if (!am.isFriend(myID, friendID)) {
+    	    			MailManager mm = (MailManager) request.getServletContext().getAttribute("mail");
+    	    			mm.sendFriend(user, am.getAccount(friendID));
+    	    		}
     	    		am.makeFriend(myID, friendID);
     	    	}
     	    	request.getRequestDispatcher("/ProfileServlet?user="+name).forward(request, response);
