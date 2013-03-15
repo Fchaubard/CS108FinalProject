@@ -227,7 +227,13 @@ public class MultipleChoice implements Question {
 	public static ArrayList<String> getRandomWrongAnswers(){
 		ArrayList<String> wrongAnswers = new ArrayList<String>();
 		for(int i =0; i <4; i++){
+			try{
 			wrongAnswers.add(getOtherRandomHTML()[0]);
+			}
+			catch(NullPointerException e){
+				e.printStackTrace();
+				wrongAnswers.add("Mening Pinguin");
+			}
 		}
 		return wrongAnswers;
 	}

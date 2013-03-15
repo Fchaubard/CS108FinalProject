@@ -133,7 +133,8 @@ public class MailManagementServlet extends HttpServlet {
     	Message m = new Message(sender, recipient, subject, body, 0, challenge, null, true);
     	MailManager mm = (MailManager) request.getServletContext().getAttribute("mail");
     	mm.sendMessage(m);
-    	request.getRequestDispatcher("/UserHome.jsp").forward(request, response);
+    	String name = ((Account) request.getSession().getAttribute("account")).getName();
+    	request.getRequestDispatcher("ProfileServlet?user="+name).forward(request, response);
     	}
     }
 }

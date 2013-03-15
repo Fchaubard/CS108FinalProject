@@ -11,6 +11,7 @@
 </head>
 <body>
 <%= helpers.HTMLHelper.printHeader((Accounts.Account)request.getSession().getAttribute("account")) %>
+<%=helpers.HTMLHelper.contentStart() %>
 <div style= "font-size: large"><b><%out.println(name + " in use.");%></b></div>
 <% out.println(name + " is taken; please enter a different name."); %> 
 
@@ -20,5 +21,6 @@ Username: <input type="text" name="User"><br>
 Password: <input type="password" name="Pass">
 <input type="submit" value="Create Account">
 </form>
+<%=helpers.HTMLHelper.contentEnd() %>
 </body>
 </html>

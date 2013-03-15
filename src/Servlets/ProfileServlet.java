@@ -36,6 +36,7 @@ import Accounts.*;
     	    	MailManager mm = (MailManager) request.getServletContext().getAttribute("mail");
     	    	Account profile = am.getAccount(request.getParameter("user"));
     	    	Account viewer = (Account) request.getSession().getAttribute("account");
+    	    	System.out.println(viewer.getId());
     	    	boolean regViewer = (viewer != null);
     	    	boolean selfViewer = (viewer != null) && (viewer.getId() == profile.getId());
     	    	response.setContentType("text/html");

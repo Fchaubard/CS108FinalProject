@@ -100,13 +100,15 @@ import Accounts.AccountManager;
     	    	String action = request.getParameter("action");
     	    	int friendID = Integer.parseInt(request.getParameter("ID"));
     	    	AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
-    	    	int myID = ((Account) request.getSession().getAttribute("account")).getId();
+    	    	Account user = (Account) request.getSession().getAttribute("account");
+    	    	int myID = user.getId();
+    	    	String name = user.getName();
     	    	if (action.equals("delete")) {
     	    		am.deleteFriend(myID, friendID);
     	    	} else if (action.equals("add")) {
     	    		System.out.println(friendID + " " + myID);
     	    		am.makeFriend(myID, friendID);
     	    	}
-    	    	request.getRequestDispatcher("/UserHome.jsp").forward(request, response);
+    	    	request.getRequestDispatcher("/ProfileServlet?user="+name).forward(request, response);
     	    }
 }
