@@ -251,18 +251,22 @@ public class QuestionResponse implements Question {
 		
 		ps.setInt(3, qID);
 		
+		System.out.println(ps.toString());
 		ps.executeUpdate();
 	}
 
 	@Override
 	public void deleteFromDB(Connection con) throws SQLException {
+		
 		PreparedStatement ps = con.prepareStatement("DELETE FROM question_response WHERE question_id = ?");
 		ps.setInt(1, qID);
+		System.out.println(ps.toString());
 		ps.executeUpdate();
 		
 		PreparedStatement prep = con.prepareStatement("DELETE FROM quiz_question_mapping WHERE question_id = ? AND question_type = ?");
 		prep.setInt(1, qID);
 		prep.setInt(2, type);
+		System.out.println(prep.toString());
 		prep.executeUpdate();
 	}
 }

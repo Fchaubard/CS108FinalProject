@@ -290,6 +290,7 @@ public class Quiz {
 		ps.setString(6, description);
 		ps.setInt(7, quiz_id);
 		
+		
 		ps.executeUpdate();
 		
 		System.out.println("action: " + action.size());
@@ -302,15 +303,18 @@ public class Quiz {
 			System.out.println("i: " + i);
 			Question q = questions.get(i);
 			if(doThis == 1) { //update
+				System.out.println("update");
 				q.updateDB(con);
 			}
 			else if(doThis == 2) { //delete
+				System.out.println("delete");
 				q.deleteFromDB(con);
 				action.remove(i);
 				questions.remove(i);
 				i-=1;
 			}
 			else { //add
+				System.out.println("add");
 				q.pushToDB(con);
 			}
 		}
