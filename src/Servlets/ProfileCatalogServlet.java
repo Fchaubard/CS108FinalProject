@@ -61,9 +61,10 @@ public class ProfileCatalogServlet extends HttpServlet {
 	    	out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
 	    	
 	    	AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
-			if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
-	    	
-    		out.println(HTMLHelper.contentStart());
+			Account user = (Account) request.getSession().getAttribute("account");
+			if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements(),am.getNews(user.getId())));
+    		
+			out.println(HTMLHelper.contentStart());
 	    	out.println("<form action=\"ProfileCatalogServlet\" method=\"get\">");
 	    	out.println("Search Users: <input type=\"text\" name=\"search\"/>");
 	    	out.println("<input type=\"submit\" value=\"Search\"/>");

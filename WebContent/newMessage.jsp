@@ -12,7 +12,9 @@
 <body>
 <%= helpers.HTMLHelper.printHeader((Accounts.Account)request.getSession().getAttribute("account")) %>
 <%AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
-if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));%>
+Account user = (Account) request.getSession().getAttribute("account");
+if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements(),am.getNews(user.getId())));
+%>
 <%=HTMLHelper.contentStart() %>
 <form action="MailManagementServlet" method="post">
 <% String from = ((Accounts.Account) request.getSession().getAttribute("account")).getName(); 

@@ -49,9 +49,10 @@ import Accounts.*;
     	    	
     	    	out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
     	    	
-    	    	if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
+    			Account user = (Account) request.getSession().getAttribute("account");
+    			if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements(),am.getNews(user.getId())));
     	    	
-    	    	out.println(HTMLHelper.contentStart());
+    			out.println(HTMLHelper.contentStart());
     	    	
     	    	//set and print profile title (name)
     	    	String title = profile.getName();

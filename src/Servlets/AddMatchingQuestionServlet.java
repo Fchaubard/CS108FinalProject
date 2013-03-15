@@ -100,7 +100,8 @@ public class AddMatchingQuestionServlet extends HttpServlet {
 			
 	    	out.println(HTMLHelper.contentStart());
 			AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
-			if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
+			Account user = (Account) request.getSession().getAttribute("account");
+			if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements(),am.getNews(user.getId())));
 			
 			out.println("<h1>"+quiz.getQuizName()+"</h1>");
 			out.println("<h3>Input Question "+(quiz.getQuestions().size()+1)+"</h3>");

@@ -76,9 +76,11 @@ public class QuizCatalogServlet extends HttpServlet {
 	    	request.getSession().removeAttribute("quiz_"+request.getSession().getAttribute("quizID"));
 	    	request.getSession().removeAttribute("quizID");
 	    	request.getSession().removeAttribute("updateDeleteAddArrayList");
-			if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
+			
+	    	Account user = (Account) request.getSession().getAttribute("account");
+			if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements(),am.getNews(user.getId())));
 	    	
-	    	out.println(HTMLHelper.contentStart());
+			out.println(HTMLHelper.contentStart());
 	  
 	    	out.println("<form action=\"QuizCatalogServlet\" method=\"get\">");
 	    	out.println("Search Quizes: <input type=\"text\" name=\"search\"/>");
