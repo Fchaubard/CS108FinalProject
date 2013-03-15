@@ -13,7 +13,7 @@
 <body>
 <%=HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")) %>
 <%AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
-if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));%>
+if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements(), null));%>
 <%=HTMLHelper.contentStart() %>
 <div style= "font-size: large"><b>Login</b></div>
 

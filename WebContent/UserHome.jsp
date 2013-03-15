@@ -14,7 +14,7 @@
 
 <%
 AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
-if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
+//if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
 %>
 
 <%=  helpers.HTMLHelper.contentStart() %>
