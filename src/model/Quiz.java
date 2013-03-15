@@ -313,12 +313,7 @@ public class Quiz {
 				questions.remove(i);
 				i-=1;
 			}
-<<<<<<< HEAD
-			else { //add
-				System.out.println("add");
-=======
 			else if(doThis == 3) { //add
->>>>>>> Adding a question to an already made quiz is DONE!
 				q.pushToDB(con);
 				// push to mapping
 				ps = con.prepareStatement("insert into quiz_question_mapping values(?, ?, ?)");
