@@ -92,13 +92,21 @@ public class QuizResultsServlet extends HttpServlet {
 			out.println(HTMLHelper.contentEnd());
 			out.println(HTMLHelper.contentStart());
 			out.println("<h3>Top Scorers</h3>");
-	    	out.println("<ol>");
+			ArrayList<QuizAttempts> history = am.getHistory(0, qa.getQuizID());
+	    	for (int i = 0; i < 5; i++) {
+	    		if (i >= history.size()) break;
+	    		QuizAttempts qh = history.get(i);
+	    		out.println(qh.printAttemt(am));
+	    	}
+	    	out.println("</ol>");
+	    	out.println("<br><a href = \"HistoryServlet?&quiz="+qa.getQuizID()+"\">More Results</a>");
+	    	/*out.println("<ol>");
 	    	//currently prints ALL the scores. Can switch to a for (0-4) but table needs to be sorted first.
 	    	for (QuizAttempts attempt : quiz.getHistory()) {
 	    		out.println(attempt.printAttemt((AccountManager)request.getServletContext().getAttribute("accounts")));
 	    		//out.println("<li>" + attempt.printAttemt((AccountManager)request.getServletContext().getAttribute("accounts")) + "</li>");
 	    	}
-	    	out.println("</ol><br>");
+	    	out.println("</ol><br>");*/
 	    	out.println(HTMLHelper.contentEnd());
 			
 	    	out.println(HTMLHelper.contentStart());

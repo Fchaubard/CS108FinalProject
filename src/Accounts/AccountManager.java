@@ -305,36 +305,38 @@ public class AccountManager {
 		return history;
 	}
 	
-	synchronized public void updateAchievements (Account acct, int quizesDone) {
+	synchronized public void updateAchievements (Account acct) {
 		/*System.out.println(quizesDone);
 		if (quizesDone > 0) acct.giveAcheivement("amateure");
 		if (quizesDone > 5) acct.giveAcheivement("prolific");
 		if (quizesDone > 10) acct.giveAcheivement("prodigious");
 		if (quizesDone > 50) acct.giveAcheivement("greatest");
 		if (quizesDone > 100) acct.giveAcheivement("quiz_machine");*/
+		int quizesDone = quizesTaken(acct);
+		int quizesAuthored = quizesAuthored(acct);
 		Statement stmt;
 		try {
 			stmt = (Statement) con.createStatement();
-			if (quizesDone >= 1 && !acct.getAcheivement("amateure")) {
+			if (quizesAuthored >= 1 && !acct.getAcheivement("amateure")) {
 				storeEvent(4, acct.getId(), 0, -1);
 				acct.giveAcheivement("amateure");
 				stmt.executeUpdate("update user set amateure = true where user_id = " + acct.getId());
 			}
-			if (quizesDone >= 5 && !acct.getAcheivement("prolific")) {
+			if (quizesAuthored >= 5 && !acct.getAcheivement("prolific")) {
 				storeEvent(4, acct.getId(), 0, -2);
 				acct.giveAcheivement("prolific");
 				stmt.executeUpdate("update user set prolific = true where user_id = " + acct.getId());
 			}
-			if (quizesDone >= 10 && !acct.getAcheivement("prodigious")) {
+			if (quizesAuthored >= 10 && !acct.getAcheivement("prodigious")) {
 				storeEvent(4, acct.getId(), 0, -3);
 				stmt.executeUpdate("update user set prodigious = true where user_id = " + acct.getId());
 			}
-			if (quizesDone >= 50  && !acct.getAcheivement("greatest")) {
+			if (isBest(acct) && !acct.getAcheivement("greatest")) {
 				storeEvent(4, acct.getId(), 0, -4);
 				acct.giveAcheivement("greatest");
 				stmt.executeUpdate("update user set greatest = true where user_id = " + acct.getId());
 			}
-			if (quizesDone >= 100  && !acct.getAcheivement("quiz_machine")) {
+			if (quizesDone >= 10  && !acct.getAcheivement("quiz_machine")) {
 				storeEvent(4, acct.getId(), 0, -5);
 				acct.giveAcheivement("quiz_machine");
 				stmt.executeUpdate("update user set quiz_machine = true where user_id = " + acct.getId());
@@ -342,6 +344,19 @@ public class AccountManager {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private boolean isBest(Account acct) {
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select distinct quiz_id, user_id from history group by quiz_id order by count(quiz_id) desc;");
+			while (rs.next()) {
+				if(rs.getInt("user_id") == acct.getId()) return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
 	synchronized public void storeAnnouncement(String announcement) {

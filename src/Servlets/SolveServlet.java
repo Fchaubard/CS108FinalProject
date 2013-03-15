@@ -154,8 +154,7 @@ public class SolveServlet extends HttpServlet {
 						am.storeEvent(2, qa.getUserID(), qa.getQuizID(), 0);
 						qa.pushAttemptToDB((Connection)request.getServletContext().getAttribute("connect"));
 						quiz.addToHistory(qa);
-						int quizesDone = am.quizesTaken(acct);
-						am.updateAchievements(acct, quizesDone);
+						am.updateAchievements(acct);
 						
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block

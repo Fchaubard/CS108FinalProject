@@ -128,7 +128,7 @@ public class QuizCatalogServlet extends HttpServlet {
 				for (int i = 1; i < 7; i++) {
 					stmt.executeUpdate("delete from "+getTable(i)+" where question_id in (select question_id from quiz_question_mapping where question_type = "+i+" AND quiz_id = "+id+");");
 				}
-				stmt.executeUpdate("delete from matching_question where question_id in (select question_id from quiz_question_mapping where question_type = 7);");
+				stmt.executeUpdate("delete from matching_question where question_id in (select question_id from quiz_question_mapping where question_type = 7 AND quiz_id = "+id+");");
 				stmt.executeUpdate("delete from matching_question_mapping where matching_entry_id in (select question_id from quiz_question_mapping where question_type = 7 AND quiz_id = "+id+");");
 				stmt.executeUpdate("delete from quiz_question_mapping where quiz_id = "+id+";");
 				stmt.executeUpdate("delete from quiz where quiz_id = "+id+";");
