@@ -60,6 +60,23 @@ public class MailManager {
 		return sendMessage(new Message(sender.getName(), friend.getName(), "Friends?", body, 0, 0, null, true));
 	}
 	
+	synchronized public boolean sendFlag(String flagger, String qid, String qname) {
+		String body = "<a href = \\\"ProfileServlet?user="+flagger+"\\\">"+flagger+"</a> has flagged" +
+		" <a href = \\\"QuizTitleServlet?id="+qid+"\\\">"+qname+"</a> as innapropriate.";
+		int x = 0;
+		try {
+			Statement stmt = (Statement) con.createStatement();
+			ResultSet rs = stmt.executeQuery("select username from user where admin = true");
+			while (rs.next()) {
+				if(sendMessage(new Message(flagger, rs.getString("username"), "Reported Quiz", body, 0, 0, null, true))) x++; 
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	return x > 0;
+}
+	
 	synchronized public Message recieveMessage(int id) {
 		ResultSet rs;
 		Statement stmt;

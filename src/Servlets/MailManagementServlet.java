@@ -134,26 +134,36 @@ public class MailManagementServlet extends HttpServlet {
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	String sender = request.getParameter("sender");
-    	String recipient = request.getParameter("recipient");
-    	AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
-    	if (!am.accountExists(recipient)) {
-    		String errorURL = "/newMessage.jsp?&to=error&subject="+request.getParameter("subject")+"&quiz=" + request.getParameter("quiz")+"&body="+request.getParameter("body");
-    		request.getRequestDispatcher(errorURL).forward(request, response);
-    	} else {
-    	String subject = request.getParameter("subject");
-    	String body = request.getParameter("body");
-    	int challenge = -1;
-    	try {
-    		challenge = Integer.parseInt(request.getParameter("quiz"));
-    	} catch (NumberFormatException e) {
-    		e.printStackTrace();
-    	}
-    	Message m = new Message(sender, recipient, subject, body, 0, challenge, null, true);
+    	String action = request.getParameter("type");
     	MailManager mm = (MailManager) request.getServletContext().getAttribute("mail");
-    	mm.sendMessage(m);
-    	String name = ((Account) request.getSession().getAttribute("account")).getName();
-    	request.getRequestDispatcher("ProfileServlet?user="+name).forward(request, response);
+    	if (action != null && action.equals("flag")) {
+    		String flagger = request.getParameter("uname");
+    		String qname = request.getParameter("qname");
+    		String qid = request.getParameter("qid");
+    		mm.sendFlag(flagger, qid, qname);
+    		request.getRequestDispatcher("QuizCatalogServlet").forward(request, response);
+    	} else {
+    		String sender = request.getParameter("sender");
+    		String recipient = request.getParameter("recipient");
+    		AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
+    		if (!am.accountExists(recipient)) {
+    			String errorURL = "/newMessage.jsp?&to=error&subject="+request.getParameter("subject")+"&quiz=" + request.getParameter("quiz")+"&body="+request.getParameter("body");
+    			request.getRequestDispatcher(errorURL).forward(request, response);
+    		} else {
+    			String subject = request.getParameter("subject");
+    			String body = request.getParameter("body");
+    			int challenge = -1;
+    			try {
+    				challenge = Integer.parseInt(request.getParameter("quiz"));
+    			} catch (NumberFormatException e) {
+    				e.printStackTrace();
+    			}
+    			Message m = new Message(sender, recipient, subject, body, 0, challenge, null, true);
+    			
+    			mm.sendMessage(m);
+    			String name = ((Account) request.getSession().getAttribute("account")).getName();
+    			request.getRequestDispatcher("ProfileServlet?user="+name).forward(request, response);
+    		}
     	}
     }
 }

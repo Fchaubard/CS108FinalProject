@@ -82,10 +82,19 @@ public class QuizTitleServlet extends HttpServlet {
 	    	if (request.getSession().getAttribute("account") != null)out.println("<a href = \"newMessage.jsp?quiz="+q.getQuiz_id()+"\">Send to a friend</a><br>");
 	    	out.println(q.getDescription());
 	    	out.println("<br>");
-	    	if (user != null && user.isAdmin()) {
-	    		out.println("<form id=\"admin\" action=\"QuizCatalogServlet\" method=\"post\">");
-	    		out.println("<input type=\"hidden\" name=\"id\" value=\""+q.getQuiz_id()+"\">");
-	    		out.println("<a href=\"#\" onclick=\"document.getElementById(\'admin\').submit();\">Remove Quiz</a>");
+	    	if (user != null) {
+	    		if(user.isAdmin()) {
+	    			out.println("<form id=\"admin\" action=\"QuizCatalogServlet\" method=\"post\">");
+		    		out.println("<input type=\"hidden\" name=\"deleteid\" value=\""+q.getQuiz_id()+"\">");
+		    		out.println("<a href=\"#\" onclick=\"document.getElementById(\'admin\').submit();\">Remove Quiz</a>");
+		    		out.println("</form>");
+	    		}
+	    		out.println("<form id=\"flag\" action=\"MailManagementServlet\" method=\"post\">");
+	    		out.println("<input type=\"hidden\" name=\"qid\" value=\""+q.getQuiz_id()+"\">");
+	    		out.println("<input type=\"hidden\" name=\"qname\" value=\""+q.getQuizName()+"\">");
+	    		out.println("<input type=\"hidden\" name=\"uname\" value=\""+user.getName()+"\">");
+	    		out.println("<input type=\"hidden\" name=\"type\" value=\"flag\">");
+	    		out.println("<a href=\"#\" onclick=\"document.getElementById(\'flag\').submit();\">Flag quiz as innapropriate</a>");
 	    		out.println("</form>");
 	    	}
 	    	out.println(HTMLHelper.contentEnd());

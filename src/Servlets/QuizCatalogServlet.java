@@ -114,7 +114,7 @@ public class QuizCatalogServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id = request.getParameter("id");
+		String id = request.getParameter("deleteid");
 		
 		Connection con = (Connection) request.getServletContext().getAttribute("connect");
 		// this deleted the our entire quiz database
