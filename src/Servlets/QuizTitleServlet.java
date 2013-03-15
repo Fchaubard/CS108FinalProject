@@ -132,7 +132,7 @@ public class QuizTitleServlet extends HttpServlet {
 			}
 	    	out.println(HTMLHelper.contentEnd());
 	    	
-	    	if(user.getId() == q.getCreator().getId()) {
+	    	if(user.isAdmin() || user.getId() == q.getCreator().getId()) {
 	    		out.println(HTMLHelper.contentStart());
 	    		out.println("<a href = \"QuizEditServlet?id="+q.getQuiz_id()+"\">Edit Quiz</a>");
 	    		out.println(HTMLHelper.contentEnd());
