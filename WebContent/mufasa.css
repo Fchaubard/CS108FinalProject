@@ -69,6 +69,10 @@ input[type="password"]{
 	max-width:80%;
 }
 
+input.quizobject{
+	width:100%;
+}
+
 a{
 	background-color: "rgb(170,238,216)";
 	border-width: 1px;
@@ -251,3 +255,9 @@ th{
 	background-color: rgb(209, 219, 226);
 	
 }
+
+textarea{
+	width:100%
+}
+
+

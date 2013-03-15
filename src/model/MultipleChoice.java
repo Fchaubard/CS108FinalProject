@@ -30,7 +30,7 @@ public class MultipleChoice implements Question {
 		StringBuilder html = new StringBuilder();
 		
 		html.append("<br />Insert Question Statement: <br /><textarea name=\"statement\" rows=\"8\" cols=\"48\" required></textarea>");
-		html.append("<br />Insert Answer:<br /> <input type=\"text\" name=\"answer1\" required />");
+		html.append("<br />Insert Answer:<br /> <input class=quizobject type=\"text\" name=\"answer1\" required />");
 		html.append("<br />Insert All Incorrect Options, one on each line:");
 		html.append("<br /><textarea name=\"wrongOptions\" cols=\"20\" rows=\"10\" required></textarea>");
 		
@@ -40,11 +40,13 @@ public class MultipleChoice implements Question {
 		String[] strings = getOtherRandomHTML();
 		ArrayList<String> wrongHashSet =getRandomWrongAnswers();
 		StringBuilder html = new StringBuilder();
-		html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\"statement\" value=\" "+strings[1] +"\"  />");
-		html.append("<br />Insert Answer:<br /> <input type=\"text\" name=\"answer1\" value=\" "+strings[0] +"\"/>");
-		html.append("<br />Insert Wrong Answer 1:<br /> <input type=\"text\" name=\"wrongAnswer1\" value=\" "+wrongHashSet.get(0)+"\"/>");
-		html.append("<br />Insert Wrong Answer 2:<br /> <input type=\"text\" name=\"wrongAnswer2\" value=\" "+wrongHashSet.get(1)+"\"/>");
-		html.append("<br />Insert Wrong Answer 3:<br /> <input type=\"text\" name=\"wrongAnswer3\" value=\" "+wrongHashSet.get(2)+"\" />");
+		html.append("<br />Insert Question Statement: <br /><textarea name=\"statement\" rows=\"8\" >Please fill the blank:&#13;&#10;"+strings[1] +"</textarea>");
+		html.append("<br />Insert Answer:<br /> <input class=quizobject type=\"text\" name=\"answer1\" value=\" "+strings[0] +"\"/>");
+		html.append("<br />Insert Wrong Options:<br /><textarea name=\"wrongOptions\" rows=\"10\">");
+		for (String wrongOption : wrongHashSet){
+			html.append(wrongOption + "&#13;&#10;");
+		}
+		html.append("</textarea>");
 		
 		return html.toString();
 		
