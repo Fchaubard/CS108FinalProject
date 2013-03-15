@@ -315,7 +315,7 @@ public class Matching implements Question {
 		StringBuilder edit = new StringBuilder();
 		
 		edit.append("<br />Matching Question");
-		edit.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\"" + type + "_" + qID + "_title\" size=\"75\" value=\"" + title + "\"required />");
+		edit.append("<br />Title: <br /><input type=\"text\" name=\"" + type + "_" + qID + "_title\" size=\"75\" value=\"" + title + "\"required />");
 		for (int i = 0; i < row1.size(); i++) {
 			edit.append("<br /><input type=\"text\" name=\"" + type + "_" + qID + "_" + i + "_row1\" value=\"" + row1.get(i) + "\"required />");
 			edit.append("<input type=\"text\" name=\"" + type + "_" + qID + "_" + i + "_row2\" value=\"" + row2.get(i) + "\"required />");
