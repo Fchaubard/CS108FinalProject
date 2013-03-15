@@ -116,7 +116,7 @@ public class QuizTitleServlet extends HttpServlet {
 		    		if (i >= history.size()) break;
 		    		QuizAttempts qa = history.get(i);
 	    			out.println("<li>score: "+qa.getScore()+"%; time: "+qa.getTime()/1000+" s</li>");
-	    		}
+		    	}
 	    	out.println("</ol>");
 	    	out.println("<a href = \"HistoryServlet?&user="+user.getId()+"&quiz="+id+"\">More Results</a>");
 	    	out.println(HTMLHelper.contentEnd());
