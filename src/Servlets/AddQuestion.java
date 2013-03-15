@@ -57,27 +57,35 @@ public class AddQuestion extends HttpServlet {
 		HttpSession session = request.getSession(true);
 		//public Quiz(ArrayList<Question> q, boolean random, boolean onePage, boolean immediateCorrect, boolean practice, int userID, String quizName, String description, String category){
 		Quiz quiz;
-		if (session.getAttribute("Quiz")==null) {
-			String randomstring = (String)request.getParameter("random")!=null ? (String)request.getParameter("random") : "blah";
-			boolean random = randomstring.equals("true1") ? true : false;
-			String multipagestring = (String)request.getParameter("multipage")!=null ? (String)request.getParameter("multipage") : "blah";;
-			boolean onePage = multipagestring.equals("true2") ? true : false ;
-			String immediateCorrectionstring = (String)request.getParameter("immediateCorrection")!=null ? (String)request.getParameter("immediateCorrection") : "blah";;
-			boolean ic = immediateCorrectionstring.equals("true3") ? true : false ;
-			String nameString = (String)request.getParameter("quizName");
-			String categoryString = (String)request.getParameter("quizCategory");
-			String descriptionString = (String)request.getParameter("quizDescription");
-			Account account =  ((Account)session.getAttribute("account"));
-			ServletContext sc = request.getServletContext();
-			AccountManager am = (AccountManager) sc.getAttribute("accounts");
-			quiz = new Quiz( am.getCon(), new ArrayList<Question>(), random, onePage, ic, false, account, nameString, descriptionString, categoryString);
-			session.setAttribute("Quiz", quiz);
+		String quizID;
+		if (session.getAttribute("quizID")!=null) {
+			// this is in quiz update mode
+			quizID = (String)session.getAttribute("quizID");
+			quiz = (Quiz) session.getAttribute("quiz_"+quizID); 
+		}else{
+		
+			if (session.getAttribute("Quiz")==null) {
+				String randomstring = (String)request.getParameter("random")!=null ? (String)request.getParameter("random") : "blah";
+				boolean random = randomstring.equals("true1") ? true : false;
+				String multipagestring = (String)request.getParameter("multipage")!=null ? (String)request.getParameter("multipage") : "blah";;
+				boolean onePage = multipagestring.equals("true2") ? true : false ;
+				String immediateCorrectionstring = (String)request.getParameter("immediateCorrection")!=null ? (String)request.getParameter("immediateCorrection") : "blah";;
+				boolean ic = immediateCorrectionstring.equals("true3") ? true : false ;
+				String nameString = (String)request.getParameter("quizName");
+				String categoryString = (String)request.getParameter("quizCategory");
+				String descriptionString = (String)request.getParameter("quizDescription");
+				Account account =  ((Account)session.getAttribute("account"));
+				ServletContext sc = request.getServletContext();
+				AccountManager am = (AccountManager) sc.getAttribute("accounts");
+				quiz = new Quiz( am.getCon(), new ArrayList<Question>(), random, onePage, ic, false, account, nameString, descriptionString, categoryString);
+				session.setAttribute("Quiz", quiz);
+				
+			}
+			else{
+				quiz = (Quiz) session.getAttribute("Quiz");
+			}
 			
 		}
-		else{
-			quiz = (Quiz) session.getAttribute("Quiz");
-		}
-		
 		String question = new String();
 		try {
 			response.setContentType("text/html");

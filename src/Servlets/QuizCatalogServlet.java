@@ -72,8 +72,10 @@ public class QuizCatalogServlet extends HttpServlet {
 	    	out.println("</head");
 	    	out.println("<body>");
 	    	out.println(HTMLHelper.printHeader((Account)request.getSession().getAttribute("account")));
-	    	
-	    	
+
+	    	request.getSession().removeAttribute("quiz_"+request.getSession().getAttribute("quizID"));
+	    	request.getSession().removeAttribute("quizID");
+	    	request.getSession().removeAttribute("updateDeleteAddArrayList");
 			if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));
 	    	
 	    	out.println(HTMLHelper.contentStart());
@@ -111,6 +113,7 @@ public class QuizCatalogServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("id");
+		
 		Connection con = (Connection) request.getServletContext().getAttribute("connect");
 		// this deleted the our entire quiz database
 		/*ResultSet qMap;

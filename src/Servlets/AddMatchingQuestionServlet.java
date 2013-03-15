@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,6 +27,7 @@ import model.*;
 public class AddMatchingQuestionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	boolean addingQuestionToAlreadyMadeQuiz = false;
 	private Quiz quiz;
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -48,13 +50,26 @@ public class AddMatchingQuestionServlet extends HttpServlet {
 		HttpSession session = request.getSession(true);
 		//public Quiz(ArrayList<Question> q, boolean random, boolean onePage, boolean immediateCorrect, boolean practice, int userID, String quizName, String description, String category){
 		Quiz quiz;
-		if (session.getAttribute("Quiz")==null) {
-			return; // this should never happen
-			
-		}
-		else{
+		
+		String quizID;
+		if (session.getAttribute("quizID")!=null) {
+			// this is in quiz update mode
+			addingQuestionToAlreadyMadeQuiz = true;
+			quizID = (String)session.getAttribute("quizID");
+			quiz = (Quiz) session.getAttribute("quiz_"+quizID); 
+		}else{
+			// this is in new quiz mode
 			quiz = (Quiz) session.getAttribute("Quiz");
+			if (quiz==null) {
+				return; // this should never happen
+				
+			}
 		}
+		
+		quiz.setPracticeMode(false);
+		System.out.println(quiz.getQuizName());
+		
+		
 		Matching matching_question;
 		if (session.getAttribute("matching_question")==null) {
 			// we have no rows make the question

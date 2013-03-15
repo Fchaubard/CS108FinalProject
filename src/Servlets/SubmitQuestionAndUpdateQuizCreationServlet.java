@@ -4,6 +4,7 @@ import helpers.HTMLHelper;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -48,14 +49,31 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
 		Quiz quiz;
-		if (session.getAttribute("Quiz")==null) {
-			//error
-			return;
-		}
-		else{
+	    
+		
+			
+			
+		String quizID;
+		if (session.getAttribute("quizID")!=null) {
+			// this is in quiz update mode
+			quizID = (String)session.getAttribute("quizID");
+			quiz = (Quiz) session.getAttribute("quiz_"+quizID); 
+			ArrayList<Integer> uda = (ArrayList<Integer>)session.getAttribute("updateDeleteAddArrayList");
+			uda.add(3);
+			session.setAttribute("updateDeleteAddArrayList", uda);
+		}else{
+			// this is in new quiz mode
 			quiz = (Quiz) session.getAttribute("Quiz");
+			if (quiz==null) {
+				return; // this should never happen
+				
+			}
 		}
 		
+		quiz.setPracticeMode(false);
+	
+	
+	
 		Question question;
 		try {
 			response.setContentType("text/html");
@@ -189,8 +207,15 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 			
 				
 		}
-			session.removeAttribute("Quiz");
-			session.setAttribute("Quiz", quiz);
+			if (session.getAttribute("quizID")!=null) {
+				// this is in quiz update mode
+				quizID = (String)session.getAttribute("quizID");
+				session.setAttribute("quiz_"+quizID, quiz); 
+			}else{
+				session.removeAttribute("Quiz");
+				session.setAttribute("Quiz", quiz);
+			}
+
 			out.println(HTMLHelper.contentStart());
 			out.println("<br />Quiz Name: "+quiz.getQuizName()+"");
 			out.println("<br />Quiz Description: " +quiz.getDescription()+"");
@@ -225,7 +250,14 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 			out.println("</form>");
 			out.println(HTMLHelper.contentEnd());
 			out.println(HTMLHelper.contentStart());
-			out.println("<form action=\"FinishQuizServlet\" method=\"post\">");
+			if (session.getAttribute("quizID")!=null) {
+				out.println("<form action=\"QuizUpdateServlet\" method=\"post\">");
+				
+			}
+			else{
+				out.println("<form action=\"FinishQuizServlet\" method=\"post\">");
+					
+			}
 			out.println("<br /><br />Done Creating Quiz");
 			out.println("<br /><input type=\"submit\" value=\"Done Creating Quiz\"/>");
 			out.println("</form>");

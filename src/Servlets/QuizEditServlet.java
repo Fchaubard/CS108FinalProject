@@ -124,8 +124,9 @@ public class QuizEditServlet extends HttpServlet {
 					out.println(q.getEditQuizString()); // all the ids in the input fields must be unique
 					out.println(HTMLHelper.contentEnd());
 				}
+				
 				out.println(HTMLHelper.contentStart());
-				out.println("<br /><input type=\"submit\" value=\"Finish Editing Exam\"/>");
+				out.println("<br /><input type=\"submit\" value=\"Update Quiz\"/>");
 				out.println(HTMLHelper.contentEnd());
 				out.println("</form>");
 				out.println("</body>");
