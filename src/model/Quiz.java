@@ -325,7 +325,6 @@ public class Quiz {
 				System.out.print("error");
 			}
 		}
-		
 	}
 
 

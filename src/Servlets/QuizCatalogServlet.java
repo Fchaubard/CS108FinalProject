@@ -119,6 +119,7 @@ public class QuizCatalogServlet extends HttpServlet {
 		Connection con = (Connection) request.getServletContext().getAttribute("connect");
 		// this deleted the our entire quiz database
 		ResultSet qMap;
+		/*
 		try {
 			Statement stmt = (Statement) con.createStatement();
 			for (int i = 1; i < 7; i++) {
@@ -128,11 +129,12 @@ public class QuizCatalogServlet extends HttpServlet {
 			stmt.executeUpdate("delete from matching_question_mapping where matching_entry_id in (select question_id from quiz_question_mapping where question_type = 7 AND quiz_id = "+id+");");
 			stmt.executeUpdate("delete from quiz_question_mapping where quiz_id = "+id+";");
 			stmt.executeUpdate("delete from quiz where quiz_id = "+id+";");
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		*/
 		System.out.println("Quiz deletion not implemented");
 		doGet(request, response);
 	}
