@@ -432,16 +432,16 @@ public class AccountManager {
 		String s= "<a href =\\\"ProfileServlet?user="+name+"\\\">"+name+"</a> ";
 		switch(acheivement) {
 		case -1:
-			s += "is an amateur quiz taker.";
+			s += "is an amateur quiz make.";
 			break;
 		case -2:
-			s += "is a prolific quiz taker.";
+			s += "is a prolific author.";
 			break;
 		case -3:
-			s += "is a quiz-taking prodigy!";
+			s += "is a quiz prodigy!";
 			break;
 		case -5:
-			s += "is a quiz machine!";
+			s += "is a quiz-taking machine!";
 			break;
 		case -4:
 			s += "is one of the greatest!";

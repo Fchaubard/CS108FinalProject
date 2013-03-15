@@ -111,7 +111,7 @@ public class MailManager {
 		try {
 			inbox = new TreeMap<Integer,Message>();
 			stmt = (Statement) con.createStatement();
-			rs = stmt.executeQuery("select message_id, sender, subject, date, quiz_id, unread from message where recipient = \"" + recipient + "\" order by date");
+			rs = stmt.executeQuery("select message_id, sender, subject, date, quiz_id, unread from message where recipient = \"" + recipient + "\" order by date desc");
 			while (rs.next()) {
 				Integer key = rs.getInt("message_ID");
 				String sender = rs.getString("sender");
@@ -141,7 +141,7 @@ public class MailManager {
 		try {
 			outbox = new TreeMap<Integer,Message>();
 			stmt = (Statement) con.createStatement();
-			rs = stmt.executeQuery("select message_id, recipient, subject, date, quiz_id from message where sender = \"" + sender + "\" order by date");
+			rs = stmt.executeQuery("select message_id, recipient, subject, date, quiz_id from message where sender = \"" + sender + "\" order by date desc");
 			while (rs.next()) {
 				Integer key = rs.getInt("message_ID");
 				String recipient = rs.getString("recipient");

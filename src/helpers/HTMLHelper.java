@@ -10,6 +10,8 @@ public class HTMLHelper {
 	private static final String TAKE_QUIZ_LINK = "<li class=header><a class=header href=\"QuizCatalogServlet\">Take a Quiz!</a></li>";
 	private static final String CREATE_LINK = "<li class=header><a class=header href=\"BeginQuizCreationServlet\">Create Quiz</a></li>";
 	private static final String STATS_LINK = "<li class=header><a class=header href=\"SiteStatsServlet\">Site Stats</a></li>";
+	private static final String OUTBOX_LINK = "<li class=header><a class=header href=\"MailManagementServlet?index=outbox\">Outbox</a></li>";
+	private static final String INBOX_LINK = "<li class=header><a class=header href=\"MailManagementServlet?index=inbox\">Inbox</a></li>";
 	private static final String FUN_FACT = "<li class=header><a class=header href=\"http://en.wikipedia.org/wiki/Special:Random\">Fun Fact</a></li>";
 	private static final String LOGOUT = "<li class=header><form action=\"AcctManagementServlet\" method=\"post\"><input type=\"hidden\" name =\"Action\" value=\"Logout\"><input style=\"float:right\" type=\"submit\" value=\"Logout\"></form></li>";
 	private static final String QUIZ_ICON = "<img class=quiz src=\"http://upload.wikimedia.org/wikipedia/commons/1/13/Blue_square_Q.PNG\">";
@@ -47,7 +49,7 @@ public class HTMLHelper {
 	public static String contentEnd(){
 		return "</div>";
 	}
-	
+		
 	public static String printFullHeader(boolean isAdmin){
 		StringBuilder fullHeader = new StringBuilder();
 		fullHeader.append("<div class=header><ul class=header>");
@@ -56,6 +58,8 @@ public class HTMLHelper {
 		fullHeader.append(FUN_FACT);
 		fullHeader.append(TAKE_QUIZ_LINK);
 		fullHeader.append(CREATE_LINK);
+		fullHeader.append(OUTBOX_LINK);
+		fullHeader.append(INBOX_LINK);
 		if (isAdmin) fullHeader.append(STATS_LINK);
 		fullHeader.append("</ul></div><div style=\"min-height:80px\"></div>");
 		
@@ -67,6 +71,7 @@ public class HTMLHelper {
 		fullHeader.append("<div class=header><ul class=header>");
 		fullHeader.append(HOME_LINK);
 		fullHeader.append(FUN_FACT);
+		fullHeader.append(TAKE_QUIZ_LINK);
 		fullHeader.append("</ul></div><div style=\"min-height:80px\"></div>");
 		return fullHeader.toString();
 	}

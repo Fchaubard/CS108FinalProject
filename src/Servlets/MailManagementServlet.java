@@ -33,7 +33,8 @@ public class MailManagementServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	MailManager mm = (MailManager) request.getServletContext().getAttribute("mail");
-    	String user = request.getParameter("user");
+    	//String user = request.getParameter("user");
+    	Account user = (Account) request.getSession().getAttribute("account");
     	response.setContentType("text/html");
     	PrintWriter out = response.getWriter();
     	out.println("<head>");
@@ -52,10 +53,10 @@ public class MailManagementServlet extends HttpServlet {
     	
     	
     	if (request.getParameter("index").equals("inbox")) {
-    		TreeMap<Integer, Message> inbox = mm.listInbox(user);
+    		TreeMap<Integer, Message> inbox = mm.listInbox(user.getName());
     		out.println("<table border=\"0\">");
     		out.println("<tr><th><b>Subject</b></th><th><b>Sender</b></th><th><b>Date</b></th><th><b>Attatchment</b></th></tr>");
-    		for (int i : inbox.keySet()) {
+    		for (int i : inbox.descendingKeySet()) {
     			String boldin = "";
     			String boldout = "";
     			if (inbox.get(i).unread) {
@@ -84,11 +85,11 @@ public class MailManagementServlet extends HttpServlet {
     		}
     		out.println("</table>");
     	} else if (request.getParameter("index").equals("outbox")) {
-    		TreeMap<Integer, Message> outbox = mm.listOutbox(user);
+    		TreeMap<Integer, Message> outbox = mm.listOutbox(user.getName());
     		//out.println("<ul>");
     		out.println("<table border=\"0\">");
     		out.println("<tr><th><b>Subject</b></th><th><b>Sender</b></th><th><b>Date</b></th><th><b>Attatchment</b></th></tr>");
-    		for (int i : outbox.keySet()) {
+    		for (int i : outbox.descendingKeySet()) {
     			out.println("<tr>");
     			out.println("<td><a href = \"MailManagementServlet?&index="+i+"&user="+user+"\">");
     			out.println(outbox.get(i).getSubject()) ;
