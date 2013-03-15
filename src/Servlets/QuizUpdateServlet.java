@@ -272,7 +272,7 @@ public class QuizUpdateServlet extends HttpServlet {
 						
 					case 7:
 						
-							statementString = (String)request.getParameter( q.getType()+"_"+q.getqID()+"_"+"title");
+							statementString = (String)request.getParameter(q.getType()+"_"+q.getqID()+"_title");
 							ArrayList<String> row1  = new ArrayList<String>();
 							ArrayList<String> row2  = new ArrayList<String>();
 							
