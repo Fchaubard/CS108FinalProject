@@ -13,6 +13,7 @@
 <%= helpers.HTMLHelper.printHeader((Accounts.Account)request.getSession().getAttribute("account")) %>
 <%AccountManager am = (AccountManager) request.getServletContext().getAttribute("accounts");
 if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.printNewsFeed(am.getAnnouncements()));%>
+<%=HTMLHelper.contentStart() %>
 <form action="MailManagementServlet" method="post">
 <% String from = ((Accounts.Account) request.getSession().getAttribute("account")).getName(); 
 	String to = (String) request.getParameter("to");
@@ -30,11 +31,12 @@ if(request.getSession().getAttribute("account") != null) out.println(HTMLHelper.
 <tr><td>Sender:</td><td><% out.println(from);%></td></tr>
 <%if (quiz.length() > 0) out.println("<tr><td>Challenge ID:</td><td>"+ quiz +"</td></tr>");%>
 <!-- <tr><td>challenge ID:</td><td><input type="text" name="challenge" value = "<% out.println(quiz); %>"></td></tr>-->
-<tr><td>Recipient:</td><td><input type="text" name="recipient value = "<% out.println(to); %>"></td></tr>
-<tr><td>subject:</td><td><input type="text" name="subject" value = "<% out.println(sub); %>"></td></tr>
-<tr><td>message:</td><td><textarea cols = "50" rows = "5" name = "body"><% out.println(body); %></textarea></td></tr>
+<tr><td>Recipient:</td><td><input style="width:100%" type="text" name="recipient value = "<% out.println(to); %>"></td></tr>
+<tr><td>subject:</td><td><input style="width:100%" type="text" name="subject" value = "<% out.println(sub); %>"></td></tr>
+<tr><td>message:</td><td><textarea style="width:100%" cols = "50" rows = "5" name = "body"><% out.println(body); %></textarea></td></tr>
 </table>
 <input type="submit" value="Send">
 </form>
+<%=HTMLHelper.contentEnd() %>
 </body>
 </html>
