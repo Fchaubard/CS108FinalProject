@@ -101,14 +101,12 @@ public class SolveServlet extends HttpServlet {
 				if ( q.getType()==7) {
 					String paramterString = "thedata"+Integer.toString(q.getqID());
 					String string = (String) request.getParameter(paramterString);
-					System.out.println(string);
 					
 					// parse the results into format 2 3 1 5 4
 					string.replaceAll("&", "");
 					String splitString =q.getType()+ "_" + q.getqID()+"[]=";
 					String[] stringArray = string.split(Pattern.quote(splitString));
 
-					System.out.println("Printing answer integers for matching:");
 					answersArrayList= new ArrayList<String>();
 					for (String s : stringArray) {
 
@@ -117,7 +115,6 @@ public class SolveServlet extends HttpServlet {
 							String temp = s.replaceAll("[^0-9]+","");
 							
 						    int i = Integer.parseInt(temp);  
-						    System.out.println(temp);
 							
 						    answersArrayList.add(Integer.toString(i));
 						    

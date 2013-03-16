@@ -96,7 +96,9 @@ public class QuizResultsServlet extends HttpServlet {
 	    	for (int i = 0; i < 5; i++) {
 	    		if (i >= history.size()) break;
 	    		QuizAttempts qh = history.get(i);
-	    		if (i == 0 &&qh.getUserID() == user.getId()) am.updateAchievements(user, true);
+	    		if (user != null) {
+	    			if (i == 0 &&qh.getUserID() == user.getId()) am.updateAchievements(user, true);
+	    		}
 	    		out.println(qh.printAttemt(am));
 	    	}
 	    	out.println("</ol>");
