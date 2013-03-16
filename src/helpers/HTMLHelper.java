@@ -158,7 +158,7 @@ public class HTMLHelper {
 	
 	public static String printNewsFeed(ArrayList<String> adminNews, ArrayList<String> friendActivity){
 		StringBuilder newsBox = new StringBuilder();
-		newsBox.append("<div style=\"min-width:1160px;top:40px; position:fixed; width:100%;height:96%;min-height:600px;z-index:-1;\">");
+		newsBox.append("<div style=\"min-width:210px;top:40px; position:fixed;height:96%; left:1060px; min-height:600px; right:0;\">");
 		newsBox.append("<div class=newsfeed style=\"top:0;\">");
 		for (String update : adminNews){
 			newsBox.append("<div class=news>");
