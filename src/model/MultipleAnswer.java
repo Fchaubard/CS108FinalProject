@@ -34,6 +34,7 @@ public class MultipleAnswer implements Question {
 		this.numAnswers = numAnswers;
 		this.statement = question;
 		this.answers = ans;
+		answers.remove("");
 	}
 
 	public MultipleAnswer(int id, Connection con) { // pulls from database
@@ -178,6 +179,11 @@ public class MultipleAnswer implements Question {
 		for(String s : ans) {
 			userAnswers.add(s);
 		}
+		
+		HashSet<String> hs = new HashSet<String>();
+		hs.addAll(userAnswers);
+		userAnswers.clear();
+		userAnswers.addAll(hs);
 	}
 
 	@Override

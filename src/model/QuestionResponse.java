@@ -31,6 +31,7 @@ public class QuestionResponse implements Question {
 	public QuestionResponse(String question, HashSet<String> ans) { // pushes to database
 		this.statement = question;
 		this.answers = ans;
+		answers.remove("");
 	}
 	
 	public QuestionResponse(Integer id, Connection con) throws SQLException {
@@ -184,6 +185,11 @@ public class QuestionResponse implements Question {
 		for(String s : ans) {
 			userAnswers.add(s);
 		}
+		
+		HashSet<String> hs = new HashSet<String>();
+		hs.addAll(userAnswers);
+		userAnswers.clear();
+		userAnswers.addAll(hs);
 	}
 
 	@Override
