@@ -170,6 +170,10 @@ public class MultipleChoiceMultipleAnswer implements Question {
 			options.add(s);
 		}
 		
+		for(String str : answers) {
+			options.add(str);
+		}
+		
 		options.remove("");
 		wrongAnswers.remove("");
 	}
