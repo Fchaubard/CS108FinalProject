@@ -66,7 +66,7 @@ public class HistoryServlet extends HttpServlet {
 			try {
 				Quiz q = new Quiz(qa.getQuizID(), am.getCon());
 				Account a = am.getAccount(qa.getUserID());
-				out.println("<tr><td><a href = \"ProfileServlet?user="+qa.getUserID()+"\">" + a.getName()+"</a>");
+				out.println("<tr><td><a href = \"ProfileServlet?user="+a.getName()+"\">" + a.getName()+"</a>");
 				out.println("</td><td><a href = \"QuizTitleServlet?id="+qa.getQuizID()+"\">" + q.getQuizName());
 				out.println("</td><td>" + qa.getScore());
 				out.println("</td><td>" + qa.getTime()/1000.0);

@@ -51,7 +51,6 @@ public class SolveServlet extends HttpServlet {
 	
 			HttpSession session = request.getSession(true);
 			String quizID = (String) session.getAttribute("quizID");
-			
 			//means the cart hasnt been initialized
 			if(session.getAttribute("quiz_"+quizID) == null){
 
@@ -154,7 +153,7 @@ public class SolveServlet extends HttpServlet {
 						am.storeEvent(2, qa.getUserID(), qa.getQuizID(), 0);
 						qa.pushAttemptToDB((Connection)request.getServletContext().getAttribute("connect"));
 						quiz.addToHistory(qa);
-						am.updateAchievements(acct);
+						am.updateAchievements(acct, false);
 						
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block

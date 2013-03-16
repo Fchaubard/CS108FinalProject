@@ -105,7 +105,7 @@ public class AccountManager {
 	
 	
 	synchronized public Account createAccount(String name, String pass) {
-		if (name.equals("error")) return null; //reserved for system
+		if (name.toLowerCase().equals("error")) return null; //reserved for system
 		if (accountExists(name)) return null;
 		pass = hashString(pass);
 			Statement stmt;
@@ -305,13 +305,7 @@ public class AccountManager {
 		return history;
 	}
 	
-	synchronized public void updateAchievements (Account acct) {
-		/*System.out.println(quizesDone);
-		if (quizesDone > 0) acct.giveAcheivement("amateure");
-		if (quizesDone > 5) acct.giveAcheivement("prolific");
-		if (quizesDone > 10) acct.giveAcheivement("prodigious");
-		if (quizesDone > 50) acct.giveAcheivement("greatest");
-		if (quizesDone > 100) acct.giveAcheivement("quiz_machine");*/
+	synchronized public void updateAchievements (Account acct, boolean highScore) {
 		int quizesDone = quizesTaken(acct);
 		int quizesAuthored = quizesAuthored(acct);
 		Statement stmt;
@@ -331,7 +325,7 @@ public class AccountManager {
 				storeEvent(4, acct.getId(), 0, -3);
 				stmt.executeUpdate("update user set prodigious = true where user_id = " + acct.getId());
 			}
-			if (isBest(acct) && !acct.getAcheivement("greatest")) {
+			if (highScore && !acct.getAcheivement("greatest")) {
 				storeEvent(4, acct.getId(), 0, -4);
 				acct.giveAcheivement("greatest");
 				stmt.executeUpdate("update user set greatest = true where user_id = " + acct.getId());
