@@ -21,11 +21,11 @@ public class FillInTheBlank implements Question {
 		
 		StringBuilder html = new StringBuilder();
 		html.append("<br /> Question:");
-		html.append("<br /><input type=\"text\" name=\"statementBefore\" size=\"50\" required />");
+		html.append("<br /><input type=\"text\" name=\"statementBefore\" size=\"50\" maxlength=\"120\" required />");
 		html.append(" __________ ");
-		html.append("<input type=\"text\" name=\"statementAfter\" size=\"50\" required />");
+		html.append("<input type=\"text\" name=\"statementAfter\" size=\"50\" maxlength=\"120\" required />");
 		html.append("<br />Insert All Possible Answers, one on each line:");
-		html.append("<br /><textarea name=\"answers\" cols=\"20\" rows=\"10\" required></textarea>");
+		html.append("<br /><textarea name=\"answers\" cols=\"20\" rows=\"10\" maxlength=\"250\" required></textarea>");
 		
 		return html.toString();
 	}

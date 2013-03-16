@@ -24,8 +24,8 @@ public class Matching implements Question {
 		// TODO
 		StringBuilder html = new StringBuilder();
 		
-		html.append("<br /><input type=\"text\" name=\"question_row\" required />");
-		html.append("matches with <input type=\"text\" name=\"answer_row\" required /><br />");
+		html.append("<br /><input type=\"text\" name=\"question_row\" maxlength=\"250\" required />");
+		html.append("matches with <input type=\"text\" name=\"answer_row\" maxlength=\"250\" required /><br />");
 		return html.toString();
 	}
 	
@@ -34,7 +34,7 @@ public class Matching implements Question {
 		// TODO
 		StringBuilder html = new StringBuilder();
 		
-		html.append("<br />Title of your matching question: <input type=\"text\" name=\"title\" required />");
+		html.append("<br />Title of your matching question: <input type=\"text\" name=\"title\" maxlength=\"250\" required />");
 		return html.toString();
 	}
 	

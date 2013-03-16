@@ -22,11 +22,11 @@ public class MultipleChoiceMultipleAnswer implements Question {
 	public static String getHTMLInputString(){
 		StringBuilder html = new StringBuilder();
 		
-		html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\"question\" size=\"75\" required />");
+		html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\"question\" size=\"75\" maxlength=\"250\" required />");
 		html.append("<br />Insert All Correct Answers, one on each line:");
-		html.append("<br /><textarea name=\"answers\" cols=\"20\" rows=\"10\" required></textarea>");
+		html.append("<br /><textarea name=\"answers\" cols=\"20\" rows=\"10\" maxlength=\"250\" required></textarea>");
 		html.append("<br />Insert All Incorrect Options, one on each line:");
-		html.append("<br /><textarea name=\"wrongAnswers\" cols=\"20\" rows=\"10\" ></textarea>");
+		html.append("<br /><textarea name=\"wrongAnswers\" cols=\"20\" rows=\"10\" maxlength=\"250\" ></textarea>");
 		
 		return html.toString();
 	}
