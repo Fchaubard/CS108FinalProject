@@ -58,16 +58,7 @@ import Accounts.*;
     	    	//set and print profile title (name)
     	    	String title = profile.getName();
     	    	ArrayList<String> actions = new ArrayList<String>();
-    	    	if ((selfViewer || viewer.isAdmin())) {
-    	    		String setPrivacy = (profile.isPrivate()) ? "Set profile to public" : "Set profile to private";
-	    			//actions.add("<a class=actionlist href = \"AcctManagementServlet?&Action=Privacy&user="+profile.getName()+"\">"+setPrivacy+"</a>");
-	    			String privateButton = ("<form id=\"privacy\" action=\"AcctManagementServlet\" method=\"post\">");
-	    			privateButton = privateButton +("<input type=\"hidden\" name=\"name\" value=\""+profile.getName()+"\">");
-	    			privateButton = privateButton +("<input type=\"hidden\" name=\"Action\" value=\"Privacy\">");
-	    			privateButton = privateButton +("<a class=actionlist href=\"#\" onclick=\"document.getElementById(\'privacy\').submit();\">"+setPrivacy+"</a>");
-	    			privateButton = privateButton +("</form>");
-	    			actions.add(privateButton);
-	    		}
+    	    	
     	    	out.println(HTMLHelper.printTitle("", title, actions));
     	    	//done with profile title
     	    	
@@ -131,6 +122,16 @@ import Accounts.*;
     	    		actions.clear();
     	    		actions.add("<a class=actionlist href = \"FriendManagementServlet\">Friends</a>");
     	    		actions.add("<a class=actionlist href=\"ProfileCatalogServlet\"> Search Users </a>");
+    	    		if ((selfViewer || viewer.isAdmin())) {
+        	    		String setPrivacy = (profile.isPrivate()) ? "Set profile to public" : "Set profile to private";
+    	    			//actions.add("<a class=actionlist href = \"AcctManagementServlet?&Action=Privacy&user="+profile.getName()+"\">"+setPrivacy+"</a>");
+    	    			String privateButton = ("<form id=\"privacy\" action=\"AcctManagementServlet\" method=\"post\">");
+    	    			privateButton = privateButton +("<input type=\"hidden\" name=\"name\" value=\""+profile.getName()+"\">");
+    	    			privateButton = privateButton +("<input type=\"hidden\" name=\"Action\" value=\"Privacy\">");
+    	    			privateButton = privateButton +("<a class=actionlist href=\"#\" onclick=\"document.getElementById(\'privacy\').submit();\">"+setPrivacy+"</a>");
+    	    			privateButton = privateButton +("</form>");
+    	    			actions.add(privateButton);
+    	    		}
     	    		out.println(HTMLHelper.printActionList("", title, actions));
     	    		//done with friends
     	    		
