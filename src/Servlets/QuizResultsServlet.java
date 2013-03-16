@@ -151,7 +151,7 @@ public class QuizResultsServlet extends HttpServlet {
 			}*/
 			out.println("</body>");
 			out.println("</html>");
-			
+			session.removeAttribute("quizID");
 			
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block

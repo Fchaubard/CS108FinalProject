@@ -1,0 +1,10 @@
+user:fchaubar (Chaubard, Francois)
+user:ststanko (Stanko, Sean)
+user:aprilyu (Yu, April)
+user:rdit (Iglesias, Ramone)
+
+File is in web content and called CS108 final project functionality
+We used JSoup framework which is 3rd party software to help us page scrape wikipedia pages.
+This .jar file will need to be added to the build path. It is included in the zip.
+
+To run the website, run on server starting from HomePage.java.
