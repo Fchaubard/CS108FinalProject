@@ -327,10 +327,10 @@ public class MultipleChoice implements Question {
 		StringBuilder html = new StringBuilder();
 		
 		html.append("<br />Multiple Choice Question");
-		html.append("<br />Insert Question Statement: <br /><textarea name=\""+type+"_"+qID+"_statement\" rows=\"8\" cols=\"48\" required>"+statement+"</textarea>");
-		html.append("<br />Insert Answer:<br /> <input type=\"text\" name=\""+type+"_"+qID+"_answer\" required value=\""+answer+"\"/>");
+		html.append("<br />Insert Question Statement: <br /><textarea name=\""+type+"_"+qID+"_statement\" rows=\"8\" cols=\"48\" maxlength=\"250\" required>"+statement+"</textarea>");
+		html.append("<br />Insert Answer:<br /> <input type=\"text\" name=\""+type+"_"+qID+"_answer\" maxlength=\"250\" required value=\""+answer+"\"/>");
 		html.append("<br />Insert All Incorrect Options, one on each line:");
-		html.append("<br /><textarea name=\""+type+"_"+qID+"_wrongOptions\" cols=\"20\" rows=\"10\" required>"+getEditWrongAnswersString()+"</textarea>");
+		html.append("<br /><textarea name=\""+type+"_"+qID+"_wrongOptions\" cols=\"20\" rows=\"10\" maxlength=\"250\" required>"+getEditWrongAnswersString()+"</textarea>");
 		
 		return html.toString();
 	}

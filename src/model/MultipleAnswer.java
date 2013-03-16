@@ -242,10 +242,10 @@ public class MultipleAnswer implements Question {
 		StringBuilder edit = new StringBuilder();
 		
 		edit.append("<br />Multiple Answer Question");
-		edit.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\"" + type + "_" + qID + "_question\" size=\"75\" value=\"" + statement + "\"required />");
-		edit.append("<br />Number of Expected Answers: <br /><input type=\"text\" name=\"" + type + "_" + qID + "_numAnswers\" value=\"" + numAnswers + "\"required />");
+		edit.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\"" + type + "_" + qID + "_question\" size=\"75\" value=\"" + statement + "\"required maxlength=\"250\" />");
+		edit.append("<br />Number of Expected Answers: <br /><input type=\"text\" name=\"" + type + "_" + qID + "_numAnswers\" value=\"" + numAnswers + "\"required maxlength=\"250\" />");
 		edit.append("<br />Insert All Possible Answers, one on each line:");
-		edit.append("<br /><textarea name=\"" + type + "_" + qID + "_answers\" cols=\"20\" rows=\"10\" required>" + getEditAnswersString() + "</textarea>");
+		edit.append("<br /><textarea name=\"" + type + "_" + qID + "_answers\" cols=\"20\" rows=\"10\" maxlength=\"250\" required>" + getEditAnswersString() + "</textarea>");
 		
 		return edit.toString();
 	}

@@ -245,9 +245,9 @@ public class QuestionResponse implements Question {
 		StringBuilder html = new StringBuilder();
 		
 		html.append("<br />Question Response Question");
-		html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\""+type+"_"+qID+"_statement\" size=\"75\" value=\"" + statement + "\" required/>");
+		html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\""+type+"_"+qID+"_statement\" size=\"75\" value=\"" + statement + "\" maxlength=\"250\" required/>");
 		html.append("<br />Insert All Possible Answers, one on each line:");
-		html.append("<br /><textarea name=\""+type+"_"+qID+"_answers\" cols=\"20\" rows=\"10\" required>"+getEditAnswersString()+"</textarea>");
+		html.append("<br /><textarea name=\""+type+"_"+qID+"_answers\" cols=\"20\" rows=\"10\" maxlength=\"250\" required>"+getEditAnswersString()+"</textarea>");
 		
 		return html.toString();
 	}

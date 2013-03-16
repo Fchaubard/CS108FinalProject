@@ -300,11 +300,11 @@ public class MultipleChoiceMultipleAnswer implements Question {
 		StringBuilder html = new StringBuilder();
 		
 		html.append("<br />Multiple-Choice-Multiple-Answer Question");
-		html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\""+type+"_"+qID+"_question\" size=\"75\" value=\""+statement+"\"required />");
+		html.append("<br />Insert Question Statement: <br /><input type=\"text\" name=\""+type+"_"+qID+"_question\" size=\"75\" value=\""+statement+"\" maxlength=\"250\" required />");
 		html.append("<br />Insert All Correct Answers, one on each line:");
-		html.append("<br /><textarea name=\""+type+"_"+qID+"_answers\" cols=\"20\" rows=\"10\" required>"+getEditAnswersString(answers)+"</textarea>");
+		html.append("<br /><textarea name=\""+type+"_"+qID+"_answers\" cols=\"20\" rows=\"10\" maxlength=\"250\" required>"+getEditAnswersString(answers)+"</textarea>");
 		html.append("<br />Insert All Incorrect Options, one on each line:");
-		html.append("<br /><textarea name=\""+type+"_"+qID+"_wrongAnswers\" cols=\"20\" rows=\"10\" >"+getEditAnswersString(wrongAnswers)+"</textarea>");
+		html.append("<br /><textarea name=\""+type+"_"+qID+"_wrongAnswers\" cols=\"20\" rows=\"10\" maxlength=\"250\">"+getEditAnswersString(wrongAnswers)+"</textarea>");
 		
 		return html.toString();
 	}

@@ -245,11 +245,11 @@ public class FillInTheBlank implements Question {
 		StringBuilder edit = new StringBuilder();
 		edit.append("<br />Fill-in-the-Blank Question");
 		edit.append("<br /> Question:");
-		edit.append("<br /><input type=\"text\" name=\"" + type + "_" + qID + "_statementBefore\" size=\"50\" value=\"" + statement.substring(0, indexOfBlank) + "\" />");
+		edit.append("<br /><input type=\"text\" name=\"" + type + "_" + qID + "_statementBefore\" size=\"50\" value=\"" + statement.substring(0, indexOfBlank) + "\" maxlength=\"120\" required />");
 		edit.append(" __________ ");
-		edit.append("<input type=\"text\" name=\"" + type + "_" + qID + "_statementAfter\" size=\"50\" value=\"" + statement.substring(indexOfBlank+10) + "\" >");
+		edit.append("<input type=\"text\" name=\"" + type + "_" + qID + "_statementAfter\" size=\"50\" value=\"" + statement.substring(indexOfBlank+10) + "\" maxlength=\"120\" required >");
 		edit.append("<br />Insert All Possible Answers, one on each line:");
-		edit.append("<br /><textarea name=\"" + type + "_" + qID + "_answers\" cols=\"20\" rows=\"10\" required>" + getEditAnswersString() + "</textarea>");
+		edit.append("<br /><textarea name=\"" + type + "_" + qID + "_answers\" cols=\"20\" rows=\"10\" maxlength=\"250\" required>" + getEditAnswersString() + "</textarea>");
 		
 		return edit.toString();
 	}
