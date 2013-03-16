@@ -94,6 +94,8 @@ import Accounts.*;
     	    		}
     	    		out.println(HTMLHelper.printActionList("", title, actions));
     	    		//done with achievements
+    	    	} else {
+    	    		out.println("<b>This user has set their profile to private. Add them as a friend to view.</b>");
     	    	}
 
 
