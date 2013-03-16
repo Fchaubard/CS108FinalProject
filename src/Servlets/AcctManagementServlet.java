@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,6 +64,21 @@ public class AcctManagementServlet extends HttpServlet {
     	}  else if (action.equals("Logout")) {
     		am.logoutAccount((Account) request.getSession().getAttribute("account"));
     		request.getSession().setAttribute("account", null);
+    		Cookie[] cookies = request.getCookies();
+    		if (cookies!=null) {
+    		Cookie cookie;
+    		 for(int i=0; i<cookies.length; i++) {
+    		      cookie = cookies[i];
+    		      if (cookie.getName().equals("name")){
+    		        cookie.getValue();
+    		        cookie.setMaxAge(0);
+    	    		cookie.setPath("/");
+    	    		cookie.setComment("EXPIRING COOKIE at " + System.currentTimeMillis());
+    	    		response.addCookie(cookie);
+    		        break;
+    		      }
+    		 }  
+    		}
     		destination = "GuestHome.jsp";
     		//request.getRequestDispatcher("/GuestHome.jsp").forward(request, response);
     	} else if (action.equals("Promote")) {
