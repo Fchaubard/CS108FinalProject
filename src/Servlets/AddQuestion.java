@@ -161,7 +161,10 @@ public class AddQuestion extends HttpServlet {
 			out.println("<br />Quiz Name: "+quiz.getQuizName()+"");
 			out.println("<br />Quiz Description: " +quiz.getDescription()+"");
 			out.println("<br />Quiz Category: "  +quiz.getCategory()+"<br />");
-			out.println("<br />Quiz Creator: "  +quiz.getCreator().getName()+"<br />");
+			if (quiz.getCreator().getName()!=null) {
+				out.println("<br />Quiz Creator: "  +quiz.getCreator().getName()+"<br />");
+				
+			}
 			
 			out.println(question);
 			
