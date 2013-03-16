@@ -27,7 +27,6 @@ public class Account {
 		try {
 			setId(rs.getInt("user_id"));
 			name = rs.getString("username");
-			System.out.println(name);
 			
 			practiceMode = rs.getBoolean("practice");
 			online = rs.getBoolean("online");

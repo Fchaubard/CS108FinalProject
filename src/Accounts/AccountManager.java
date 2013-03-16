@@ -160,7 +160,6 @@ public class AccountManager {
 				storeEvent(5, sender, 0, friend);
 	    		storeEvent(5, friend, 0, sender);
 			} else { //send request
-				System.out.println("boop");
 				rs = stmt.executeQuery("SELECT * FROM pending_friends WHERE accepted_user_id = " + sender +" AND pending_user_id = "+ friend +"");
 				if (rs.next()) return; //already sent request
 				stmt.executeUpdate("INSERT INTO pending_friends VALUES("+sender+", "+friend+");");
@@ -417,7 +416,6 @@ public class AccountManager {
 				update = "";
 				break;
 			}
-			System.out.println("insert into event values (default, "+type+", \""+update+"\", "+user+")");
 			stmt.executeUpdate("insert into event values (default, "+type+", \""+update+"\", "+user+")");
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -452,15 +450,11 @@ public class AccountManager {
 	synchronized public ArrayList<String> getAnnouncements() {
 		ArrayList<String> ann = new ArrayList<String>();
 		try {
-			//System.out.println("this happened, which is getAnn)");
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from event where type = 1 order by event_id desc");
 			while (rs.next()) {
 				ann.add(rs.getString("event"));
 			}
-			//for (String s : ann) {
-			//	System.out.println(s);
-			//}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -475,9 +469,6 @@ public class AccountManager {
 			while (rs.next()) {
 				news.add(rs.getString("event"));
 			}
-			//for (String s : news) {
-			//	System.out.println(s);
-			//}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -498,7 +489,6 @@ public class AccountManager {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println("body" + "!!!");
 		return body;
 	}
 	

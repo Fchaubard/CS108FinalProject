@@ -43,7 +43,6 @@ public class MailManager {
 		}
 		sb.append(", default);");
 		try {
-			System.out.println(sb.toString());
 			stmt = (Statement) con.createStatement();
 			stmt.executeUpdate(sb.toString());
 		} catch (SQLException e) {
