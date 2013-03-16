@@ -160,7 +160,7 @@ public class HTMLHelper {
 		StringBuilder newsBox = new StringBuilder();
 		newsBox.append("<div style=\"min-width:210px;top:60px; position:fixed;height:96%; left:1060px; min-height:700px; right:0;\">");
 		newsBox.append("<div class=newsfeed style=\"height:30px\"><div class=news><b>Newsfeed</b></div></div>");
-		newsBox.append("<div class=newsfeed style=\"top:41; height:40%\">");
+		newsBox.append("<div class=newsfeed style=\"top:41px; height:40%\">");
 		for (String update : adminNews){
 			newsBox.append("<div class=news>");
 			newsBox.append(update);
