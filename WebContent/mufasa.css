@@ -136,6 +136,7 @@ div.content{
 	min-width:364px;
 	max-width:700px;
 	margin-bottom:20px;
+	word-wrap:break-word;
 }
 
 div.quiz{

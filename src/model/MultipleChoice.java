@@ -62,7 +62,8 @@ public class MultipleChoice implements Question {
 	}
 
 	public MultipleChoice(String question, HashSet<String> wrongAns, String ans) { // pushes to database
-		this.statement = question;
+		if (question.length() < 250) this.statement = question;
+		else this.statement = question.substring(0,245) +"...";
 		this.wrongAnswers = wrongAns;
 		wrongAnswers.remove("");
 		
@@ -253,6 +254,9 @@ public class MultipleChoice implements Question {
 			String regex = respuesta.text();
 			String parrafo = firstParagraph.text();
 			String pincheParrafo = parrafo.replace(regex,"__________");
+			if(pincheParrafo.length() > 250){
+				pincheParrafo = pincheParrafo.substring(0,249) + "...";
+			}
 			String[] setup = {regex, pincheParrafo};
 			return setup;
 		} catch (IOException e) {
