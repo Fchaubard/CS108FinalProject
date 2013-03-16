@@ -32,7 +32,8 @@ public class MultipleAnswer implements Question {
 	
 	public MultipleAnswer(String question, Set<String> ans, int numAnswers) { // pushes to database
 		this.numAnswers = numAnswers;
-		this.statement = question.replace("\"", "");
+		question = question.replace("\"", "");
+		this.statement = (question.length() < 250) ? question : (question.substring(0, 245) + "...");
 		this.answers = new HashSet<String>();
 		
 		for(String s : ans) {
@@ -81,7 +82,8 @@ public class MultipleAnswer implements Question {
 	}
 
 	public void setStatement(String statement) {
-		this.statement = statement.replace("\"", "");
+		statement = statement.replace("\"", "");
+		this.statement = (statement.length() < 250) ? statement : (statement.substring(0, 245) + "...");
 	}
 
 	public Set<String> getAnswers() {

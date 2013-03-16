@@ -63,9 +63,8 @@ public class FillInTheBlank implements Question {
 	}
 	
 	public FillInTheBlank(String question, Set<String> ans) { 
-		
-		this.statement = question.trim(); // this should have the ________ in it already
-		this.statement = this.statement.replace("\"", "");
+		question = question.replace("\"", "").trim();
+		this.statement = (question.length() < 250) ? question : (question.substring(0, 245) + "...");
 		
 		this.answers = new HashSet<String>(); // need to add the &&&
 		
@@ -115,7 +114,8 @@ public class FillInTheBlank implements Question {
 	}
 
 	public void setStatement(String statement) {
-		this.statement = statement.replace("\"", "");
+		statement = statement.replace("\"", "");
+		this.statement = (statement.length() < 250) ? statement : (statement.substring(0, 245) + "...");
 	}
 
 	public Set<String> getAnswers() {

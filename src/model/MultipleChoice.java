@@ -68,8 +68,9 @@ public class MultipleChoice implements Question {
 
 		this.wrongAnswers = new HashSet<String>();
 		
+		int numChars = 0;
 		for(String s : wrongAns) {
-			wrongAnswers.add(s.replace("\"", ""));
+			wrongAnswers.add(s);
 		}
 		wrongAnswers.remove("");
 		
@@ -114,7 +115,8 @@ public class MultipleChoice implements Question {
 	}
 
 	public void setStatement(String statement) {
-		this.statement = statement.replace("\"", "");
+		statement = statement.replace("\"", "");
+		this.statement = (statement.length() < 250) ? statement : (statement.substring(0, 245) + "...");
 	}
 
 	public Set<String> getWrongAnswers() {

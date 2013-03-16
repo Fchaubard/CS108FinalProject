@@ -38,7 +38,8 @@ public class PictureResponse implements Question {
 	}
 
 	public PictureResponse(String url, Set<String> ans) { // pushes to database
-		this.url = url.replace("\"", "");
+		url = url.replace("\"", "");
+		this.url = (url.length() < 250) ? url : (url.substring(0, 245) + "...");
 		this.answers = new HashSet<String>();
 		
 		for(String s : ans) {
@@ -85,7 +86,8 @@ public class PictureResponse implements Question {
 	}
 
 	public void setURL(String url) {
-		this.url = url.replace("\"", "");
+		url = url.replace("\"", "");
+		this.url = (url.length() < 250) ? url : (url.substring(0, 245) + "...");
 	}
 
 	public Set<String> getAnswers() {

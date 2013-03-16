@@ -39,7 +39,8 @@ public class Matching implements Question {
 	}
 	
 	public Matching(String title, ArrayList<String> row1,ArrayList<String> row2) { 
-		this.title = title.replace("\"", "");
+		title = title.replace("\"", "");
+		this.title = (title.length() < 250) ? title : (title.substring(0, 245) + "...");
 		this.row1 = new ArrayList<String>();
 		
 		for(String s : row1) {
@@ -232,7 +233,8 @@ public class Matching implements Question {
 	}
 
 	public void setTitle(String title) {
-		this.title = title.replace("\"", "");
+		title = title.replace("\"", "");
+		this.title = (title.length() < 250) ? title : (title.substring(0, 245) + "...");
 	}
 
 

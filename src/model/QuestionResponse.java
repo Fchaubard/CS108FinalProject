@@ -29,7 +29,8 @@ public class QuestionResponse implements Question {
 	}
 	
 	public QuestionResponse(String question, HashSet<String> ans) { // pushes to database
-		this.statement = question.replace("\"", "");
+		question = question.replace("\"", "");
+		this.statement = (question.length() < 250) ? question : (question.subSequence(0, 245) + "...");
 		this.answers = new HashSet<String>();
 		
 		for(String s : ans) {
@@ -66,7 +67,8 @@ public class QuestionResponse implements Question {
 	}
 
 	public void setStatement(String statement) {
-		this.statement = statement.replace("\"", "");
+		statement = statement.replace("\"", "");
+		this.statement = (statement.length() < 250) ? statement : (statement.substring(0, 245) + "...");
 	}
 
 	public Set<String> getAnswers() {
