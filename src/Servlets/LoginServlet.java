@@ -45,7 +45,6 @@ public class LoginServlet extends HttpServlet {
 			String pass = request.getParameter("pass");
 			ServletContext sc = request.getServletContext();
 			AccountManager am = (AccountManager) sc.getAttribute("accounts");
-			if (am == null) System.out.println("Huh?");
 			Account acct = am.loginAccount(name, pass);
 			if (acct != null) {
 				if (acct.isBanned()) {

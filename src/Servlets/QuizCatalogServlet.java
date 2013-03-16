@@ -63,7 +63,6 @@ public class QuizCatalogServlet extends HttpServlet {
 				}
 				searchQuizes += " where "+searchBy + searchFor;
 			}
-			System.out.println(searchQuizes);
 			rs = stmt.executeQuery(searchQuizes);
 			response.setContentType("text/html");
 	    	PrintWriter out = response.getWriter();
@@ -106,7 +105,6 @@ public class QuizCatalogServlet extends HttpServlet {
 			out.println("</body>");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("oops!");
 		}
 	}
 

@@ -51,7 +51,6 @@ public class SinglePageQuizServlet extends HttpServlet {
 								practice = true;
 							}
 		}
-		System.out.println(quizID);
 
 		
 		try {
@@ -69,7 +68,6 @@ public class SinglePageQuizServlet extends HttpServlet {
 					quiz = (Quiz) session.getAttribute("quiz_"+quizID);
 				}
 				quiz.setPracticeMode(practice);
-			System.out.println(quiz.getQuizName());
 			
 			if( request.getParameter("ajax_id")==null){
 				quiz.randomizeQuestions();

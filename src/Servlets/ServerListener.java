@@ -40,7 +40,6 @@ public class ServerListener implements ServletContextListener {
     	
     	ServletContext sc = arg0.getServletContext();
     	Connection con = (Connection) MyDB.getConnection();
-    	if (con == null) System.out.println("con failed");
     	sc.setAttribute("connect", con);
     	AccountManager am = new AccountManager(con);
     	sc.setAttribute("accounts", am);

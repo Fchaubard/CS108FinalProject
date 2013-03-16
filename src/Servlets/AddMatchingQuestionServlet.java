@@ -67,7 +67,6 @@ public class AddMatchingQuestionServlet extends HttpServlet {
 		}
 		
 		quiz.setPracticeMode(false);
-		System.out.println(quiz.getQuizName());
 		
 		
 		Matching matching_question;

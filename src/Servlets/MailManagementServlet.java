@@ -115,9 +115,7 @@ public class MailManagementServlet extends HttpServlet {
     		try {
     			x = Integer.parseInt(request.getParameter("index"));
     		} catch (NumberFormatException e) {
-    			System.out.println("mail fail");
     		}
-    		System.out.println(x);
     		Message m = mm.recieveMessage(x);
     		out.println("<b>Subject:</b> " + m.getSubject() + "<br>");
     		out.println("<b>From:</b> " + m.getSender() + " @ " + new java.util.Date(m.getTimestamp())+ "<hr>");

@@ -36,7 +36,6 @@ import Accounts.*;
     	    	MailManager mm = (MailManager) request.getServletContext().getAttribute("mail");
     	    	Account profile = am.getAccount(request.getParameter("user"));
     	    	Account viewer = (Account) request.getSession().getAttribute("account");
-    	    	System.out.println(viewer.getId());
     	    	boolean regViewer = (viewer != null);
     	    	boolean selfViewer = (viewer != null) && (viewer.getId() == profile.getId());
     	    	boolean skipPrivate = selfViewer || viewer.isAdmin() || !profile.isPrivate() || am.isFriend(profile.getId(), viewer.getId());
@@ -65,12 +64,10 @@ import Accounts.*;
     	    	//set and print popular
     	    	title = "Popular Quizzes";
     	    	actions.clear();
-    	    	System.out.println(am.getPopular().size());
     	    	int i = 0;
     	    	for (String action : am.getPopular()){
     	    		
     	    		actions.add(action);
-    	    		System.out.println(action);
     	    		i++;
     	    		if (i >= 3) break;
     	    	}

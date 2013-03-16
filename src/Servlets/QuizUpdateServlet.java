@@ -104,7 +104,6 @@ public class QuizUpdateServlet extends HttpServlet {
 			updateDeleteAddArrayList = (ArrayList<Integer>)session.getAttribute("updateDeleteAddArrayList");
 		}
 		session.setAttribute("updateDeleteAddArrayList", updateDeleteAddArrayList);
-		System.out.println("updateDeleteAddArrayList"+updateDeleteAddArrayList);
 		Question question;
 		try {
 			if(!updateDeleteAddArrayList.contains(3)){

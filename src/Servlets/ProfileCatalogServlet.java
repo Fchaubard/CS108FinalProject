@@ -79,7 +79,6 @@ public class ProfileCatalogServlet extends HttpServlet {
 			out.println(HTMLHelper.contentEnd());
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("oops!");
 		}
 	}
 

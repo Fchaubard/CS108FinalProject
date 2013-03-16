@@ -40,7 +40,6 @@ public class AcctManagementServlet extends HttpServlet {
     	String name = request.getParameter("User");
     	String pass = request.getParameter("Pass");
 
-    	System.out.println(action);
     	
     	ServletContext sc = request.getServletContext();
 		AccountManager am = (AccountManager) sc.getAttribute("accounts");
@@ -51,12 +50,10 @@ public class AcctManagementServlet extends HttpServlet {
     		if (acct == null) {
     			request.getSession().setAttribute("user", name);
     			destination = "/NameTaken.jsp";
-    			//request.getRequestDispatcher("/NameTaken.jsp").forward(request, response);
     		} else {
     			request.getSession().setAttribute("user", name);
     			request.getSession().setAttribute("account", acct);
     			destination = "ProfileServlet?user=" + name;
-    			//request.getRequestDispatcher("/UserHome.jsp").forward(request, response);
     		}
     	} else if (action.equals("Delete")) {
     		am.deleteAccount(name);
@@ -90,7 +87,6 @@ public class AcctManagementServlet extends HttpServlet {
     		destination = "ProfileServlet?user=" + acct.getName();
     	} else if (action.equals("Ban")) {
     		Account acct = am.getAccount(request.getParameter("name"));
-    		if (acct == null) System.out.println("no ban" + request.getParameter("name"));
     		am.banUser(acct, true);
     		destination = "ProfileServlet?user=" + acct.getName();
     	} else if (action.equals("Pardon")) {
@@ -103,6 +99,5 @@ public class AcctManagementServlet extends HttpServlet {
     		destination = "ProfileServlet?user=" + acct.getName();
     	}
     	request.getRequestDispatcher(destination).forward(request, response);
-    	//request.getRequestDispatcher("/ProfileServlet?user="+request.getParameter("name")).forward(request, response);
     }
 }

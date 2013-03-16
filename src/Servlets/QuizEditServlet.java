@@ -46,7 +46,6 @@ public class QuizEditServlet extends HttpServlet {
 		}else{
 			quizID = request.getParameter("id");
 		}
-		System.out.println(quizID);
 
 		try {
 				session.setAttribute("quizID", quizID);
@@ -61,7 +60,6 @@ public class QuizEditServlet extends HttpServlet {
 					quiz = (Quiz) session.getAttribute("quiz_"+quizID);
 				}
 				quiz.setPracticeMode(false);
-			System.out.println(quiz.getQuizName());
 			
 			
 
