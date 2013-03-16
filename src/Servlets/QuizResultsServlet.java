@@ -15,12 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import Accounts.Account;
-import Accounts.AccountManager;
-
 import model.Question;
 import model.Quiz;
 import model.QuizAttempts;
+import Accounts.Account;
+import Accounts.AccountManager;
 
 
 /**

@@ -72,7 +72,6 @@ public class AcctManagementServlet extends HttpServlet {
     		      if (cookie.getName().equals("name")){
     		        cookie.getValue();
     		        cookie.setMaxAge(0);
-    	    		cookie.setPath("/");
     	    		cookie.setComment("EXPIRING COOKIE at " + System.currentTimeMillis());
     	    		response.addCookie(cookie);
     		        break;
