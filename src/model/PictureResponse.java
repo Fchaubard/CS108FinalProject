@@ -40,6 +40,7 @@ public class PictureResponse implements Question {
 	public PictureResponse(String url, Set<String> ans) { // pushes to database
 		this.url = url;
 		this.answers = ans;
+		answers.remove("");
 	}
 
 	public PictureResponse(int id, Connection con) { // pulls from database
@@ -184,6 +185,11 @@ public class PictureResponse implements Question {
 		for(String s : ans) {
 			userAnswers.add(s);
 		}
+		
+		HashSet<String> hs = new HashSet<String>();
+		hs.addAll(userAnswers);
+		userAnswers.clear();
+		userAnswers.addAll(hs);
 	}
 
 	@Override

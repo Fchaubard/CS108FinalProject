@@ -170,7 +170,15 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 					hashSet.add(string);
 				}
 				
-				int numAnswers = Integer.parseInt((String)request.getParameter("numAnswers"));
+				String num = (String)request.getParameter("numAnswers");
+				
+				boolean isNumber = true;
+				for (char c : num.toCharArray())
+			    {
+			        if (!Character.isDigit(c)) isNumber = false;
+			    }
+				
+				int numAnswers = (isNumber) ? Integer.parseInt((String)request.getParameter("numAnswers")) : hashSet.size();
 				
 				question = new MultipleAnswer(statementString, hashSet, numAnswers);
 				quiz.addQuestion(question);
@@ -181,10 +189,13 @@ public class SubmitQuestionAndUpdateQuizCreationServlet extends HttpServlet {
 				String wrongAns = (String)request.getParameter("wrongAnswers");
 				String answ = (String)request.getParameter("answers");
 				
+
 				Set<String> wAns = new HashSet<String>();
-				String[] wrong = wrongAns.split(Pattern.quote("\r\n"));
-				for (String st : wrong) {
-					wAns.add(st);
+				if(wrongAns.length() != 0) {
+					String[] wrong = wrongAns.split(Pattern.quote("\r\n"));
+					for (String st : wrong) {
+						wAns.add(st);
+					}
 				}
 				
 				Set<String> ans = new HashSet<String>();

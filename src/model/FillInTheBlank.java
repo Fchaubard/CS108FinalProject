@@ -21,9 +21,9 @@ public class FillInTheBlank implements Question {
 		
 		StringBuilder html = new StringBuilder();
 		html.append("<br /> Question:");
-		html.append("<br /><input type=\"text\" name=\"statementBefore\" size=\"50\" />");
+		html.append("<br /><input type=\"text\" name=\"statementBefore\" size=\"50\" required />");
 		html.append(" __________ ");
-		html.append("<input type=\"text\" name=\"statementAfter\" size=\"50\" >");
+		html.append("<input type=\"text\" name=\"statementAfter\" size=\"50\" required />");
 		html.append("<br />Insert All Possible Answers, one on each line:");
 		html.append("<br /><textarea name=\"answers\" cols=\"20\" rows=\"10\" required></textarea>");
 		
@@ -67,6 +67,7 @@ public class FillInTheBlank implements Question {
 		this.statement = question.trim(); // this should have the ________ in it already
 		
 		this.answers = ans; // need to add the &&&
+		answers.remove("");
 	}
 
 	
@@ -185,6 +186,11 @@ public class FillInTheBlank implements Question {
 		for(String s : ans) {
 			userAnswers.add(s);
 		}
+		
+		HashSet<String> hs = new HashSet<String>();
+		hs.addAll(userAnswers);
+		userAnswers.clear();
+		userAnswers.addAll(hs);
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Set;
 
 public class Matching implements Question {
 
@@ -23,8 +24,8 @@ public class Matching implements Question {
 		// TODO
 		StringBuilder html = new StringBuilder();
 		
-		html.append("<br /><input type=\"text\" name=\"question_row\" />");
-		html.append("matches with <input type=\"text\" name=\"answer_row\" /><br />");
+		html.append("<br /><input type=\"text\" name=\"question_row\" required />");
+		html.append("matches with <input type=\"text\" name=\"answer_row\" required /><br />");
 		return html.toString();
 	}
 	
@@ -33,9 +34,10 @@ public class Matching implements Question {
 		// TODO
 		StringBuilder html = new StringBuilder();
 		
-		html.append("<br />Title of your matching question: <input type=\"text\" name=\"title\" />");
+		html.append("<br />Title of your matching question: <input type=\"text\" name=\"title\" required />");
 		return html.toString();
 	}
+	
 	public Matching(String title, ArrayList<String> row1,ArrayList<String> row2) { 
 		this.title = title;
 		this.row1 = row1;

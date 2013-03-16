@@ -64,6 +64,8 @@ public class MultipleChoice implements Question {
 	public MultipleChoice(String question, HashSet<String> wrongAns, String ans) { // pushes to database
 		this.statement = question;
 		this.wrongAnswers = wrongAns;
+		wrongAnswers.remove("");
+		
 		this.answer = ans;
 		
 		options = new HashSet<String>();
@@ -270,7 +272,6 @@ public class MultipleChoice implements Question {
 		for(String s : ans) {
 			userAnswer = s;
 		}
-		
 	}
 	
 	@Override
