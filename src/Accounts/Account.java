@@ -13,6 +13,7 @@ public class Account {
 	private boolean admin;
 	private boolean banned;
 	private boolean online;
+	private boolean privacy;
 	
 	private HashMap<String, Boolean> acheivements;
 	
@@ -32,6 +33,7 @@ public class Account {
 			online = rs.getBoolean("online");
 			admin = rs.getBoolean("admin");
 			banned = rs.getBoolean("banned");
+			privacy = rs.getBoolean("private");
 			
 			acheivements = new HashMap<String, Boolean>();
 			
@@ -73,6 +75,14 @@ public class Account {
 	
 	public boolean isBanned() {
 		return banned;
+	}
+	
+	public void setPrivacy(boolean setting) {
+		this.privacy = setting;
+	}
+	
+	public boolean isPrivate() {
+		return privacy;
 	}
 	
 	public boolean getAcheivement(String key) {

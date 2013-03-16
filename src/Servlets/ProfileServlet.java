@@ -39,6 +39,7 @@ import Accounts.*;
     	    	System.out.println(viewer.getId());
     	    	boolean regViewer = (viewer != null);
     	    	boolean selfViewer = (viewer != null) && (viewer.getId() == profile.getId());
+    	    	boolean skipPrivate = selfViewer || viewer.isAdmin() || !profile.isPrivate() || am.isFriend(profile.getId(), viewer.getId());
     	    	response.setContentType("text/html");
     	    	PrintWriter out = response.getWriter();
     	    	out.println("<head>");
@@ -57,33 +58,45 @@ import Accounts.*;
     	    	//set and print profile title (name)
     	    	String title = profile.getName();
     	    	ArrayList<String> actions = new ArrayList<String>();
+    	    	if ((selfViewer || viewer.isAdmin())) {
+    	    		String setPrivacy = (profile.isPrivate()) ? "Set profile to public" : "Set profile to private";
+	    			//actions.add("<a class=actionlist href = \"AcctManagementServlet?&Action=Privacy&user="+profile.getName()+"\">"+setPrivacy+"</a>");
+	    			String privateButton = ("<form id=\"privacy\" action=\"AcctManagementServlet\" method=\"post\">");
+	    			privateButton = privateButton +("<input type=\"hidden\" name=\"name\" value=\""+profile.getName()+"\">");
+	    			privateButton = privateButton +("<input type=\"hidden\" name=\"Action\" value=\"Privacy\">");
+	    			privateButton = privateButton +("<a class=actionlist href=\"#\" onclick=\"document.getElementById(\'privacy\').submit();\">"+setPrivacy+"</a>");
+	    			privateButton = privateButton +("</form>");
+	    			actions.add(privateButton);
+	    		}
     	    	out.println(HTMLHelper.printTitle("", title, actions));
     	    	//done with profile title
     	    	
     	    	//set and print statistics
-    	    	title = "Statistics";
-    	    	actions.clear();
-    	    	actions.add("Quizes Created: " + am.quizesAuthored(profile));
-    	    	actions.add("Quizes Taken: " + am.quizesTaken(profile));
-    	    	
-    	    	String name = (selfViewer) ? "My" : profile.getName() + "'s";
-    	    	actions.add("<a class=actionlist href = \"QuizCatalogServlet?&search="+profile.getName()+"&type=creator_id\">"+name+" Quizes</a>");
-    	    	if (selfViewer) actions.add("<a class=actionlist href = \"HistoryServlet?user="+profile.getId()+"\">"+name+" History</a>");
-    	    	
-    	    	out.println(HTMLHelper.printActionList("", title, actions));
-    	    	//done printing statistics
-    	    	
-    	    	//set up achievements and print
-    	    	title = "Achievements";
-    	    	actions.clear();
-    	    	for(String s : profile.getAcheivementKeySet()) {
-    	    		if (profile.getAcheivement(s)) actions.add(s);
+    	    	if (skipPrivate) {
+    	    		title = "Statistics";
+    	    		actions.clear();
+    	    		actions.add("Quizes Created: " + am.quizesAuthored(profile));
+    	    		actions.add("Quizes Taken: " + am.quizesTaken(profile));
+
+    	    		String name = (selfViewer) ? "My" : profile.getName() + "'s";
+    	    		actions.add("<a class=actionlist href = \"QuizCatalogServlet?&search="+profile.getName()+"&type=creator_id\">"+name+" Quizes</a>");
+    	    		if (selfViewer || viewer.isAdmin() || !profile.isPrivate()) actions.add("<a class=actionlist href = \"HistoryServlet?user="+profile.getId()+"\">"+name+" History</a>");
+    	    		
+
+    	    		out.println(HTMLHelper.printActionList("", title, actions));
+    	    		//done printing statistics
+
+    	    		//set up achievements and print
+    	    		title = "Achievements";
+    	    		actions.clear();
+    	    		for(String s : profile.getAcheivementKeySet()) {
+    	    			if (profile.getAcheivement(s)) actions.add(s);
+    	    		}
+    	    		out.println(HTMLHelper.printActionList("", title, actions));
+    	    		//done with achievements
     	    	}
-    	    	out.println(HTMLHelper.printActionList("", title, actions));
-    	    	//done with achievements
-    	    	
-    	    	
-    	    	
+
+
     	    	if (selfViewer) {
     	    		//let's do mail
     	    		title = "Mail";

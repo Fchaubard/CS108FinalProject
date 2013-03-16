@@ -82,6 +82,10 @@ public class AcctManagementServlet extends HttpServlet {
     		Account acct = am.getAccount(request.getParameter("name"));
     		am.banUser(acct, false);
     		destination = "ProfileServlet?user=" + acct.getName();
+    	} else if (action.equals("Privacy")) {
+    		Account acct = am.getAccount(request.getParameter("name"));
+    		am.updatePrivacy(acct);
+    		destination = "ProfileServlet?user=" + acct.getName();
     	}
     	request.getRequestDispatcher(destination).forward(request, response);
     	//request.getRequestDispatcher("/ProfileServlet?user="+request.getParameter("name")).forward(request, response);

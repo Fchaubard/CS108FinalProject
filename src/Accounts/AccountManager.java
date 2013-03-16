@@ -359,6 +359,18 @@ public class AccountManager {
 		return false;
 	}
 	
+	synchronized public void updatePrivacy(Account acct) {
+		try {
+			boolean setting = !(acct.isPrivate());
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("update user set private = "+setting+" where user_id = "+acct.getId());
+			acct.setPrivacy(setting);
+			} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
 	synchronized public void storeAnnouncement(String announcement) {
 		try {
 			Statement stmt = con.createStatement();
