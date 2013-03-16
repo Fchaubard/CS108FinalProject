@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,7 +53,11 @@ public class LoginServlet extends HttpServlet {
 				} else {
 					sc.setAttribute("user", name);
 					request.getSession().setAttribute("account", acct);
+					Cookie cookie = new Cookie("name",name);
+					cookie.setMaxAge(60*60); //1 hour
+					response.addCookie(cookie);
 					request.getRequestDispatcher("/ProfileServlet?user="+acct.getName()).forward( request, response );
+					
 				}
 			} else {
 				request.getRequestDispatcher("/GuestHome.jsp?err=badLogin" ).forward( request, response );
