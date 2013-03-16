@@ -18,14 +18,14 @@ public class HTMLHelper {
 	private static final String INBOX_LINK = "<li class=header><a class=header href=\"MailManagementServlet?index=inbox\">Inbox</a></li>";
 	private static final String FUN_FACT = "<li class=header><a class=header href=\"http://en.wikipedia.org/wiki/Special:Random\">Fun Fact</a></li>";
 	private static final String LOGOUT = "<li class=header><form action=\"AcctManagementServlet\" method=\"post\"><input type=\"hidden\" name =\"Action\" value=\"Logout\"><input style=\"float:right\" type=\"submit\" value=\"Logout\"></form></li>";
-	private static final String QUIZ_ICON = "<img class=quiz src=\"http://upload.wikimedia.org/wikipedia/commons/1/13/Blue_square_Q.PNG\">";
+	public static final String QUIZ_ICON = "<img class=quiz src=\"http://upload.wikimedia.org/wikipedia/commons/1/13/Blue_square_Q.PNG\">";
 	private static final String DEFAULT_PROFILE_PIC = "http://www.iconsdb.com/icons/download/caribbean-blue/user-256.gif";
 	private static final String BLUE_STAR_ICON = "http://www.gettyicons.com/free-icons/136/stars/png/256/star_blue_256.png";
 	private static final String MAIL_ICON ="http://cdn1.iconfinder.com/data/icons/metro-uinvert-dock/256/Mail.png";
 	public static final String STATISTICS_ICON = "http://12starsmedia.com/wp-content/uploads/2012/02/VideoStatsIcon.gif";
 	private static final String ACTION_ICON ="http://myyearwithoutclothesshopping.com/wp-content/uploads/2013/01/take-action-click-icon.jpg";
 	private static final String ADMIN_ICON = "http://cdn1.iconfinder.com/data/icons/meBaze-Freebies/512/setting.png";
-	
+	public static final String QUIZ_ICON2 = "http://upload.wikimedia.org/wikipedia/commons/1/13/Blue_square_Q.PNG";
 	
 	
 	

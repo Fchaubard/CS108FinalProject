@@ -71,6 +71,16 @@ import Accounts.*;
     	    	out.println(HTMLHelper.printTitle("", title, actions));
     	    	//done with profile title
     	    	
+    	    	//set and print popular
+    	    	title = "Popular Quizzes";
+    	    	actions.clear();
+    	    	System.out.println(am.getPopular().size());
+    	    	for (String action : am.getPopular()){
+    	    		actions.add(action);
+    	    		System.out.println(action);
+    	    	}
+    	    	out.println(HTMLHelper.printActionList(HTMLHelper.QUIZ_ICON2, title, actions));
+    	    	
     	    	//set and print statistics
     	    	if (skipPrivate) {
     	    		title = "Statistics";
