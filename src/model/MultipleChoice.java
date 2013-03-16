@@ -169,7 +169,7 @@ public class MultipleChoice implements Question {
                 html.append(qID);
 
                 html.append("\" value=\"");
-                html.append(s + "\"> " + s);
+                html.append(s + " required \"> " + s);
                 html.append("<br />");       
         }
         
@@ -288,9 +288,14 @@ public class MultipleChoice implements Question {
 	
 	@Override
 	public void setUserAnswers(ArrayList<String> ans) {
-		for(String s : ans) {
-			s = s.replace("\"", "");
-			userAnswer = s;
+		ans.remove(null);
+		if(ans.size() != 0) {
+			for(String s : ans) {
+				s = s.replace("\"", "");
+				userAnswer = s;
+			}
+		} else {
+			userAnswer = "";
 		}
 	}
 	
