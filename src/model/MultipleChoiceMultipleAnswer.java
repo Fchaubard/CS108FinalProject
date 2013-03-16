@@ -34,21 +34,23 @@ public class MultipleChoiceMultipleAnswer implements Question {
 
 	
 	public MultipleChoiceMultipleAnswer(String question, Set<String> ans, Set<String> wrongAns) { // pushes to database
-		this.wrongAnswers = wrongAns;
-		this.statement = question;
-		this.answers = ans;
-		
-		answers.remove("");
-		wrongAnswers.remove("");
+		this.wrongAnswers = new HashSet<String>();
+		this.statement = question.replace("\"", "");
+		this.answers = new HashSet<String>();
 		
 		options = new HashSet<String>();
-		for(String s : wrongAnswers) {
+		for(String s : wrongAns) {
+			this.wrongAnswers.add(s.replace("\"", ""));
 			options.add(s);
 		}
 		
-		for(String str : answers) {
+		for(String str : ans) {
+			this.answers.add(str.replace("\"", ""));
 			options.add(str);
 		}
+		
+		answers.remove("");
+		wrongAnswers.remove("");
 	}
 
 	public MultipleChoiceMultipleAnswer(int id, Connection con) { // pulls from database
@@ -97,7 +99,7 @@ public class MultipleChoiceMultipleAnswer implements Question {
 	}
 
 	public void setStatement(String statement) {
-		this.statement = statement;
+		this.statement = statement.replace("\"", "");
 	}
 
 	public Set<String> getAnswers() {
@@ -105,7 +107,11 @@ public class MultipleChoiceMultipleAnswer implements Question {
 	}
 
 	public void setAnswers(Set<String> answers) {
-		this.answers = answers;
+		this.answers = new HashSet<String>();
+		
+		for(String s : answers) {
+			this.answers.add(s.replace("\"", ""));
+		}
 	}
 
 	public int solve(ArrayList<String> answer) {
@@ -137,7 +143,11 @@ public class MultipleChoiceMultipleAnswer implements Question {
 	}
 
 	public void setWrongAnswers(Set<String> wrongAnswers) {
-		this.wrongAnswers = wrongAnswers;
+		this.wrongAnswers = new HashSet<String>();
+		
+		for(String s : wrongAnswers) {
+			wrongAnswers.add(s.replace("\"", ""));
+		}
 	}
 
 	@Override
@@ -235,6 +245,7 @@ public class MultipleChoiceMultipleAnswer implements Question {
 		userAnswers = new ArrayList<String>();
 		
 		for(String s : ans) {
+			s = s.replace("\"", "");
 			userAnswers.add(s);
 		}
 		

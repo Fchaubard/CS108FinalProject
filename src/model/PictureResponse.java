@@ -38,8 +38,12 @@ public class PictureResponse implements Question {
 	}
 
 	public PictureResponse(String url, Set<String> ans) { // pushes to database
-		this.url = url;
-		this.answers = ans;
+		this.url = url.replace("\"", "");
+		this.answers = new HashSet<String>();
+		
+		for(String s : ans) {
+			this.answers.add(s.replace("\"", ""));
+		}
 		answers.remove("");
 	}
 
@@ -81,7 +85,7 @@ public class PictureResponse implements Question {
 	}
 
 	public void setURL(String url) {
-		this.url = url;
+		this.url = url.replace("\"", "");
 	}
 
 	public Set<String> getAnswers() {
@@ -89,7 +93,11 @@ public class PictureResponse implements Question {
 	}
 
 	public void setAnswers(Set<String> answers) {
-		this.answers = answers;
+		this.answers = new HashSet<String>();
+		
+		for(String s : answers) {
+			this.answers.add(s.replace("\"", ""));
+		}
 	}
 
 	public int solve(ArrayList<String> ans) {
@@ -183,6 +191,7 @@ public class PictureResponse implements Question {
 		userAnswers = new ArrayList<String>();
 		
 		for(String s : ans) {
+			s = s.replace("\"", "");
 			userAnswers.add(s);
 		}
 		

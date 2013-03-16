@@ -10,7 +10,7 @@ import Accounts.Account;
 
 
 public class HTMLHelper {
-	private static final String HOME_LINK = "<li class=header style=\"float:left\"><a class=header href=\"HomePage\">Moses-Foe Quiz Project</a></li>";
+	private static final String HOME_LINK = "<li class=header style=\"float:left\"><img src=\"ness.png\" style=\"width:50px; height:50px\"></li><li class=header style=\"float:left\"><a class=header href=\"HomePage\">Kwiz Kid</a></li>";
 	private static final String TAKE_QUIZ_LINK = "<li class=header><a class=header href=\"QuizCatalogServlet\">Take a Quiz!</a></li>";
 	private static final String CREATE_LINK = "<li class=header><a class=header href=\"BeginQuizCreationServlet\">Create Quiz</a></li>";
 	private static final String STATS_LINK = "<li class=header><a class=header href=\"SiteStatsServlet\">Site Stats</a></li>";
@@ -158,7 +158,7 @@ public class HTMLHelper {
 	
 	public static String printNewsFeed(ArrayList<String> adminNews, ArrayList<String> friendActivity){
 		StringBuilder newsBox = new StringBuilder();
-		newsBox.append("<div style=\"min-width:210px;top:40px; position:fixed;height:96%; left:1060px; min-height:600px; right:0;\">");
+		newsBox.append("<div style=\"min-width:210px;top:60px; position:fixed;height:96%; left:1060px; min-height:600px; right:0;\">");
 		newsBox.append("<div class=newsfeed style=\"top:0;\">");
 		for (String update : adminNews){
 			newsBox.append("<div class=news>");

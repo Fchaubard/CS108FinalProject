@@ -65,8 +65,13 @@ public class FillInTheBlank implements Question {
 	public FillInTheBlank(String question, Set<String> ans) { 
 		
 		this.statement = question.trim(); // this should have the ________ in it already
+		this.statement = this.statement.replace("\"", "");
 		
-		this.answers = ans; // need to add the &&&
+		this.answers = new HashSet<String>(); // need to add the &&&
+		
+		for(String s : ans) {
+			this.answers.add(s.replace("\"", ""));
+		}
 		answers.remove("");
 	}
 
@@ -110,7 +115,7 @@ public class FillInTheBlank implements Question {
 	}
 
 	public void setStatement(String statement) {
-		this.statement = statement;
+		this.statement = statement.replace("\"", "");
 	}
 
 	public Set<String> getAnswers() {
@@ -118,7 +123,10 @@ public class FillInTheBlank implements Question {
 	}
 
 	public void setAnswers(Set<String> answers) {
-		this.answers = answers;
+		this.answers = new HashSet<String>();
+		for(String s : answers) {
+			this.answers.add(s.replace("\"", ""));
+		}
 	}
 	
 	public int solve(ArrayList<String> ans) {
@@ -184,6 +192,7 @@ public class FillInTheBlank implements Question {
 		userAnswers = new ArrayList<String>();
 		
 		for(String s : ans) {
+			s = s.replace("\"", "");
 			userAnswers.add(s);
 		}
 		

@@ -29,8 +29,13 @@ public class QuestionResponse implements Question {
 	}
 	
 	public QuestionResponse(String question, HashSet<String> ans) { // pushes to database
-		this.statement = question;
-		this.answers = ans;
+		this.statement = question.replace("\"", "");
+		this.answers = new HashSet<String>();
+		
+		for(String s : ans) {
+			this.answers.add(s.replace("\"", ""));
+		}
+		
 		answers.remove("");
 	}
 	
@@ -61,7 +66,7 @@ public class QuestionResponse implements Question {
 	}
 
 	public void setStatement(String statement) {
-		this.statement = statement;
+		this.statement = statement.replace("\"", "");
 	}
 
 	public Set<String> getAnswers() {
@@ -69,7 +74,11 @@ public class QuestionResponse implements Question {
 	}
 
 	public void setAnswers(Set<String> answers) {
-		this.answers = answers;
+		this.answers = new HashSet<String>();
+		
+		for(String s : answers) {
+			this.answers.add(s.replace("\"", ""));
+		}
 	}
 
 	@Override
@@ -183,6 +192,7 @@ public class QuestionResponse implements Question {
 		userAnswers = new ArrayList<String>();
 		
 		for(String s : ans) {
+			s = s.replace("\"", "");
 			userAnswers.add(s);
 		}
 		

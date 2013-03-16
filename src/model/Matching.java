@@ -39,9 +39,19 @@ public class Matching implements Question {
 	}
 	
 	public Matching(String title, ArrayList<String> row1,ArrayList<String> row2) { 
-		this.title = title;
-		this.row1 = row1;
-		this.row2 = row2;
+		this.title = title.replace("\"", "");
+		this.row1 = new ArrayList<String>();
+		
+		for(String s : row1) {
+			this.row1.add(s.replace("\"", ""));
+		}
+		
+		this.row2 = new ArrayList<String>();
+		
+		for(String str : row2) {
+			this.row2.add(str.replace("\"", ""));
+		}
+		
 		shuffleIntegersForRow2 = new ArrayList<Integer>();
 		for (int i = 0; i < row2.size(); i++) {
 			shuffleIntegersForRow2.add(i);
@@ -222,7 +232,7 @@ public class Matching implements Question {
 	}
 
 	public void setTitle(String title) {
-		this.title = title;
+		this.title = title.replace("\"", "");
 	}
 
 
@@ -263,7 +273,11 @@ public class Matching implements Question {
 	@Override
 	public void setUserAnswers(ArrayList<String> ans) {
 		// this is an array of integer strings
-		this.userAns = ans;
+		this.userAns = new ArrayList<String>();;
+		
+		for(String s : ans) {
+			userAns.add(s.replace("\"", ""));
+		}
 		
 	}
 	public void addRow(String question, String answer) {
@@ -278,7 +292,11 @@ public class Matching implements Question {
 	}
 
 	public void setRow1(ArrayList<String> row1) {
-		this.row1 = row1;
+		this.row1 = new ArrayList<String>();
+		
+		for(String s : row1) {
+			this.row1.add(s.replace("\"", ""));
+		}
 	}
 
 	public ArrayList<String> getRow2() {
@@ -286,7 +304,11 @@ public class Matching implements Question {
 	}
 
 	public void setRow2(ArrayList<String> row2) {
-		this.row2 = row2;
+		this.row2 = new ArrayList<String>();
+		
+		for(String s : row2) {
+			this.row2.add(s.replace("\"", ""));
+		}
 	}
 
 	public ArrayList<Integer> getShuffleIntegersForRow2() {
@@ -296,15 +318,19 @@ public class Matching implements Question {
 	public void setShuffleIntegersForRow2(ArrayList<Integer> shuffleIntegersForRow2) {
 		this.shuffleIntegersForRow2 = shuffleIntegersForRow2;
 	}
+	
 	public ArrayList<String> getUserAns() {
 		return userAns;
 	}
 
 
 	public void setUserAns(ArrayList<String> userAns) {
-		this.userAns = userAns;
+		this.userAns = new ArrayList<String>();
+		
+		for(String s : userAns) {
+			this.userAns.add(s.replace("\"", ""));
+		}
 	}
-
 
 	@Override
 	public int getNumAnswers() {
