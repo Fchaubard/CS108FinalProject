@@ -42,17 +42,20 @@ public class MultipleChoiceMultipleAnswer implements Question {
 		
 		options = new HashSet<String>();
 		for(String s : wrongAns) {
-			this.wrongAnswers.add(s.replace("\"", ""));
+			s = s.replace("\"", "");
+			this.wrongAnswers.add(s);
 			options.add(s);
 		}
 		
 		for(String str : ans) {
-			this.answers.add(str.replace("\"", ""));
+			str = str.replace("\"", "");
+			this.answers.add(str);
 			options.add(str);
 		}
 		
 		answers.remove("");
 		wrongAnswers.remove("");
+		options.remove("");
 	}
 
 	public MultipleChoiceMultipleAnswer(int id, Connection con) { // pulls from database
@@ -85,6 +88,7 @@ public class MultipleChoiceMultipleAnswer implements Question {
 				answers.add(string);
 				options.add(string);
 			}
+			
 			strings = wrongAns.split(Pattern.quote(" &&& "));
 			wrongAnswers = new HashSet<String>();
 			for (String string : strings) {
@@ -112,9 +116,19 @@ public class MultipleChoiceMultipleAnswer implements Question {
 	public void setAnswers(Set<String> answers) {
 		this.answers = new HashSet<String>();
 		
+		options.clear();
+		
 		for(String s : answers) {
-			this.answers.add(s.replace("\"", ""));
+			s = s.replace("\"", "");
+			this.answers.add(s);
+			options.add(s);
 		}
+		answers.remove("");
+		
+		for(String str : this.wrongAnswers) {
+			options.add(str);
+		}
+		options.remove("");
 	}
 
 	public int solve(ArrayList<String> answer) {
@@ -148,9 +162,16 @@ public class MultipleChoiceMultipleAnswer implements Question {
 	public void setWrongAnswers(Set<String> wrongAnswers) {
 		this.wrongAnswers = new HashSet<String>();
 		
+		options.clear();
+		
 		for(String s : wrongAnswers) {
-			wrongAnswers.add(s.replace("\"", ""));
+			s = s.replace("\"", "");
+			wrongAnswers.add(s);
+			options.add(s);
 		}
+		
+		options.remove("");
+		wrongAnswers.remove("");
 	}
 
 	@Override
