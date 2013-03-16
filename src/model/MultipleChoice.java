@@ -62,15 +62,22 @@ public class MultipleChoice implements Question {
 	}
 
 	public MultipleChoice(String question, HashSet<String> wrongAns, String ans) { // pushes to database
+		question = question.replace("\"", "");
 		if (question.length() < 250) this.statement = question;
 		else this.statement = question.substring(0,245) +"...";
-		this.wrongAnswers = wrongAns;
+
+		this.wrongAnswers = new HashSet<String>();
+		
+		for(String s : wrongAns) {
+			wrongAnswers.add(s.replace("\"", ""));
+		}
 		wrongAnswers.remove("");
 		
-		this.answer = ans;
+		this.answer = ans.replace("\"", "");
 		
 		options = new HashSet<String>();
 		for(String s : wrongAnswers) {
+			s = s.replace("\"", "");
 			options.add(s);
 		}
 		options.add(answer);
@@ -107,7 +114,7 @@ public class MultipleChoice implements Question {
 	}
 
 	public void setStatement(String statement) {
-		this.statement = statement;
+		this.statement = statement.replace("\"", "");
 	}
 
 	public Set<String> getWrongAnswers() {
@@ -115,7 +122,11 @@ public class MultipleChoice implements Question {
 	}
 
 	public void setWrongAnswers(Set<String> wrongAnswers) {
-		this.wrongAnswers = wrongAnswers;
+		this.wrongAnswers = new HashSet<String>();
+		
+		for(String s : wrongAnswers) {
+			this.wrongAnswers.add(s.replace("\"", ""));
+		}
 	}
 	
 
@@ -139,7 +150,7 @@ public class MultipleChoice implements Question {
 	}
 
 	public void setAnswer(String answer) {
-		this.answer = answer;
+		this.answer = answer.replace("\"", "");
 	}
 
 	@Override
@@ -207,7 +218,8 @@ public class MultipleChoice implements Question {
 			sqlString.replace(sqlString.length()-5, sqlString.length(), "");
 			sqlString.append("\") ");
 			
-			System.out.print(sqlString.toString());
+			System.out.println(sqlString.toString());
+			System.out.println();
 			stmt.executeUpdate(sqlString.toString());
 			
 			stmt = con.createStatement();
@@ -215,7 +227,8 @@ public class MultipleChoice implements Question {
 			sqlString.append(statement);
 			sqlString.append("\" ");
 			
-			System.out.print(sqlString.toString());
+			System.out.println(sqlString.toString());
+			System.out.println();
 			ResultSet resultSet = stmt.executeQuery(sqlString.toString());
 			
 			
@@ -274,6 +287,7 @@ public class MultipleChoice implements Question {
 	@Override
 	public void setUserAnswers(ArrayList<String> ans) {
 		for(String s : ans) {
+			s = s.replace("\"", "");
 			userAnswer = s;
 		}
 	}

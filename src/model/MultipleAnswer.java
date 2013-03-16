@@ -32,8 +32,12 @@ public class MultipleAnswer implements Question {
 	
 	public MultipleAnswer(String question, Set<String> ans, int numAnswers) { // pushes to database
 		this.numAnswers = numAnswers;
-		this.statement = question;
-		this.answers = ans;
+		this.statement = question.replace("\"", "");
+		this.answers = new HashSet<String>();
+		
+		for(String s : ans) {
+			this.answers.add(s.replace("\"", ""));
+		}
 		answers.remove("");
 	}
 
@@ -77,7 +81,7 @@ public class MultipleAnswer implements Question {
 	}
 
 	public void setStatement(String statement) {
-		this.statement = statement;
+		this.statement = statement.replace("\"", "");
 	}
 
 	public Set<String> getAnswers() {
@@ -85,7 +89,11 @@ public class MultipleAnswer implements Question {
 	}
 
 	public void setAnswers(Set<String> answers) {
-		this.answers = answers;
+		this.answers = new HashSet<String>();
+		
+		for(String s : answers) {
+			this.answers.add(s.replace("\"", ""));
+		}
 	}
 	
 	@Override
@@ -177,6 +185,7 @@ public class MultipleAnswer implements Question {
 		userAnswers = new ArrayList<String>();
 		
 		for(String s : ans) {
+			s = s.replace("\"", "");
 			userAnswers.add(s);
 		}
 		
