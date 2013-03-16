@@ -75,9 +75,13 @@ import Accounts.*;
     	    	title = "Popular Quizzes";
     	    	actions.clear();
     	    	System.out.println(am.getPopular().size());
+    	    	int i = 0;
     	    	for (String action : am.getPopular()){
+    	    		
     	    		actions.add(action);
     	    		System.out.println(action);
+    	    		i++;
+    	    		if (i >= 3) break;
     	    	}
     	    	out.println(HTMLHelper.printActionList(HTMLHelper.QUIZ_ICON2, title, actions));
     	    	

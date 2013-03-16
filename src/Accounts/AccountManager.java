@@ -106,6 +106,7 @@ public class AccountManager {
 	
 	synchronized public Account createAccount(String name, String pass) {
 		if (name.toLowerCase().equals("error")) return null; //reserved for system
+		if (name.length() > 255) return null; //too large
 		if (accountExists(name)) return null;
 		pass = hashString(pass);
 			Statement stmt;
@@ -340,18 +341,6 @@ public class AccountManager {
 		}
 	}
 	
-	private boolean isBest(Account acct) {
-		try {
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("select distinct quiz_id, user_id from history group by quiz_id order by count(quiz_id) desc;");
-			while (rs.next()) {
-				if(rs.getInt("user_id") == acct.getId()) return true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
 	
 	synchronized public void updatePrivacy(Account acct) {
 		try {
@@ -385,9 +374,10 @@ public class AccountManager {
 				int count = rs.getInt("count(quiz_id)");
 				Statement stmt2 = con.createStatement();
 				ResultSet rs2 = stmt2.executeQuery("select name from quiz where quiz_id = " + quizid);
-				rs2.next();
-				String qname = rs2.getString("name");
-				popQuiz.add("<a href = \"QuizTitleServlet?id="+quizid+"\">"+qname+"</a>: "+count);
+				if(rs2.next()) {
+					String qname = rs2.getString("name");
+					popQuiz.add("<a href = \"QuizTitleServlet?id="+quizid+"\">"+qname+"</a>: "+count);
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
