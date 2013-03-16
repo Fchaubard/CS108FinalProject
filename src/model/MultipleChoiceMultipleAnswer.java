@@ -123,7 +123,7 @@ public class MultipleChoiceMultipleAnswer implements Question {
 			this.answers.add(s);
 			options.add(s);
 		}
-		answers.remove("");
+		this.answers.remove("");
 		
 		for(String str : this.wrongAnswers) {
 			options.add(str);
@@ -166,7 +166,7 @@ public class MultipleChoiceMultipleAnswer implements Question {
 		
 		for(String s : wrongAnswers) {
 			s = s.replace("\"", "");
-			wrongAnswers.add(s);
+			this.wrongAnswers.add(s);
 			options.add(s);
 		}
 		
@@ -175,7 +175,7 @@ public class MultipleChoiceMultipleAnswer implements Question {
 		}
 		
 		options.remove("");
-		wrongAnswers.remove("");
+		this.wrongAnswers.remove("");
 	}
 
 	@Override
