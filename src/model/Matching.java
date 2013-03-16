@@ -245,7 +245,13 @@ public class Matching implements Question {
 			userAnswers.append("<br />");
 			userAnswers.append(row1.get(i));
 			userAnswers.append(" ");
-			userAnswers.append(row2.get(Integer.parseInt(this.userAns.get(i))));
+			try {
+
+				userAnswers.append(row2.get(Integer.parseInt(this.userAns.get(i))));
+			} catch (Exception e) {
+				userAnswers.append(row2.get(i));
+				
+			}
 			userAnswers.append("<br />");
 			
 		}
