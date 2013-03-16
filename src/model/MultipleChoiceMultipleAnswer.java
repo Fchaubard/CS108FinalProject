@@ -327,11 +327,13 @@ public class MultipleChoiceMultipleAnswer implements Question {
 		ps.setString(2, ans.toString());
 		
 		StringBuilder wAns = new StringBuilder();
-		for(String wa : wrongAnswers) {
-			wAns.append(wa);
-			wAns.append(" &&& ");
+		if(wrongAnswers.size() != 0) {
+			for(String wa : wrongAnswers) {
+				wAns.append(wa);
+				wAns.append(" &&& ");
+			}
+			wAns.replace(wAns.length()-5, wAns.length(), "");
 		}
-		wAns.replace(wAns.length()-5, wAns.length(), "");
 		
 		ps.setString(3, wAns.toString());
 		
